@@ -10,6 +10,12 @@
 		95694D7E25FBBA15000A06F7 /* authenticator_ios_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95694D7425FBBA15000A06F7 /* authenticator_ios_sdk.framework */; };
 		95694D8325FBBA15000A06F7 /* authenticator_ios_sdkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D8225FBBA15000A06F7 /* authenticator_ios_sdkTests.swift */; };
 		95694D8525FBBA15000A06F7 /* authenticator_ios_sdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 95694D7725FBBA15000A06F7 /* authenticator_ios_sdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		95694D9325FBBA66000A06F7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D9225FBBA66000A06F7 /* Colors.swift */; };
+		95694D9E25FBBA8D000A06F7 /* SignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D9C25FBBA8D000A06F7 /* SignInButton.swift */; };
+		95694D9F25FBBA8D000A06F7 /* SignUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D9D25FBBA8D000A06F7 /* SignUpButton.swift */; };
+		95694DA325FBBA9D000A06F7 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694DA225FBBA9C000A06F7 /* AuthView.swift */; };
+		95694DD225FBCE4C000A06F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95694D9825FBBA78000A06F7 /* Assets.xcassets */; };
+		95694DD625FBD370000A06F7 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694DD525FBD370000A06F7 /* Bundle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +35,12 @@
 		95694D7D25FBBA15000A06F7 /* authenticator-ios-sdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "authenticator-ios-sdkTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		95694D8225FBBA15000A06F7 /* authenticator_ios_sdkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = authenticator_ios_sdkTests.swift; sourceTree = "<group>"; };
 		95694D8425FBBA15000A06F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		95694D9225FBBA66000A06F7 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		95694D9825FBBA78000A06F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		95694D9C25FBBA8D000A06F7 /* SignInButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInButton.swift; sourceTree = "<group>"; };
+		95694D9D25FBBA8D000A06F7 /* SignUpButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpButton.swift; sourceTree = "<group>"; };
+		95694DA225FBBA9C000A06F7 /* AuthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		95694DD525FBD370000A06F7 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +83,9 @@
 		95694D7625FBBA15000A06F7 /* authenticator-ios-sdk */ = {
 			isa = PBXGroup;
 			children = (
-				95694D7725FBBA15000A06F7 /* authenticator_ios_sdk.h */,
+				95694DDF25FBD5A2000A06F7 /* Source */,
 				95694D7825FBBA15000A06F7 /* Info.plist */,
+				95694DE025FBD5E8000A06F7 /* Framework */,
 			);
 			path = "authenticator-ios-sdk";
 			sourceTree = "<group>";
@@ -84,6 +97,27 @@
 				95694D8425FBBA15000A06F7 /* Info.plist */,
 			);
 			path = "authenticator-ios-sdkTests";
+			sourceTree = "<group>";
+		};
+		95694DDF25FBD5A2000A06F7 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				95694DA225FBBA9C000A06F7 /* AuthView.swift */,
+				95694D9225FBBA66000A06F7 /* Colors.swift */,
+				95694D9C25FBBA8D000A06F7 /* SignInButton.swift */,
+				95694D9D25FBBA8D000A06F7 /* SignUpButton.swift */,
+				95694D9825FBBA78000A06F7 /* Assets.xcassets */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		95694DE025FBD5E8000A06F7 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				95694DD525FBD370000A06F7 /* Bundle.swift */,
+				95694D7725FBBA15000A06F7 /* authenticator_ios_sdk.h */,
+			);
+			path = Framework;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +181,7 @@
 				TargetAttributes = {
 					95694D7325FBBA15000A06F7 = {
 						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1230;
 					};
 					95694D7C25FBBA15000A06F7 = {
 						CreatedOnToolsVersion = 12.3;
@@ -177,6 +212,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95694DD225FBCE4C000A06F7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +230,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95694D9325FBBA66000A06F7 /* Colors.swift in Sources */,
+				95694D9E25FBBA8D000A06F7 /* SignInButton.swift in Sources */,
+				95694DA325FBBA9D000A06F7 /* AuthView.swift in Sources */,
+				95694DD625FBD370000A06F7 /* Bundle.swift in Sources */,
+				95694D9F25FBBA8D000A06F7 /* SignUpButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +382,8 @@
 		95694D8925FBBA15000A06F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = BZA6SZ8XVQ;
@@ -349,6 +392,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "authenticator-ios-sdk/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -357,6 +401,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.beyondidentity.sdk.authenticator-ios-sdk";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -365,6 +410,8 @@
 		95694D8A25FBBA15000A06F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = BZA6SZ8XVQ;
@@ -373,6 +420,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "authenticator-ios-sdk/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -389,6 +437,7 @@
 		95694D8C25FBBA15000A06F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BZA6SZ8XVQ;
 				INFOPLIST_FILE = "authenticator-ios-sdkTests/Info.plist";
@@ -407,6 +456,7 @@
 		95694D8D25FBBA15000A06F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BZA6SZ8XVQ;
 				INFOPLIST_FILE = "authenticator-ios-sdkTests/Info.plist";
