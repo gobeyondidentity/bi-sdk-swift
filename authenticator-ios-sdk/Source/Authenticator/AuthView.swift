@@ -14,7 +14,6 @@ public class AuthView: UIView {
         self.session = session
         self.signUpAction = signUpAction
         super.init(frame: .zero)
-        
         setUpViews()
     }
     

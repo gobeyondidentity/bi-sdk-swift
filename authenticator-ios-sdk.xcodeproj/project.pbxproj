@@ -118,11 +118,10 @@
 		95694DDF25FBD5A2000A06F7 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				95694E1625FFD6E3000A06F7 /* Extensions */,
-				95694E2525FFD868000A06F7 /* Styles */,
-				95694DA225FBBA9C000A06F7 /* AuthView.swift */,
-				95694D9C25FBBA8D000A06F7 /* SignInButton.swift */,
-				95694D9D25FBBA8D000A06F7 /* SignUpButton.swift */,
+				95694E2625FFDCB1000A06F7 /* Resources */,
+				95694E5825FFF8A2000A06F7 /* Authenticator */,
+				95694E5925FFF8B0000A06F7 /* Core */,
+				95694E6225FFFA46000A06F7 /* Embedded */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -130,8 +129,6 @@
 		95694DE025FBD5E8000A06F7 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				95694D9825FBBA78000A06F7 /* Assets.xcassets */,
-				95694DD525FBD370000A06F7 /* Bundle.swift */,
 				95694D7725FBBA15000A06F7 /* authenticator_ios_sdk.h */,
 			);
 			path = Framework;
@@ -152,6 +149,41 @@
 				95694E1025FFC720000A06F7 /* Icon.swift */,
 			);
 			path = Styles;
+			sourceTree = "<group>";
+		};
+		95694E2625FFDCB1000A06F7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				95694DD525FBD370000A06F7 /* Bundle.swift */,
+				95694D9825FBBA78000A06F7 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		95694E5825FFF8A2000A06F7 /* Authenticator */ = {
+			isa = PBXGroup;
+			children = (
+				95694DA225FBBA9C000A06F7 /* AuthView.swift */,
+			);
+			path = Authenticator;
+			sourceTree = "<group>";
+		};
+		95694E5925FFF8B0000A06F7 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				95694E1625FFD6E3000A06F7 /* Extensions */,
+				95694E2525FFD868000A06F7 /* Styles */,
+				95694D9C25FBBA8D000A06F7 /* SignInButton.swift */,
+				95694D9D25FBBA8D000A06F7 /* SignUpButton.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		95694E6225FFFA46000A06F7 /* Embedded */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Embedded;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
