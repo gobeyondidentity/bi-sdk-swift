@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 class SignUpButton: UIControl {
-    let imageView = UIImageView(image: UIImage(named: "arrowRight"))
+    let imageView = UIImageView(image: .arrowRight)
     let label = UILabel()
     let title: String
     
@@ -45,7 +45,7 @@ class SignUpButton: UIControl {
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
         ])
         
         layer.backgroundColor = UIColor.secondaryButtonColor.cgColor

@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 class SignInButton: UIControl {
-    let imageView = UIImageView(image: UIImage(named: "logo"))
+    let imageView = UIImageView(image: .logo)
     let label = UILabel()
     let title: String
     
@@ -39,10 +39,12 @@ class SignInButton: UIControl {
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 60),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -60),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 15),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).priority(.defaultLow),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).priority(.defaultLow),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         
         layer.backgroundColor = UIColor.primaryButtonColor.cgColor
