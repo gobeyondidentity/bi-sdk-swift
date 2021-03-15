@@ -3,17 +3,18 @@ import Foundation
 import UIKit
 
 public class AuthView: UIView {
-    let signInCallBack: (Result<URL,Error>) -> Void
+    let session: ASWebAuthenticationSession
     let signUpAction: () -> Void
-    let callbackURLScheme: String
-    let redirectURL: URL
+    let signInButton = SignInButton(title: "Log in with Beyond Identity")
+    let signUpButton = SignUpButton(title: "New to Beyond Identity? Go passwordless today")
     
-    public init(redirectURL:URL, callbackURLScheme: String, signInCallBack: @escaping (Result<URL,Error>) -> Void, signUpAction: @escaping () -> Void) {
-        self.redirectURL = redirectURL
-        self.callbackURLScheme = callbackURLScheme
-        self.signInCallBack = signInCallBack
+    public init(
+        session: ASWebAuthenticationSession,
+        signUpAction: @escaping () -> Void) {
+        self.session = session
         self.signUpAction = signUpAction
         super.init(frame: .zero)
+        
         setUpViews()
     }
     
@@ -23,8 +24,6 @@ public class AuthView: UIView {
     }
     
     private func setUpViews() {
-        let signInButton = SignInButton(title: "Log in with Beyond Identity")
-        let signUpButton = SignUpButton(title: "New to Beyond Identity? Go passwordless today")
         signInButton.addTarget(self, action: #selector(signIn), for: .touchUpInside)
         signUpButton.addTarget(self, action: #selector(signUp), for: .touchUpInside)
         
@@ -47,13 +46,6 @@ public class AuthView: UIView {
     }
     
     @objc private func signIn() {
-        let session = ASWebAuthenticationSession(
-            url: redirectURL,
-            callbackURLScheme: callbackURLScheme) { [weak self] url, error in
-            if let error = error { self?.signInCallBack(.failure(error)) }
-            if let url = url { self?.signInCallBack(.success(url)) }
-        }
-        
         if #available(iOS 13.0, *) {
             session.presentationContextProvider = self
             session.prefersEphemeralWebBrowserSession = true

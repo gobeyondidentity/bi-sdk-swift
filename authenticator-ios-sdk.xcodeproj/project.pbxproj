@@ -8,14 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		95694D7E25FBBA15000A06F7 /* authenticator_ios_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95694D7425FBBA15000A06F7 /* authenticator_ios_sdk.framework */; };
-		95694D8325FBBA15000A06F7 /* authenticator_ios_sdkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D8225FBBA15000A06F7 /* authenticator_ios_sdkTests.swift */; };
+		95694D8325FBBA15000A06F7 /* SignInButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D8225FBBA15000A06F7 /* SignInButtonTests.swift */; };
 		95694D8525FBBA15000A06F7 /* authenticator_ios_sdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 95694D7725FBBA15000A06F7 /* authenticator_ios_sdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		95694D9325FBBA66000A06F7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D9225FBBA66000A06F7 /* Colors.swift */; };
+		95694D9325FBBA66000A06F7 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D9225FBBA66000A06F7 /* Color.swift */; };
 		95694D9E25FBBA8D000A06F7 /* SignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D9C25FBBA8D000A06F7 /* SignInButton.swift */; };
 		95694D9F25FBBA8D000A06F7 /* SignUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D9D25FBBA8D000A06F7 /* SignUpButton.swift */; };
 		95694DA325FBBA9D000A06F7 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694DA225FBBA9C000A06F7 /* AuthView.swift */; };
 		95694DD225FBCE4C000A06F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95694D9825FBBA78000A06F7 /* Assets.xcassets */; };
 		95694DD625FBD370000A06F7 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694DD525FBD370000A06F7 /* Bundle.swift */; };
+		95694DF225FEC6EB000A06F7 /* SignUpButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694DF125FEC6EB000A06F7 /* SignUpButtonTests.swift */; };
+		95694DF625FECAD6000A06F7 /* ColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694DF525FECAD6000A06F7 /* ColorTests.swift */; };
+		95694E0225FEE3AD000A06F7 /* AuthViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694E0125FEE3AD000A06F7 /* AuthViewTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,14 +36,17 @@
 		95694D7725FBBA15000A06F7 /* authenticator_ios_sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = authenticator_ios_sdk.h; sourceTree = "<group>"; };
 		95694D7825FBBA15000A06F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		95694D7D25FBBA15000A06F7 /* authenticator-ios-sdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "authenticator-ios-sdkTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		95694D8225FBBA15000A06F7 /* authenticator_ios_sdkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = authenticator_ios_sdkTests.swift; sourceTree = "<group>"; };
+		95694D8225FBBA15000A06F7 /* SignInButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInButtonTests.swift; sourceTree = "<group>"; };
 		95694D8425FBBA15000A06F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		95694D9225FBBA66000A06F7 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		95694D9225FBBA66000A06F7 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		95694D9825FBBA78000A06F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95694D9C25FBBA8D000A06F7 /* SignInButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInButton.swift; sourceTree = "<group>"; };
 		95694D9D25FBBA8D000A06F7 /* SignUpButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpButton.swift; sourceTree = "<group>"; };
 		95694DA225FBBA9C000A06F7 /* AuthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		95694DD525FBD370000A06F7 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
+		95694DF125FEC6EB000A06F7 /* SignUpButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpButtonTests.swift; sourceTree = "<group>"; };
+		95694DF525FECAD6000A06F7 /* ColorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTests.swift; sourceTree = "<group>"; };
+		95694E0125FEE3AD000A06F7 /* AuthViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +99,10 @@
 		95694D8125FBBA15000A06F7 /* authenticator-ios-sdkTests */ = {
 			isa = PBXGroup;
 			children = (
-				95694D8225FBBA15000A06F7 /* authenticator_ios_sdkTests.swift */,
+				95694E0125FEE3AD000A06F7 /* AuthViewTests.swift */,
+				95694DF525FECAD6000A06F7 /* ColorTests.swift */,
+				95694D8225FBBA15000A06F7 /* SignInButtonTests.swift */,
+				95694DF125FEC6EB000A06F7 /* SignUpButtonTests.swift */,
 				95694D8425FBBA15000A06F7 /* Info.plist */,
 			);
 			path = "authenticator-ios-sdkTests";
@@ -103,10 +112,9 @@
 			isa = PBXGroup;
 			children = (
 				95694DA225FBBA9C000A06F7 /* AuthView.swift */,
-				95694D9225FBBA66000A06F7 /* Colors.swift */,
+				95694D9225FBBA66000A06F7 /* Color.swift */,
 				95694D9C25FBBA8D000A06F7 /* SignInButton.swift */,
 				95694D9D25FBBA8D000A06F7 /* SignUpButton.swift */,
-				95694D9825FBBA78000A06F7 /* Assets.xcassets */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -114,6 +122,7 @@
 		95694DE025FBD5E8000A06F7 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				95694D9825FBBA78000A06F7 /* Assets.xcassets */,
 				95694DD525FBD370000A06F7 /* Bundle.swift */,
 				95694D7725FBBA15000A06F7 /* authenticator_ios_sdk.h */,
 			);
@@ -230,7 +239,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95694D9325FBBA66000A06F7 /* Colors.swift in Sources */,
+				95694D9325FBBA66000A06F7 /* Color.swift in Sources */,
 				95694D9E25FBBA8D000A06F7 /* SignInButton.swift in Sources */,
 				95694DA325FBBA9D000A06F7 /* AuthView.swift in Sources */,
 				95694DD625FBD370000A06F7 /* Bundle.swift in Sources */,
@@ -242,7 +251,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95694D8325FBBA15000A06F7 /* authenticator_ios_sdkTests.swift in Sources */,
+				95694D8325FBBA15000A06F7 /* SignInButtonTests.swift in Sources */,
+				95694DF625FECAD6000A06F7 /* ColorTests.swift in Sources */,
+				95694E0225FEE3AD000A06F7 /* AuthViewTests.swift in Sources */,
+				95694DF225FEC6EB000A06F7 /* SignUpButtonTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
