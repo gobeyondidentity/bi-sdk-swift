@@ -1,6 +1,6 @@
 import AuthenticationServices
 import XCTest
-@testable import authenticator_ios_sdk
+@testable import BISDK
 
 class AuthViewTests: XCTestCase {
     private var authView: AuthView!

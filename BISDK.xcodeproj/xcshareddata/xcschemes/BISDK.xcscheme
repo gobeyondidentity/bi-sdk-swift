@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "95694D7325FBBA15000A06F7"
-               BuildableName = "authenticator_ios_sdk.framework"
-               BlueprintName = "authenticator-ios-sdk"
-               ReferencedContainer = "container:authenticator-ios-sdk.xcodeproj">
+               BuildableName = "BISDK.framework"
+               BlueprintName = "BISDK"
+               ReferencedContainer = "container:BISDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "95694D7C25FBBA15000A06F7"
-               BuildableName = "authenticator-ios-sdkTests.xctest"
-               BlueprintName = "authenticator-ios-sdkTests"
-               ReferencedContainer = "container:authenticator-ios-sdk.xcodeproj">
+               BuildableName = "BISDKTests.xctest"
+               BlueprintName = "BISDKTests"
+               ReferencedContainer = "container:BISDK.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "95694D7325FBBA15000A06F7"
-            BuildableName = "authenticator_ios_sdk.framework"
-            BlueprintName = "authenticator-ios-sdk"
-            ReferencedContainer = "container:authenticator-ios-sdk.xcodeproj">
+            BuildableName = "BISDK.framework"
+            BlueprintName = "BISDK"
+            ReferencedContainer = "container:BISDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

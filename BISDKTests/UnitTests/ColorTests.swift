@@ -1,5 +1,5 @@
 import XCTest
-@testable import authenticator_ios_sdk
+@testable import BISDK
 
 class ColorTests: XCTestCase {
     func test_primaryButtonText_notEmpty() throws {

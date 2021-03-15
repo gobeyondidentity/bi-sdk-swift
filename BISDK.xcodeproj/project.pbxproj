@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		95694D7E25FBBA15000A06F7 /* authenticator_ios_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95694D7425FBBA15000A06F7 /* authenticator_ios_sdk.framework */; };
+		95694D7E25FBBA15000A06F7 /* BISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95694D7425FBBA15000A06F7 /* BISDK.framework */; };
 		95694D8325FBBA15000A06F7 /* SignInButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D8225FBBA15000A06F7 /* SignInButtonTests.swift */; };
-		95694D8525FBBA15000A06F7 /* authenticator_ios_sdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 95694D7725FBBA15000A06F7 /* authenticator_ios_sdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		95694D8525FBBA15000A06F7 /* BISDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 95694D7725FBBA15000A06F7 /* BISDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		95694D9325FBBA66000A06F7 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D9225FBBA66000A06F7 /* Color.swift */; };
 		95694D9E25FBBA8D000A06F7 /* SignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D9C25FBBA8D000A06F7 /* SignInButton.swift */; };
 		95694D9F25FBBA8D000A06F7 /* SignUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D9D25FBBA8D000A06F7 /* SignUpButton.swift */; };
@@ -30,15 +30,15 @@
 			containerPortal = 95694D6B25FBBA14000A06F7 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 95694D7325FBBA15000A06F7;
-			remoteInfo = "authenticator-ios-sdk";
+			remoteInfo = "BISDK";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		95694D7425FBBA15000A06F7 /* authenticator_ios_sdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = authenticator_ios_sdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		95694D7725FBBA15000A06F7 /* authenticator_ios_sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = authenticator_ios_sdk.h; sourceTree = "<group>"; };
+		95694D7425FBBA15000A06F7 /* BISDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BISDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		95694D7725FBBA15000A06F7 /* BISDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BISDK.h; sourceTree = "<group>"; };
 		95694D7825FBBA15000A06F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		95694D7D25FBBA15000A06F7 /* authenticator-ios-sdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "authenticator-ios-sdkTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		95694D7D25FBBA15000A06F7 /* BISDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BISDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		95694D8225FBBA15000A06F7 /* SignInButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInButtonTests.swift; sourceTree = "<group>"; };
 		95694D8425FBBA15000A06F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		95694D9225FBBA66000A06F7 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -67,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95694D7E25FBBA15000A06F7 /* authenticator_ios_sdk.framework in Frameworks */,
+				95694D7E25FBBA15000A06F7 /* BISDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,8 +77,8 @@
 		95694D6A25FBBA14000A06F7 = {
 			isa = PBXGroup;
 			children = (
-				95694D7625FBBA15000A06F7 /* authenticator-ios-sdk */,
-				95694D8125FBBA15000A06F7 /* authenticator-ios-sdkTests */,
+				95694D7625FBBA15000A06F7 /* BISDK */,
+				95694D8125FBBA15000A06F7 /* BISDKTests */,
 				95694D7525FBBA15000A06F7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,33 +86,29 @@
 		95694D7525FBBA15000A06F7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				95694D7425FBBA15000A06F7 /* authenticator_ios_sdk.framework */,
-				95694D7D25FBBA15000A06F7 /* authenticator-ios-sdkTests.xctest */,
+				95694D7425FBBA15000A06F7 /* BISDK.framework */,
+				95694D7D25FBBA15000A06F7 /* BISDKTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		95694D7625FBBA15000A06F7 /* authenticator-ios-sdk */ = {
+		95694D7625FBBA15000A06F7 /* BISDK */ = {
 			isa = PBXGroup;
 			children = (
 				95694DDF25FBD5A2000A06F7 /* Source */,
 				95694D7825FBBA15000A06F7 /* Info.plist */,
 				95694DE025FBD5E8000A06F7 /* Framework */,
 			);
-			path = "authenticator-ios-sdk";
+			path = BISDK;
 			sourceTree = "<group>";
 		};
-		95694D8125FBBA15000A06F7 /* authenticator-ios-sdkTests */ = {
+		95694D8125FBBA15000A06F7 /* BISDKTests */ = {
 			isa = PBXGroup;
 			children = (
-				95694E0125FEE3AD000A06F7 /* AuthViewTests.swift */,
-				95694DF525FECAD6000A06F7 /* ColorTests.swift */,
-				95694E1D25FFD79F000A06F7 /* IconTests.swift */,
-				95694D8225FBBA15000A06F7 /* SignInButtonTests.swift */,
-				95694DF125FEC6EB000A06F7 /* SignUpButtonTests.swift */,
+				95694F4A26001111000A06F7 /* UnitTests */,
 				95694D8425FBBA15000A06F7 /* Info.plist */,
 			);
-			path = "authenticator-ios-sdkTests";
+			path = BISDKTests;
 			sourceTree = "<group>";
 		};
 		95694DDF25FBD5A2000A06F7 /* Source */ = {
@@ -129,7 +125,7 @@
 		95694DE025FBD5E8000A06F7 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				95694D7725FBBA15000A06F7 /* authenticator_ios_sdk.h */,
+				95694D7725FBBA15000A06F7 /* BISDK.h */,
 			);
 			path = Framework;
 			sourceTree = "<group>";
@@ -186,6 +182,18 @@
 			path = Embedded;
 			sourceTree = "<group>";
 		};
+		95694F4A26001111000A06F7 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				95694E0125FEE3AD000A06F7 /* AuthViewTests.swift */,
+				95694DF525FECAD6000A06F7 /* ColorTests.swift */,
+				95694E1D25FFD79F000A06F7 /* IconTests.swift */,
+				95694D8225FBBA15000A06F7 /* SignInButtonTests.swift */,
+				95694DF125FEC6EB000A06F7 /* SignUpButtonTests.swift */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -193,16 +201,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95694D8525FBBA15000A06F7 /* authenticator_ios_sdk.h in Headers */,
+				95694D8525FBBA15000A06F7 /* BISDK.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		95694D7325FBBA15000A06F7 /* authenticator-ios-sdk */ = {
+		95694D7325FBBA15000A06F7 /* BISDK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 95694D8825FBBA15000A06F7 /* Build configuration list for PBXNativeTarget "authenticator-ios-sdk" */;
+			buildConfigurationList = 95694D8825FBBA15000A06F7 /* Build configuration list for PBXNativeTarget "BISDK" */;
 			buildPhases = (
 				95694D6F25FBBA15000A06F7 /* Headers */,
 				95694D7025FBBA15000A06F7 /* Sources */,
@@ -213,14 +221,14 @@
 			);
 			dependencies = (
 			);
-			name = "authenticator-ios-sdk";
-			productName = "authenticator-ios-sdk";
-			productReference = 95694D7425FBBA15000A06F7 /* authenticator_ios_sdk.framework */;
+			name = BISDK;
+			productName = "BISDK";
+			productReference = 95694D7425FBBA15000A06F7 /* BISDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		95694D7C25FBBA15000A06F7 /* authenticator-ios-sdkTests */ = {
+		95694D7C25FBBA15000A06F7 /* BISDKTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 95694D8B25FBBA15000A06F7 /* Build configuration list for PBXNativeTarget "authenticator-ios-sdkTests" */;
+			buildConfigurationList = 95694D8B25FBBA15000A06F7 /* Build configuration list for PBXNativeTarget "BISDKTests" */;
 			buildPhases = (
 				95694D7925FBBA15000A06F7 /* Sources */,
 				95694D7A25FBBA15000A06F7 /* Frameworks */,
@@ -231,9 +239,9 @@
 			dependencies = (
 				95694D8025FBBA15000A06F7 /* PBXTargetDependency */,
 			);
-			name = "authenticator-ios-sdkTests";
-			productName = "authenticator-ios-sdkTests";
-			productReference = 95694D7D25FBBA15000A06F7 /* authenticator-ios-sdkTests.xctest */;
+			name = BISDKTests;
+			productName = "BISDKTests";
+			productReference = 95694D7D25FBBA15000A06F7 /* BISDKTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -254,7 +262,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 95694D6E25FBBA14000A06F7 /* Build configuration list for PBXProject "authenticator-ios-sdk" */;
+			buildConfigurationList = 95694D6E25FBBA14000A06F7 /* Build configuration list for PBXProject "BISDK" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -267,8 +275,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				95694D7325FBBA15000A06F7 /* authenticator-ios-sdk */,
-				95694D7C25FBBA15000A06F7 /* authenticator-ios-sdkTests */,
+				95694D7325FBBA15000A06F7 /* BISDK */,
+				95694D7C25FBBA15000A06F7 /* BISDKTests */,
 			);
 		};
 /* End PBXProject section */
@@ -323,7 +331,7 @@
 /* Begin PBXTargetDependency section */
 		95694D8025FBBA15000A06F7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 95694D7325FBBA15000A06F7 /* authenticator-ios-sdk */;
+			target = 95694D7325FBBA15000A06F7 /* BISDK */;
 			targetProxy = 95694D7F25FBBA15000A06F7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -462,7 +470,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "authenticator-ios-sdk/Info.plist";
+				INFOPLIST_FILE = BISDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -470,7 +478,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.beyondidentity.sdk.authenticator-ios-sdk";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beyondidentity.sdk.BISDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -490,7 +498,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "authenticator-ios-sdk/Info.plist";
+				INFOPLIST_FILE = BISDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -498,7 +506,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.beyondidentity.sdk.authenticator-ios-sdk";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beyondidentity.sdk.BISDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -510,15 +518,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BZA6SZ8XVQ;
-				INFOPLIST_FILE = "authenticator-ios-sdkTests/Info.plist";
+				INFOPLIST_FILE = BISDKTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.beyondidentity.sdk.authenticator-ios-sdkTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beyondidentity.sdk.BISDKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -529,15 +538,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BZA6SZ8XVQ;
-				INFOPLIST_FILE = "authenticator-ios-sdkTests/Info.plist";
+				INFOPLIST_FILE = BISDKTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.beyondidentity.sdk.authenticator-ios-sdkTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beyondidentity.sdk.BISDKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -547,7 +557,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		95694D6E25FBBA14000A06F7 /* Build configuration list for PBXProject "authenticator-ios-sdk" */ = {
+		95694D6E25FBBA14000A06F7 /* Build configuration list for PBXProject "BISDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				95694D8625FBBA15000A06F7 /* Debug */,
@@ -556,7 +566,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		95694D8825FBBA15000A06F7 /* Build configuration list for PBXNativeTarget "authenticator-ios-sdk" */ = {
+		95694D8825FBBA15000A06F7 /* Build configuration list for PBXNativeTarget "BISDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				95694D8925FBBA15000A06F7 /* Debug */,
@@ -565,7 +575,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		95694D8B25FBBA15000A06F7 /* Build configuration list for PBXNativeTarget "authenticator-ios-sdkTests" */ = {
+		95694D8B25FBBA15000A06F7 /* Build configuration list for PBXNativeTarget "BISDKTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				95694D8C25FBBA15000A06F7 /* Debug */,

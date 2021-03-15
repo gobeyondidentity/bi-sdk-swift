@@ -1,5 +1,5 @@
 import XCTest
-@testable import authenticator_ios_sdk
+@testable import BISDK
 
 class SignInButtonTests: XCTestCase {
     private var button: SignInButton!
