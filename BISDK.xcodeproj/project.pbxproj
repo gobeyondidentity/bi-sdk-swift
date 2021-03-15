@@ -30,7 +30,28 @@
 			containerPortal = 95694D6B25FBBA14000A06F7 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 95694D7325FBBA15000A06F7;
-			remoteInfo = "BISDK";
+			remoteInfo = BISDK;
+		};
+		9569505B2600188C000A06F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 956950542600188C000A06F7 /* ExampleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95694CD725F81A34000A06F7;
+			remoteInfo = ExampleApp;
+		};
+		9569505D2600188C000A06F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 956950542600188C000A06F7 /* ExampleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95694CED25F81A35000A06F7;
+			remoteInfo = ExampleAppTests;
+		};
+		9569505F2600188C000A06F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 956950542600188C000A06F7 /* ExampleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95694CF825F81A35000A06F7;
+			remoteInfo = ExampleAppUITests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -53,6 +74,7 @@
 		95694E1025FFC720000A06F7 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		95694E1725FFD6FA000A06F7 /* NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraint.swift; sourceTree = "<group>"; };
 		95694E1D25FFD79F000A06F7 /* IconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTests.swift; sourceTree = "<group>"; };
+		956950542600188C000A06F7 /* ExampleApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ExampleApp.xcodeproj; path = BISDK/Example/ExampleApp.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +117,7 @@
 		95694D7625FBBA15000A06F7 /* BISDK */ = {
 			isa = PBXGroup;
 			children = (
+				95694FF426001753000A06F7 /* Example */,
 				95694DDF25FBD5A2000A06F7 /* Source */,
 				95694D7825FBBA15000A06F7 /* Info.plist */,
 				95694DE025FBD5E8000A06F7 /* Framework */,
@@ -194,6 +217,25 @@
 			path = UnitTests;
 			sourceTree = "<group>";
 		};
+		95694FF426001753000A06F7 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				956950542600188C000A06F7 /* ExampleApp.xcodeproj */,
+			);
+			name = Example;
+			path = Source/Example;
+			sourceTree = "<group>";
+		};
+		956950552600188C000A06F7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9569505C2600188C000A06F7 /* ExampleApp.app */,
+				9569505E2600188C000A06F7 /* ExampleAppTests.xctest */,
+				956950602600188C000A06F7 /* ExampleAppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -222,7 +264,7 @@
 			dependencies = (
 			);
 			name = BISDK;
-			productName = "BISDK";
+			productName = BISDK;
 			productReference = 95694D7425FBBA15000A06F7 /* BISDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -240,7 +282,7 @@
 				95694D8025FBBA15000A06F7 /* PBXTargetDependency */,
 			);
 			name = BISDKTests;
-			productName = "BISDKTests";
+			productName = BISDKTests;
 			productReference = 95694D7D25FBBA15000A06F7 /* BISDKTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -273,6 +315,12 @@
 			mainGroup = 95694D6A25FBBA14000A06F7;
 			productRefGroup = 95694D7525FBBA15000A06F7 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 956950552600188C000A06F7 /* Products */;
+					ProjectRef = 956950542600188C000A06F7 /* ExampleApp.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				95694D7325FBBA15000A06F7 /* BISDK */,
@@ -280,6 +328,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9569505C2600188C000A06F7 /* ExampleApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ExampleApp.app;
+			remoteRef = 9569505B2600188C000A06F7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9569505E2600188C000A06F7 /* ExampleAppTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ExampleAppTests.xctest;
+			remoteRef = 9569505D2600188C000A06F7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		956950602600188C000A06F7 /* ExampleAppUITests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ExampleAppUITests.xctest;
+			remoteRef = 9569505F2600188C000A06F7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		95694D7225FBBA15000A06F7 /* Resources */ = {
