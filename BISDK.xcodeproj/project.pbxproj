@@ -32,23 +32,23 @@
 			remoteGlobalIDString = 95694D7325FBBA15000A06F7;
 			remoteInfo = BISDK;
 		};
-		9569505B2600188C000A06F7 /* PBXContainerItemProxy */ = {
+		9569530026013FAC000A06F7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 956950542600188C000A06F7 /* ExampleApp.xcodeproj */;
+			containerPortal = 956952EB26013FAC000A06F7 /* ExampleApp.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 95694CD725F81A34000A06F7;
 			remoteInfo = ExampleApp;
 		};
-		9569505D2600188C000A06F7 /* PBXContainerItemProxy */ = {
+		9569530226013FAC000A06F7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 956950542600188C000A06F7 /* ExampleApp.xcodeproj */;
+			containerPortal = 956952EB26013FAC000A06F7 /* ExampleApp.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 95694CED25F81A35000A06F7;
 			remoteInfo = ExampleAppTests;
 		};
-		9569505F2600188C000A06F7 /* PBXContainerItemProxy */ = {
+		9569530426013FAC000A06F7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 956950542600188C000A06F7 /* ExampleApp.xcodeproj */;
+			containerPortal = 956952EB26013FAC000A06F7 /* ExampleApp.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 95694CF825F81A35000A06F7;
 			remoteInfo = ExampleAppUITests;
@@ -74,7 +74,17 @@
 		95694E1025FFC720000A06F7 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		95694E1725FFD6FA000A06F7 /* NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraint.swift; sourceTree = "<group>"; };
 		95694E1D25FFD79F000A06F7 /* IconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTests.swift; sourceTree = "<group>"; };
-		956950542600188C000A06F7 /* ExampleApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ExampleApp.xcodeproj; path = BISDK/Example/ExampleApp.xcodeproj; sourceTree = SOURCE_ROOT; };
+		956952EB26013FAC000A06F7 /* ExampleApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ExampleApp.xcodeproj; sourceTree = "<group>"; };
+		956952F126013FAC000A06F7 /* LoggedInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInViewController.swift; sourceTree = "<group>"; };
+		956952F226013FAC000A06F7 /* PreLoggedInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreLoggedInViewModel.swift; sourceTree = "<group>"; };
+		956952F326013FAC000A06F7 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
+		956952F426013FAC000A06F7 /* LoggedInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInViewModel.swift; sourceTree = "<group>"; };
+		956952F526013FAC000A06F7 /* PreLoggedInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreLoggedInViewController.swift; sourceTree = "<group>"; };
+		956952F826013FAC000A06F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		956952F926013FAC000A06F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		956952FA26013FAC000A06F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		956952FB26013FAC000A06F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		956952FC26013FAC000A06F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,8 +109,9 @@
 		95694D6A25FBBA14000A06F7 = {
 			isa = PBXGroup;
 			children = (
-				95694D7625FBBA15000A06F7 /* BISDK */,
-				95694D8125FBBA15000A06F7 /* BISDKTests */,
+				956952EA26013FAC000A06F7 /* Example */,
+				95694DDF25FBD5A2000A06F7 /* Source */,
+				95694D8125FBBA15000A06F7 /* Tests */,
 				95694D7525FBBA15000A06F7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -114,33 +125,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		95694D7625FBBA15000A06F7 /* BISDK */ = {
-			isa = PBXGroup;
-			children = (
-				95694FF426001753000A06F7 /* Example */,
-				95694DDF25FBD5A2000A06F7 /* Source */,
-				95694D7825FBBA15000A06F7 /* Info.plist */,
-				95694DE025FBD5E8000A06F7 /* Framework */,
-			);
-			path = BISDK;
-			sourceTree = "<group>";
-		};
-		95694D8125FBBA15000A06F7 /* BISDKTests */ = {
+		95694D8125FBBA15000A06F7 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				95694F4A26001111000A06F7 /* UnitTests */,
 				95694D8425FBBA15000A06F7 /* Info.plist */,
 			);
-			path = BISDKTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		95694DDF25FBD5A2000A06F7 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				95694E2625FFDCB1000A06F7 /* Resources */,
 				95694E5825FFF8A2000A06F7 /* Authenticator */,
 				95694E5925FFF8B0000A06F7 /* Core */,
-				95694E6225FFFA46000A06F7 /* Embedded */,
+				95694DE025FBD5E8000A06F7 /* Framework */,
+				95694E2625FFDCB1000A06F7 /* Resources */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -148,6 +148,7 @@
 		95694DE025FBD5E8000A06F7 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				95694D7825FBBA15000A06F7 /* Info.plist */,
 				95694D7725FBBA15000A06F7 /* BISDK.h */,
 			);
 			path = Framework;
@@ -198,42 +199,92 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		95694E6225FFFA46000A06F7 /* Embedded */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Embedded;
-			sourceTree = "<group>";
-		};
 		95694F4A26001111000A06F7 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				95694E0125FEE3AD000A06F7 /* AuthViewTests.swift */,
-				95694DF525FECAD6000A06F7 /* ColorTests.swift */,
-				95694E1D25FFD79F000A06F7 /* IconTests.swift */,
-				95694D8225FBBA15000A06F7 /* SignInButtonTests.swift */,
-				95694DF125FEC6EB000A06F7 /* SignUpButtonTests.swift */,
+				9569509A2600F3AE000A06F7 /* AuthenticatorTests */,
+				9569509E2600F3C7000A06F7 /* CoreTests */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
 		};
-		95694FF426001753000A06F7 /* Example */ = {
+		9569509A2600F3AE000A06F7 /* AuthenticatorTests */ = {
 			isa = PBXGroup;
 			children = (
-				956950542600188C000A06F7 /* ExampleApp.xcodeproj */,
+				95694E0125FEE3AD000A06F7 /* AuthViewTests.swift */,
 			);
-			name = Example;
-			path = Source/Example;
+			path = AuthenticatorTests;
 			sourceTree = "<group>";
 		};
-		956950552600188C000A06F7 /* Products */ = {
+		9569509E2600F3C7000A06F7 /* CoreTests */ = {
 			isa = PBXGroup;
 			children = (
-				9569505C2600188C000A06F7 /* ExampleApp.app */,
-				9569505E2600188C000A06F7 /* ExampleAppTests.xctest */,
-				956950602600188C000A06F7 /* ExampleAppUITests.xctest */,
+				9569509F2600F3D3000A06F7 /* Styles */,
+				95694D8225FBBA15000A06F7 /* SignInButtonTests.swift */,
+				95694DF125FEC6EB000A06F7 /* SignUpButtonTests.swift */,
+			);
+			path = CoreTests;
+			sourceTree = "<group>";
+		};
+		9569509F2600F3D3000A06F7 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				95694DF525FECAD6000A06F7 /* ColorTests.swift */,
+				95694E1D25FFD79F000A06F7 /* IconTests.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		956952EA26013FAC000A06F7 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				956952EB26013FAC000A06F7 /* ExampleApp.xcodeproj */,
+				956952EF26013FAC000A06F7 /* ExampleApp */,
+			);
+			path = Example;
+			sourceTree = "<group>";
+		};
+		956952EC26013FAC000A06F7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9569530126013FAC000A06F7 /* ExampleApp.app */,
+				9569530326013FAC000A06F7 /* ExampleAppTests.xctest */,
+				9569530526013FAC000A06F7 /* ExampleAppUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		956952EF26013FAC000A06F7 /* ExampleApp */ = {
+			isa = PBXGroup;
+			children = (
+				956952F026013FAC000A06F7 /* AuthenticatorExample */,
+				956952F626013FAC000A06F7 /* Supporting */,
+				956952FC26013FAC000A06F7 /* Info.plist */,
+			);
+			path = ExampleApp;
+			sourceTree = "<group>";
+		};
+		956952F026013FAC000A06F7 /* AuthenticatorExample */ = {
+			isa = PBXGroup;
+			children = (
+				956952F126013FAC000A06F7 /* LoggedInViewController.swift */,
+				956952F226013FAC000A06F7 /* PreLoggedInViewModel.swift */,
+				956952F326013FAC000A06F7 /* InputViewController.swift */,
+				956952F426013FAC000A06F7 /* LoggedInViewModel.swift */,
+				956952F526013FAC000A06F7 /* PreLoggedInViewController.swift */,
+			);
+			path = AuthenticatorExample;
+			sourceTree = "<group>";
+		};
+		956952F626013FAC000A06F7 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				956952F726013FAC000A06F7 /* LaunchScreen.storyboard */,
+				956952F926013FAC000A06F7 /* AppDelegate.swift */,
+				956952FA26013FAC000A06F7 /* Info.plist */,
+				956952FB26013FAC000A06F7 /* SceneDelegate.swift */,
+			);
+			path = Supporting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,8 +368,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 956950552600188C000A06F7 /* Products */;
-					ProjectRef = 956950542600188C000A06F7 /* ExampleApp.xcodeproj */;
+					ProductGroup = 956952EC26013FAC000A06F7 /* Products */;
+					ProjectRef = 956952EB26013FAC000A06F7 /* ExampleApp.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -330,25 +381,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		9569505C2600188C000A06F7 /* ExampleApp.app */ = {
+		9569530126013FAC000A06F7 /* ExampleApp.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
 			path = ExampleApp.app;
-			remoteRef = 9569505B2600188C000A06F7 /* PBXContainerItemProxy */;
+			remoteRef = 9569530026013FAC000A06F7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9569505E2600188C000A06F7 /* ExampleAppTests.xctest */ = {
+		9569530326013FAC000A06F7 /* ExampleAppTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = ExampleAppTests.xctest;
-			remoteRef = 9569505D2600188C000A06F7 /* PBXContainerItemProxy */;
+			remoteRef = 9569530226013FAC000A06F7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		956950602600188C000A06F7 /* ExampleAppUITests.xctest */ = {
+		9569530526013FAC000A06F7 /* ExampleAppUITests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = ExampleAppUITests.xctest;
-			remoteRef = 9569505F2600188C000A06F7 /* PBXContainerItemProxy */;
+			remoteRef = 9569530426013FAC000A06F7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -407,6 +458,17 @@
 			targetProxy = 95694D7F25FBBA15000A06F7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		956952F726013FAC000A06F7 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				956952F826013FAC000A06F7 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		95694D8625FBBA15000A06F7 /* Debug */ = {
@@ -542,7 +604,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = BISDK/Info.plist;
+				INFOPLIST_FILE = Source/Framework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -570,7 +632,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = BISDK/Info.plist;
+				INFOPLIST_FILE = Source/Framework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (

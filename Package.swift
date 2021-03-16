@@ -4,5 +4,21 @@ import PackageDescription
 let package = Package(
     name: "BISDK",
     platforms: [.iOS(.v12)],
-    dependencies: []
+    products: [
+        .library(
+            name: "BISDK",
+            targets: ["BISDK"])
+    ],
+    dependencies: [],
+    targets: [
+        .target(
+            name: "BISDK",
+            path: "Source"
+        ),
+        .testTarget(
+            name: "UnitTests",
+            dependencies: ["BISDK"],
+            path: "Tests/UnitTests"
+        )
+    ]
 )

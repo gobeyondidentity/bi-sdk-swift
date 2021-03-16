@@ -6,7 +6,7 @@ extension UIImage {
     static let arrowRight = getIcon(for: "arrowRight")
     
     static func getIcon(for name: String) -> UIImage? {
-        UIImage(named: name, in: Bundle.sdk, compatibleWith: nil) ?? nil
+        return UIImage(named: name, in: Bundle.module, compatibleWith: nil) ?? nil
     }
 }
 

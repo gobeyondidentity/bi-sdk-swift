@@ -8,7 +8,7 @@ extension UIColor {
     static let secondaryButtonColor = getColor(for: "secondaryButtonColor")
     
     static func getColor(for name: String) -> UIColor {
-        UIColor(named: name, in: Bundle.sdk, compatibleWith: nil)!
+        UIColor(named: name, in: Bundle.module, compatibleWith: nil)!
     }
 }
 
