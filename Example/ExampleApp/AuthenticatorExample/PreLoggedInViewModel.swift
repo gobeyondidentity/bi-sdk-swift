@@ -2,7 +2,7 @@ import Foundation
 
 struct PreLoggedInViewModel {
     let urlScheme = "acme"
-    var ACME_CLOUD_URL: URL{
+    var cloudURL: URL{
         URL(string: "https://acme-cloud.rolling.byndid.run/start?redirect=\(urlScheme)://")!
     }
     let navigationTitle = "Log in with Beyond Identity"

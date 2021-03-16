@@ -27,7 +27,7 @@ class PreLoggedInViewController: UIViewController {
         
         let button = AuthView(
             session: ASWebAuthenticationSession(
-                url: viewModel.ACME_CLOUD_URL,
+                url: viewModel.cloudURL,
                 callbackURLScheme: viewModel.urlScheme,
                 completionHandler: { [weak self] url, error in
                     if let error = error { self?.signInCallBack(.failure(error)) }
