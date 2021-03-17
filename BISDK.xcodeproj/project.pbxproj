@@ -32,27 +32,6 @@
 			remoteGlobalIDString = 95694D7325FBBA15000A06F7;
 			remoteInfo = BISDK;
 		};
-		9569530026013FAC000A06F7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 956952EB26013FAC000A06F7 /* ExampleApp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 95694CD725F81A34000A06F7;
-			remoteInfo = ExampleApp;
-		};
-		9569530226013FAC000A06F7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 956952EB26013FAC000A06F7 /* ExampleApp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 95694CED25F81A35000A06F7;
-			remoteInfo = ExampleAppTests;
-		};
-		9569530426013FAC000A06F7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 956952EB26013FAC000A06F7 /* ExampleApp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 95694CF825F81A35000A06F7;
-			remoteInfo = ExampleAppUITests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -74,17 +53,6 @@
 		95694E1025FFC720000A06F7 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		95694E1725FFD6FA000A06F7 /* NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraint.swift; sourceTree = "<group>"; };
 		95694E1D25FFD79F000A06F7 /* IconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTests.swift; sourceTree = "<group>"; };
-		956952EB26013FAC000A06F7 /* ExampleApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ExampleApp.xcodeproj; sourceTree = "<group>"; };
-		956952F126013FAC000A06F7 /* LoggedInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInViewController.swift; sourceTree = "<group>"; };
-		956952F226013FAC000A06F7 /* PreLoggedInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreLoggedInViewModel.swift; sourceTree = "<group>"; };
-		956952F326013FAC000A06F7 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
-		956952F426013FAC000A06F7 /* LoggedInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInViewModel.swift; sourceTree = "<group>"; };
-		956952F526013FAC000A06F7 /* PreLoggedInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreLoggedInViewController.swift; sourceTree = "<group>"; };
-		956952F826013FAC000A06F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		956952F926013FAC000A06F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		956952FA26013FAC000A06F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		956952FB26013FAC000A06F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		956952FC26013FAC000A06F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +77,6 @@
 		95694D6A25FBBA14000A06F7 = {
 			isa = PBXGroup;
 			children = (
-				956952EA26013FAC000A06F7 /* Example */,
 				95694DDF25FBD5A2000A06F7 /* Source */,
 				95694D8125FBBA15000A06F7 /* Tests */,
 				95694D7525FBBA15000A06F7 /* Products */,
@@ -235,58 +202,6 @@
 			path = Styles;
 			sourceTree = "<group>";
 		};
-		956952EA26013FAC000A06F7 /* Example */ = {
-			isa = PBXGroup;
-			children = (
-				956952EB26013FAC000A06F7 /* ExampleApp.xcodeproj */,
-				956952EF26013FAC000A06F7 /* ExampleApp */,
-			);
-			path = Example;
-			sourceTree = "<group>";
-		};
-		956952EC26013FAC000A06F7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9569530126013FAC000A06F7 /* ExampleApp.app */,
-				9569530326013FAC000A06F7 /* ExampleAppTests.xctest */,
-				9569530526013FAC000A06F7 /* ExampleAppUITests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		956952EF26013FAC000A06F7 /* ExampleApp */ = {
-			isa = PBXGroup;
-			children = (
-				956952F026013FAC000A06F7 /* AuthenticatorExample */,
-				956952F626013FAC000A06F7 /* Supporting */,
-				956952FC26013FAC000A06F7 /* Info.plist */,
-			);
-			path = ExampleApp;
-			sourceTree = "<group>";
-		};
-		956952F026013FAC000A06F7 /* AuthenticatorExample */ = {
-			isa = PBXGroup;
-			children = (
-				956952F126013FAC000A06F7 /* LoggedInViewController.swift */,
-				956952F226013FAC000A06F7 /* PreLoggedInViewModel.swift */,
-				956952F326013FAC000A06F7 /* InputViewController.swift */,
-				956952F426013FAC000A06F7 /* LoggedInViewModel.swift */,
-				956952F526013FAC000A06F7 /* PreLoggedInViewController.swift */,
-			);
-			path = AuthenticatorExample;
-			sourceTree = "<group>";
-		};
-		956952F626013FAC000A06F7 /* Supporting */ = {
-			isa = PBXGroup;
-			children = (
-				956952F726013FAC000A06F7 /* LaunchScreen.storyboard */,
-				956952F926013FAC000A06F7 /* AppDelegate.swift */,
-				956952FA26013FAC000A06F7 /* Info.plist */,
-				956952FB26013FAC000A06F7 /* SceneDelegate.swift */,
-			);
-			path = Supporting;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -366,12 +281,6 @@
 			mainGroup = 95694D6A25FBBA14000A06F7;
 			productRefGroup = 95694D7525FBBA15000A06F7 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 956952EC26013FAC000A06F7 /* Products */;
-					ProjectRef = 956952EB26013FAC000A06F7 /* ExampleApp.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				95694D7325FBBA15000A06F7 /* BISDK */,
@@ -379,30 +288,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		9569530126013FAC000A06F7 /* ExampleApp.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = ExampleApp.app;
-			remoteRef = 9569530026013FAC000A06F7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9569530326013FAC000A06F7 /* ExampleAppTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ExampleAppTests.xctest;
-			remoteRef = 9569530226013FAC000A06F7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9569530526013FAC000A06F7 /* ExampleAppUITests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ExampleAppUITests.xctest;
-			remoteRef = 9569530426013FAC000A06F7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		95694D7225FBBA15000A06F7 /* Resources */ = {
@@ -458,17 +343,6 @@
 			targetProxy = 95694D7F25FBBA15000A06F7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		956952F726013FAC000A06F7 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				956952F826013FAC000A06F7 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		95694D8625FBBA15000A06F7 /* Debug */ = {
@@ -655,7 +529,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BZA6SZ8XVQ;
-				INFOPLIST_FILE = BISDKTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -675,7 +549,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BZA6SZ8XVQ;
-				INFOPLIST_FILE = BISDKTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

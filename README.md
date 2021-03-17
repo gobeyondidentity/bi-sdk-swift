@@ -113,6 +113,6 @@ view.addSubview(authView)
 
 ## Sample App and Walkthrough
 
-A sample apps is available to explore in [/Examples](https://github.com/byndid/bi-sdk-swift/tree/main/Example) for the Authenticator SDK. 
+A sample apps is available to explore in [Example](https://github.com/byndid/bi-sdk-swift/tree/main/Example) for the Authenticator SDK. 
 
 Most of the heavy lifting is delegated to the external Beyond Identity Authenticator App when integrating the Authenticator SDK. Try out the flow by creating an account with our demo app [Acme Pay](https://acme-app.byndid.com/). You'll need access to the App Store to download the Authenticator app.
