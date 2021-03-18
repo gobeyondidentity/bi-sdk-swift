@@ -31,8 +31,8 @@ To mitigate this risk, use a [Universal Link](https://developer.apple.com/librar
 public class AuthView: UIView {
     let session: ASWebAuthenticationSession
     let signUpAction: () -> Void
-    let signInButton = SignInButton(title: "Log in with Beyond Identity")
-    let signUpButton = SignUpButton(title: "New to Beyond Identity? Go passwordless today")
+    let signInButton = SignInButton(title: LocalizedString.value(for: .SignInButtonTitle))
+    let signUpButton = SignUpButton(title: LocalizedString.value(for: .SignUpButtonTitle))
     
     public init(
         session: ASWebAuthenticationSession,

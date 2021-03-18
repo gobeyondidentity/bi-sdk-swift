@@ -22,6 +22,9 @@
 		95694E1125FFC720000A06F7 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694E1025FFC720000A06F7 /* Icon.swift */; };
 		95694E1825FFD6FA000A06F7 /* NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694E1725FFD6FA000A06F7 /* NSLayoutConstraint.swift */; };
 		95694E1E25FFD79F000A06F7 /* IconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694E1D25FFD79F000A06F7 /* IconTests.swift */; };
+		956954882602A8B0000A06F7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9569548A2602A8B0000A06F7 /* Localizable.strings */; };
+		956954902602CF3D000A06F7 /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9569548F2602CF3D000A06F7 /* LocalizedString.swift */; };
+		956954D32602E3C6000A06F7 /* LocalizedStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956954CD2602E392000A06F7 /* LocalizedStringTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,9 @@
 		95694E1025FFC720000A06F7 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		95694E1725FFD6FA000A06F7 /* NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraint.swift; sourceTree = "<group>"; };
 		95694E1D25FFD79F000A06F7 /* IconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTests.swift; sourceTree = "<group>"; };
+		956954892602A8B0000A06F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9569548F2602CF3D000A06F7 /* LocalizedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
+		956954CD2602E392000A06F7 /* LocalizedStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStringTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,20 +135,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		95694E2525FFD868000A06F7 /* Styles */ = {
-			isa = PBXGroup;
-			children = (
-				95694D9225FBBA66000A06F7 /* Color.swift */,
-				95694E1025FFC720000A06F7 /* Icon.swift */,
-			);
-			path = Styles;
-			sourceTree = "<group>";
-		};
 		95694E2625FFDCB1000A06F7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				95694DD525FBD370000A06F7 /* Bundle.swift */,
+				9569548E2602CEFD000A06F7 /* Localization */,
 				95694D9825FBBA78000A06F7 /* Assets.xcassets */,
+				95694DD525FBD370000A06F7 /* Bundle.swift */,
+				95694D9225FBBA66000A06F7 /* Color.swift */,
+				95694E1025FFC720000A06F7 /* Icon.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -159,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				95694E1625FFD6E3000A06F7 /* Extensions */,
-				95694E2525FFD868000A06F7 /* Styles */,
 				95694D9C25FBBA8D000A06F7 /* SignInButton.swift */,
 				95694D9D25FBBA8D000A06F7 /* SignUpButton.swift */,
 			);
@@ -171,6 +170,7 @@
 			children = (
 				9569509A2600F3AE000A06F7 /* AuthenticatorTests */,
 				9569509E2600F3C7000A06F7 /* CoreTests */,
+				956954CC2602E333000A06F7 /* ResourcesTests */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -186,20 +186,29 @@
 		9569509E2600F3C7000A06F7 /* CoreTests */ = {
 			isa = PBXGroup;
 			children = (
-				9569509F2600F3D3000A06F7 /* Styles */,
 				95694D8225FBBA15000A06F7 /* SignInButtonTests.swift */,
 				95694DF125FEC6EB000A06F7 /* SignUpButtonTests.swift */,
 			);
 			path = CoreTests;
 			sourceTree = "<group>";
 		};
-		9569509F2600F3D3000A06F7 /* Styles */ = {
+		9569548E2602CEFD000A06F7 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				9569548A2602A8B0000A06F7 /* Localizable.strings */,
+				9569548F2602CF3D000A06F7 /* LocalizedString.swift */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		956954CC2602E333000A06F7 /* ResourcesTests */ = {
 			isa = PBXGroup;
 			children = (
 				95694DF525FECAD6000A06F7 /* ColorTests.swift */,
 				95694E1D25FFD79F000A06F7 /* IconTests.swift */,
+				956954CD2602E392000A06F7 /* LocalizedStringTests.swift */,
 			);
-			path = Styles;
+			path = ResourcesTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95694DD225FBCE4C000A06F7 /* Assets.xcassets in Resources */,
+				956954882602A8B0000A06F7 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +328,7 @@
 				95694E1825FFD6FA000A06F7 /* NSLayoutConstraint.swift in Sources */,
 				95694DA325FBBA9D000A06F7 /* AuthView.swift in Sources */,
 				95694DD625FBD370000A06F7 /* Bundle.swift in Sources */,
+				956954902602CF3D000A06F7 /* LocalizedString.swift in Sources */,
 				95694D9F25FBBA8D000A06F7 /* SignUpButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -326,6 +337,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				956954D32602E3C6000A06F7 /* LocalizedStringTests.swift in Sources */,
 				95694D8325FBBA15000A06F7 /* SignInButtonTests.swift in Sources */,
 				95694DF625FECAD6000A06F7 /* ColorTests.swift in Sources */,
 				95694E0225FEE3AD000A06F7 /* AuthViewTests.swift in Sources */,
@@ -343,6 +355,17 @@
 			targetProxy = 95694D7F25FBBA15000A06F7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9569548A2602A8B0000A06F7 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				956954892602A8B0000A06F7 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		95694D8625FBBA15000A06F7 /* Debug */ = {
