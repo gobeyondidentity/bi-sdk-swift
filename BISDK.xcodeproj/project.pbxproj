@@ -230,6 +230,7 @@
 			buildConfigurationList = 95694D8825FBBA15000A06F7 /* Build configuration list for PBXNativeTarget "BISDK" */;
 			buildPhases = (
 				95694D6F25FBBA15000A06F7 /* Headers */,
+				956954FB2603F3A8000A06F7 /* SwiftLint */,
 				95694D7025FBBA15000A06F7 /* Sources */,
 				95694D7125FBBA15000A06F7 /* Frameworks */,
 				95694D7225FBBA15000A06F7 /* Resources */,
@@ -247,6 +248,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 95694D8B25FBBA15000A06F7 /* Build configuration list for PBXNativeTarget "BISDKTests" */;
 			buildPhases = (
+				956954F82603F2C9000A06F7 /* SwiftLint */,
 				95694D7925FBBA15000A06F7 /* Sources */,
 				95694D7A25FBBA15000A06F7 /* Frameworks */,
 				95694D7B25FBBA15000A06F7 /* Resources */,
@@ -316,6 +318,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		956954F82603F2C9000A06F7 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./scripts/lint.sh\n";
+		};
+		956954FB2603F3A8000A06F7 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./scripts/lint.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		95694D7025FBBA15000A06F7 /* Sources */ = {

@@ -31,9 +31,9 @@ To mitigate this risk, use a [Universal Link](https://developer.apple.com/librar
 public class AuthView: UIView {
     let session: ASWebAuthenticationSession
     let signUpAction: () -> Void
-    let signInButton = SignInButton(title: LocalizedString.value(for: .SignInButtonTitle))
-    let signUpButton = SignUpButton(title: LocalizedString.value(for: .SignUpButtonTitle))
-    
+    let signInButton = SignInButton(title: LocalizedString.value(for: .signInButtonTitle))
+    let signUpButton = SignUpButton(title: LocalizedString.value(for: .signUpButtonTitle))
+
     public init(
         session: ASWebAuthenticationSession,
         signUpAction: @escaping () -> Void) {
@@ -42,34 +42,34 @@ public class AuthView: UIView {
         super.init(frame: .zero)
         setUpViews()
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setUpViews() {
         signInButton.addTarget(self, action: #selector(signIn), for: .touchUpInside)
         signUpButton.addTarget(self, action: #selector(signUp), for: .touchUpInside)
-        
+
         let stackView = UIStackView(arrangedSubviews: [signInButton, signUpButton])
         stackView.spacing = 10
         stackView.axis = .vertical
         addSubview(stackView)
-        
+
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    
-    @objc private func signUp(){
+
+    @objc private func signUp() {
         signUpAction()
     }
-    
+
     @objc private func signIn() {
         if #available(iOS 13.0, *) {
             session.presentationContextProvider = self
@@ -81,6 +81,6 @@ public class AuthView: UIView {
 
 extension AuthView: ASWebAuthenticationPresentationContextProviding {
     public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        return superview?.window ?? ASPresentationAnchor()
+        superview?.window ?? ASPresentationAnchor()
     }
 }

@@ -1,0 +1,9 @@
+line_length: 
+  ignores_comments: true
+opt_in_rules:
+  - collection_alignment                     
+  - closure_body_length
+  - closure_end_indentation
+  - closure_spacing  
+  - implicit_return
+  - multiline_arguments

@@ -3,18 +3,18 @@ import XCTest
 
 class ColorTests: XCTestCase {
     func test_primaryButtonText_notEmpty() throws {
-        let _ = try XCTUnwrap(UIColor.primaryButtonText)
+        _ = try XCTUnwrap(UIColor.primaryButtonText)
     }
-    
+
     func test_primaryButtonColor_notEmpty() throws {
-        let _ = try XCTUnwrap(UIColor.primaryButtonColor)
+        _ = try XCTUnwrap(UIColor.primaryButtonColor)
     }
-    
+
     func test_secondaryButtonText_notEmpty() throws {
-        let _ = try XCTUnwrap(UIColor.secondaryButtonText)
+        _ = try XCTUnwrap(UIColor.secondaryButtonText)
     }
-    
+
     func test_secondaryButtonColor_notEmpty() throws {
-        let _ = try XCTUnwrap(UIColor.secondaryButtonColor)
+        _ = try XCTUnwrap(UIColor.secondaryButtonColor)
     }
 }
