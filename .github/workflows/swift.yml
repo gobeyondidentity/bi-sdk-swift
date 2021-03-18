@@ -7,18 +7,12 @@ on:
     branches: [ main ]
 
 jobs:
-  lint: 
-    runs-on: macos-latest
-    steps: 
-      - uses: actions/checkout@v2
-      - run: ./scripts/lint.sh
   build-ios:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - run: xcodebuild clean build -project BISDK.xcodeproj -scheme BISDK CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO  
   test-ios:
-    needs: build-ios
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
