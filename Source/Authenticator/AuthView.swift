@@ -73,7 +73,6 @@ public class AuthView: UIView {
     @objc private func signIn() {
         if #available(iOS 13.0, *) {
             session.presentationContextProvider = self
-            session.prefersEphemeralWebBrowserSession = true
         }
         session.start()
     }
