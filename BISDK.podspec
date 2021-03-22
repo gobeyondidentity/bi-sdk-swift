@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.summary               = "A swift client SDK for comunicating with Beyond Identity's passwordless authentication."
 
   s.homepage              = "https://github.com/byndid/bi-sdk-swift.git"
-  s.license               = { :type => "Apache License", :file => '' }
+  s.license               = { :type => "Apache License", :file => 'LICENSE' }
   s.author                = { "Anna" => "email removed" }
 
   s.ios.deployment_target = "12.0"
