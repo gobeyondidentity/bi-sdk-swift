@@ -69,7 +69,7 @@ Currently, Beyond Identity only supports clients with a backend. This allows for
 Your backend is configured to handle getting the authorization code and exchanging that code for an access token and id token.
 
 2. [Client And Cloud](#Client-And-Cloud)  
-The client queries for the access token and your backend makes the token exchange.
+The client queries for the authorization code and your backend makes the token exchange.
 
 For either flow you'll want to create and add an `AuthView` in your `ViewController`. This view contains both Beyond Identity Sign In and Sign Up buttons.
 
