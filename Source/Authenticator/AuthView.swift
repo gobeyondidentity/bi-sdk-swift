@@ -10,9 +10,11 @@ A two button view that manages a passwordless experience with Beyond Identity.
 
 Configure an [ASWebAuthenticationSession](https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession) instance to authenticate a user.
  
-Initialize the session with a URL that points to the authentication webpage that you have configured in your cloud. A secure, embedded web view loads and displays the page, from which the user can authenticate.
+Initialize the session with a `url` that points to the authentication webpage that you have configured in your cloud. Or make a call to Beyond Identity's /authorize endpoint to get an authorization code. A secure, embedded web view loads and displays the page, from which the user can authenticate.
  
-On completion, the service sends a callback URL to the session with an authentication token, and the session passes this URL back to the app through a completion handler. Use a [Universal Link](https://developer.apple.com/library/archive/documentation/General/Conceptual/AppSearch/UniversalLinks.html) for the `callbackURLScheme` as there are potential risks using a Custom URL Scheme. See the warning below.
+If your backend is getting the authorization code and exchanging the access token, then on completion, the service sends a callback `url` to the session with anything your backend is configured to send.
+
+If your client is getting the authorization code, then on completion, the service sends a callback `url` to the session with an authorization code that you can then send to your backend to make a token exchange.
 
 When the user taps the "Sign In" button, your session will start. When the user taps "Sign Up" button the AuthView will trigger your sign up action.
  
