@@ -7,8 +7,12 @@ class AuthViewTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        let session = ASWebAuthenticationSessionMock(mockClosure: {})
-        authView = AuthView(session: session, signUpAction: { })
+        authView = AuthView(
+            url: URL(string: "http://")!,
+            callbackURLScheme: "scheme",
+            completionHandler: { _, _  in },
+            signUpAction: { }
+        )
     }
 
     override func tearDown() {
@@ -26,21 +30,40 @@ class AuthViewTests: XCTestCase {
 
     func test_authView_signUpButton_tapped_callsSignUpAction() {
         var capture: Bool = false
-        let session = ASWebAuthenticationSessionMock(mockClosure: {})
-        let authView = AuthView(session: session, signUpAction: { capture = true })
+        let authView = AuthView(
+            url: URL(string: "http://")!,
+            callbackURLScheme: "scheme",
+            completionHandler: { _, _  in },
+            signUpAction: { capture = true })
 
         XCTAssertFalse(capture, "Precondition")
         authView.signUpButton.simulateEvent(.touchUpInside)
         XCTAssertTrue(capture)
     }
 
-    func test_authView_signInButton_tapped_startSession() {
+    func test_authView_signInButton_tapped_callsCreateSessionAndStartSession() {
+        let authView = AuthViewMock(
+            url: URL(string: "http://")!,
+            callbackURLScheme: "scheme",
+            completionHandler: { _, _  in },
+            signUpAction: { }
+        )
+
+        XCTAssertFalse(authView.createSessionCalled, "Precondition")
+        XCTAssertFalse(authView.startSessionCalled, "Precondition")
+
+        authView.signInButton.simulateEvent(.touchUpInside)
+
+        XCTAssertTrue(authView.startSessionCalled)
+        XCTAssertTrue(authView.createSessionCalled)
+    }
+
+    func test_startSession() {
         var capture: Bool = false
         let session = ASWebAuthenticationSessionMock(mockClosure: { capture = true })
-        let authView = AuthView(session: session, signUpAction: {})
 
         XCTAssertFalse(capture, "Precondition")
-        authView.signInButton.simulateEvent(.touchUpInside)
+        authView.startSession(session)
         XCTAssertTrue(capture)
     }
 
@@ -77,5 +100,22 @@ private class ASWebAuthenticationSessionMock: ASWebAuthenticationSession {
     override func start() -> Bool {
         mockClosure()
         return true
+    }
+}
+
+private class AuthViewMock: AuthView {
+    var createSessionCalled = false
+    var startSessionCalled = false
+
+    override func createSession(
+        url: URL,
+        callbackURLScheme: String?,
+        completionHandler: @escaping ASWebAuthenticationSession.CompletionHandler,
+        prefersEphemeralWebBrowserSession: Bool = false) -> ASWebAuthenticationSession {
+        createSessionCalled = true
+        return ASWebAuthenticationSessionMock(mockClosure: {})
+    }
+    override func startSession(_ session: ASWebAuthenticationSession) {
+        startSessionCalled = true
     }
 }
