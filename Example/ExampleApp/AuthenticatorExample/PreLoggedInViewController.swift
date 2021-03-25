@@ -1,6 +1,5 @@
-import AuthenticationServices
-import UIKit
 import BISDK
+import UIKit
 
 class PreLoggedInViewController: UIViewController {
     let viewModel: PreLoggedInViewModel
@@ -25,24 +24,23 @@ class PreLoggedInViewController: UIViewController {
          and thus malicious apps can hijack sensitive data. To mitigate this risk, please use
          Universal Links in your production app */
 
-        let button = AuthView(
-            session: ASWebAuthenticationSession(
-                url: viewModel.cloudURL,
-                callbackURLScheme: viewModel.urlScheme,
-                completionHandler: { [weak self] url, error in
-                    if let error = error { self?.signInCallBack(.failure(error)) }
-                    if let url = url { self?.signInCallBack(.success(url)) }
-                }
-            ),
-            signUpAction: signUpAction)
+        let authView = AuthView(
+            url: viewModel.cloudURL,
+            callbackURLScheme: viewModel.urlScheme,
+            completionHandler: { [weak self] url, error in
+                if let error = error { self?.signInCallBack(.failure(error)) }
+                if let url = url { self?.signInCallBack(.success(url)) }
+            },
+            signUpAction: signUpAction
+        )
 
-        view.addSubview(button)
+        view.addSubview(authView)
 
-        button.translatesAutoresizingMaskIntoConstraints = false
+        authView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            button.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            authView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            authView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 

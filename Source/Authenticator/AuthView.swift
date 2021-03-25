@@ -4,13 +4,16 @@ import UIKit
 /**
 A two button view that manages a passwordless experience with Beyond Identity.
 
-- Parameters:
-  - session: An [ASWebAuthenticationSession](https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession) instance used on Sign In.
-  - signUpAction: A function called when the user taps the Sign Up button.
+ Parameters:
+ - url: A URL with the http or https scheme pointing to the authentication webpage.
+ - callbackURLScheme: The custom URL scheme that the app expects in the callback URL.
+ - completionHandler: A completion handler the session calls when it completes successfully, or when the user cancels the session.
+ - prefersEphemeralWebBrowserSession: A Boolean value that indicates whether the session should ask the browser for a private authentication session. Set to true to request that the browser doesn’t share cookies or other browsing data between the authentication session and the user’s normal browser session. The value of this property is false by default.
+ - signUpAction: A function called when the user taps the Sign Up button.
 
-Configure an [ASWebAuthenticationSession](https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession) instance to authenticate a user.
+An `AuthView` handles creating and starting an [ASWebAuthenticationSession](https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession) instance to authenticate a user.
  
-Initialize the session with a `url` that points to the authentication webpage that you have configured in your cloud. Or make a call to Beyond Identity's /authorize endpoint to get an authorization code. A secure, embedded web view loads and displays the page, from which the user can authenticate.
+Initialize an `AuthView` session with a `url` that either points to the authentication webpage that you have configured in your cloud or make a call to Beyond Identity's `/authorize` endpoint to get an authorization code. A secure, embedded web view loads and displays the page, from which the user can authenticate.
  
 If your backend is getting the authorization code and exchanging the access token, then on completion, the service sends a callback `url` to the session with anything your backend is configured to send.
 
@@ -31,15 +34,27 @@ To mitigate this risk, use a [Universal Link](https://developer.apple.com/librar
 */
 
 public class AuthView: UIView {
-    let session: ASWebAuthenticationSession
+    // ASWebAuthenticationSession
+    let url: URL
+    let callbackURLScheme: String?
+    let completionHandler: ASWebAuthenticationSession.CompletionHandler
+    let prefersEphemeralWebBrowserSession: Bool
+
+    // Beyond Identity
     let signUpAction: () -> Void
     let signInButton = SignInButton(title: LocalizedString.value(for: .signInButtonTitle))
     let signUpButton = SignUpButton(title: LocalizedString.value(for: .signUpButtonTitle))
 
     public init(
-        session: ASWebAuthenticationSession,
+        url: URL,
+        callbackURLScheme: String?,
+        completionHandler: @escaping ASWebAuthenticationSession.CompletionHandler,
+        prefersEphemeralWebBrowserSession: Bool = false,
         signUpAction: @escaping () -> Void) {
-        self.session = session
+        self.url = url
+        self.callbackURLScheme = callbackURLScheme
+        self.completionHandler = completionHandler
+        self.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
         self.signUpAction = signUpAction
         super.init(frame: .zero)
         setUpViews()
@@ -73,9 +88,36 @@ public class AuthView: UIView {
     }
 
     @objc private func signIn() {
+        // `start` only called once per session, create a new session to retry
+        let session = createSession(
+            url: url,
+            callbackURLScheme: callbackURLScheme,
+            completionHandler: completionHandler
+        )
+
+        startSession(session)
+    }
+
+    func createSession(
+        url: URL,
+        callbackURLScheme: String?,
+        completionHandler: @escaping ASWebAuthenticationSession.CompletionHandler,
+        prefersEphemeralWebBrowserSession: Bool = false
+    ) -> ASWebAuthenticationSession {
+        let session = ASWebAuthenticationSession(
+            url: url,
+            callbackURLScheme: callbackURLScheme,
+            completionHandler: completionHandler
+        )
         if #available(iOS 13.0, *) {
             session.presentationContextProvider = self
+            session.prefersEphemeralWebBrowserSession = prefersEphemeralWebBrowserSession
         }
+
+        return session
+    }
+
+    func startSession(_ session: ASWebAuthenticationSession) {
         session.start()
     }
 }
