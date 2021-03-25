@@ -8,7 +8,7 @@ A two button view that manages a passwordless experience with Beyond Identity.
  - url: A URL with the http or https scheme pointing to the authentication webpage.
  - callbackURLScheme: The custom URL scheme that the app expects in the callback URL.
  - completionHandler: A completion handler the session calls when it completes successfully, or when the user cancels the session.
- - prefersEphemeralWebBrowserSession: A Boolean value that indicates whether the session should ask the browser for a private authentication session.
+ - prefersEphemeralWebBrowserSession: A Boolean value that indicates whether the session should ask the browser for a private authentication session. Set to true to request that the browser doesn’t share cookies or other browsing data between the authentication session and the user’s normal browser session. The value of this property is false by default.
  - signUpAction: A function called when the user taps the Sign Up button.
 
 An `AuthView` handles creating and starting an [ASWebAuthenticationSession](https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession) instance to authenticate a user.
