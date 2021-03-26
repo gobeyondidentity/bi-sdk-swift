@@ -65,12 +65,17 @@ Use the `Embedded` subspec:
 ## Usage
 Currently, Beyond Identity only supports clients with a backend. This allows for two flows: 
 
-1. [Cloud Handles Everything](#Cloud-Handles-Everything)  
-Your backend is configured to handle getting the authorization code and exchanging that code for an access token and id token.
+1. [Confidential Client Handles Everything](#Confidential-Client-Handles-Everything)  
+The confidential client (backend) is configured to get the authorization code and exchange that code for an access token and id token.
 
-2. [Client And Cloud](#Client-And-Cloud)  
-The client queries for the authorization code and your backend makes the token exchange.
+<img width="1024" alt="Screen Shot 2021-03-24 at 4 18 26 PM" src="https://user-images.githubusercontent.com/6456218/112377859-9b2ba080-8cbc-11eb-95f0-a0f32973da68.png">
 
+2. [Public Client And Confidential Client](#Public-Client-And-Confidential-Client)  
+The public client (mobile app) queries for the authorization code and your confidential client (backend) makes the token exchange.
+
+<img width="1024" alt="Screen Shot 2021-03-24 at 4 18 14 PM" src="https://user-images.githubusercontent.com/6456218/112377947-b39bbb00-8cbc-11eb-8b08-89b68e5b20c2.png">
+
+### View Setup
 For either flow you'll want to create and add an `AuthView` in your `ViewController`. This view contains both Beyond Identity Sign In and Sign Up buttons.
 
 When the user taps the "Sign In" button, an instance of [ASWebAuthenticationSession](https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession) is created and will start. A secure, embedded web view loads and displays the page, from which the user can authenticate. When the user taps "Sign Up" button the AuthView will trigger your sign up action. 
@@ -87,16 +92,18 @@ Custom Schemes offer a potential attack as iOS allows any URL Scheme to be claim
 When configuting `ASWebAuthenticationSession`
 use a [Universal Link](https://developer.apple.com/library/archive/documentation/General/Conceptual/AppSearch/UniversalLinks.html) for the `callbackURLScheme` to mitigate risk.
 
-### Cloud Handles Everything
-In this scenerio your backend handles getting the authorization code and exchanging that for an access token and id token. 
+### Confidential Client Handles Everything
+In this scenerio your confidential client (backend) handles getting the authorization code and exchanging that for an access token and id token. 
 
-It is up to the developer to decide how to invoke their backend in order to initiate the flow, as well as what the response would be. As an example, a response could be a session id associated with the authenticated user or the userinfo payload that was queried on the backend.
+It is up to the developer to decide how to invoke their confidential client in order to initiate the flow, as well as what the response would be. As an example, a response could be a session id associated with the authenticated user or the userinfo payload that was queried on the confidential client.
 
-Initialize an `AuthView` with a `url` that points to the authentication webpage that you have configured in your cloud. A secure, embedded web view loads and displays the page, from which the user can authenticate. 
+Initialize an `AuthView` with a `url` that points to the authentication webpage that you have configured your confidential client. A secure, embedded web view loads and displays the page, from which the user can authenticate. 
 
-On completion, the service sends a callback `url` to the session with an authentication token or anything else you have configured your backend to send in that url.
+On completion, the service sends a callback `url` to the registered redirect with an authentication token or anything else you have configured your confidential client to send in that url. In order to intercept that callback, provide a `ASWebAuthenticationSession.CompletionHandler` to the `completionHandler` parameter.
 
-For more details on configuring your backend, see the [Developer Docs](https://docs.byndid.com).
+Depending on how you configured your redirect, you may need to provide a `callbackURLScheme`.
+
+For more details on configuring your confidential client, see the [Developer Docs](https://docs.byndid.com).
 
 ```swift
 import BISDK
@@ -128,10 +135,10 @@ func mySignUpAction() {
 } 
 ```
 
-### Client And Cloud
-In this scenerio your client handles getting the authorization code by calling a Beyond Identity endpoint and your backend handles exchanging that code for an access token and id token. 
+### Public Client And Confidential Client
+In this scenerio your public client (mobile app) handles getting the authorization code and your confidential client (backend) handles exchanging that code for an access token and id token.
 
-It is up to the developer to decide what the response would be for your backend. As an example, a response could be a session id associated with the authenticated user or the userinfo payload that was queried on the backend.
+It is up to the developer to decide what the response would be for your confidential client. As an example, a response could be a session id associated with the authenticated user or the userinfo payload that was queried on the confidential client.
 
 The Beyond Identity `/authorize` endpoint supports the following parameters:
 * `client_id`: unique ID for a tenant's registered OIDC client.
@@ -142,7 +149,7 @@ The Beyond Identity `/authorize` endpoint supports the following parameters:
 
 Initialize an `AuthView` with a `url` that points to Beyond Identity's `/authorize` endpoint with the appropriate parameters. A secure, embedded web view loads and displays the page, from which the user can authenticate. 
 
-On completion, the service sends a callback `url` to the session where you'll need to confirm the state parameter has not changed and then pass the code to your backend to exchange for an access token and id token.
+On completion, the service sends a callback `url` to the session. In order to intercept that callback, provide a `ASWebAuthenticationSession.CompletionHandler` to the `completionHandler` parameter. You'll need to confirm the state parameter has not changed and then pass the authorization code to your backend to exchange for an access token and id token.
 
 For more details, see the [Developer Docs](https://docs.byndid.com).
 
@@ -175,20 +182,20 @@ let authView = AuthView(
         if let error = error { print(error) }
         if let url = url { print(url) }
         
+        // Check the state matches the state you've sent
         guard let url = url, let currentState = url.queryParameters?["state"], 
             currentState == self.state! else {
-            print("Incorrect state")
+            // someone is interfering with our auth process
             return
         }
 
         guard let url = url, let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
             components.queryItems?.first(where: { $0.name == "state" })?.value == self.state! else {
-            print("Incorrect state")
             return
         }
 
         if let code = components.queryItems?.first(where: { $0.name == "code" })?.value {
-            // call your backend to make token exchange
+            // Exchange the authorization code for access token and id token
             print(code)
         }
     },
@@ -204,8 +211,12 @@ func mySignUpAction() {
 } 
 ```
 
+## Prerequisites
+Since most of the heavy lifting is delegated to the Beyond Identity Authenticator client when integrating the Authenticator SDK you need to [download](https://app.byndid.com/downloads) the app on your development phone (you'll need the App Store).
+
 ## Sample App and Walkthrough
+- A sample apps is available to explore in [Example](https://github.com/byndid/bi-sdk-swift/tree/main/Example) for the Authenticator SDK. 
 
-A sample apps is available to explore in [Example](https://github.com/byndid/bi-sdk-swift/tree/main/Example) for the Authenticator SDK. 
+- You can also try registering and logging in without a password with a fictional financial services demo app [Acme Pay](https://acme-app.byndid.com/). 
 
-Most of the heavy lifting is delegated to the external Beyond Identity Authenticator App when integrating the Authenticator SDK. Try out the flow by creating an account with our demo app [Acme Pay](https://acme-app.byndid.com/). You'll need access to the App Store to download the Authenticator app.
+https://www.beyondidentity.com/customer-passwordless-solution/live-demo
