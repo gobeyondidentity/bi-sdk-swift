@@ -1,5 +1,10 @@
+excluded: 
+  - Example/.build
+  - Package.swift
 line_length: 
   ignores_comments: true
+function_parameter_count:
+  warning: 6
 opt_in_rules:
   - collection_alignment                     
   - closure_body_length
@@ -7,3 +12,5 @@ opt_in_rules:
   - closure_spacing  
   - implicit_return
   - multiline_arguments
+disabled_rules:
+  - duplicate_enum_cases

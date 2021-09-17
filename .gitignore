@@ -2,3 +2,4 @@ xcuserdata/
 Carthage/
 .swiftpm
 .build/
+libs/

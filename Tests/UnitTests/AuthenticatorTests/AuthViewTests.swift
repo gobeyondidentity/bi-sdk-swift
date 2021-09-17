@@ -1,6 +1,7 @@
 import AuthenticationServices
 import XCTest
-@testable import BISDK
+@testable import Authenticator
+@testable import SharedDesign
 
 class AuthViewTests: XCTestCase {
     private var authView: AuthView!
@@ -21,7 +22,7 @@ class AuthViewTests: XCTestCase {
     }
 
     func test_authView_signInButton_title() {
-        XCTAssertEqual(authView.signInButton.title, "Log in with Beyond Identity")
+        XCTAssertEqual(authView.signInButton.titleLabel.text, "Log in with Beyond Identity")
     }
 
     func test_authView_signUpButton_title() {
