@@ -24,7 +24,7 @@ class DeleteWarningView: View {
         backgroundColor = Colors.background.value
         
         let closeButton = Button()
-        closeButton.setImage(.close?.withRenderingMode(.alwaysTemplate), for: .normal)
+        closeButton.setImage(Image.close?.withRenderingMode(.alwaysTemplate), for: .normal)
         closeButton.tintColor = Colors.heading.value
         closeButton.addTarget(self, action: #selector(tappedCancel), for: .touchUpInside)
         
@@ -45,6 +45,7 @@ class DeleteWarningView: View {
         
         let cancelButton = Button(type: .roundedRect)
         cancelButton.setTitle(LocalizedString.settingCancelButton.string, for: .normal)
+        cancelButton.setTitleColor(Colors.link.value, for: .normal)
         cancelButton.addTarget(self, action: #selector(tappedCancel), for: .touchUpInside)
         cancelButton.backgroundColor = Colors.background.value
         cancelButton.setCornerRadius(for: .small)

@@ -12,7 +12,7 @@
 The Embedded SDK is a holistic SDK solution offering the entire experience embedded in your product. Users will not need to download the Beyond Identity Authenticator.
 
 ### [EmbeddedUI](https://developer.beyondidentity.com/docs/ios-swift-embedded-with-ui)
-The EmbeddedUI SDK provides view wrappers around the `Embedded SDK` functions.
+The EmbeddedUI SDK provides view wrappers around the Embedded SDK functions.
 
 ### [Authenticator](https://developer.beyondidentity.com/docs/ios-swift-authenticator-sdk)
 The Authenticator SDK is used in conjunction with the existing [Beyond Identity Authenticator](https://app.byndid.com/downloads) where most of the heavy lifting is handled in the Beyond Identity Authenticator and will need to be downloaded by your users. 
@@ -25,7 +25,7 @@ The Authenticator SDK is used in conjunction with the existing [Beyond Identity 
 1. From the Xcode `File` menu, select `Swift Packages` » `Add Package Dependency` and add the following url:
 
 ```
-https://github.com/byndid/bi-sdk-swift
+https://github.com/gobeyondidentity/bi-sdk-swift
 ```
 
 2. Select a version and hit Next.
@@ -37,7 +37,7 @@ add the following `dependency` to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/byndid/bi-sdk-swift.git", from: "1.0.0")
+    .package(url: "https://github.com/gobeyondidentity/bi-sdk-swift.git", from: [version])
 ]
 ```
 2. Run `swift build`

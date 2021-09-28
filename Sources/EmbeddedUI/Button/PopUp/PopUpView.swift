@@ -47,7 +47,7 @@ class PopUpView: View {
         backgroundColor = Colors.background.value
         
         let closeButton = Button()
-        closeButton.setImage(.close?.withRenderingMode(.alwaysTemplate), for: .normal)
+        closeButton.setImage(Image.close?.withRenderingMode(.alwaysTemplate), for: .normal)
         closeButton.tintColor = Colors.heading.value
         closeButton.addTarget(self, action: #selector(tappedClose), for: .touchUpInside)
         

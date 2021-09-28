@@ -38,7 +38,7 @@ class SignUpViewController: ScrollableViewController {
             signUpAction: tapSignUp
         )
         
-        let alternateOptionsToSignUpView = AlternateOptionsToSignUpView(delegate: self)
+        let alternateOptionsToSignUpView = makeAltTextView()
         
         let stack = StackView(arrangedSubviews: [
             signUpView,
@@ -78,33 +78,50 @@ class SignUpViewController: ScrollableViewController {
         present(PopUpViewController(popUpView: popUpView), animated: true, completion: nil)
     }
     
+    func makeAltTextView() -> View {
+        let addToDevice = Button()
+        addToDevice.setTappableText(
+            text: LocalizedString.alternateOptionsAddDeviceText.string,
+            tappableText: LocalizedString.alternateOptionsAddDeviceTappableText.string
+        )
+        addToDevice.addTarget(self, action: #selector(tappedAddToDevice), for: .touchUpInside)
+        
+        let recoverAccount = Button()
+        recoverAccount.setTappableText(text: LocalizedString.alternateOptionsRecoverAccountText.string, tappableText: LocalizedString.alternateOptionsRecoverAccountTappableText.string)
+        recoverAccount.addTarget(self, action: #selector(tappedRecoverAccount), for: .touchUpInside)
+        
+        let visitSupport = Button()
+        visitSupport.setTappableText(text: LocalizedString.alternateOptionsVisitSupportText.string, tappableText: LocalizedString.alternateOptionsVisitSupportTappableText.string)
+        visitSupport.addTarget(self, action: #selector(tappedVisitSupport), for: .touchUpInside)
+        
+        let stack = StackView(arrangedSubviews: [addToDevice, recoverAccount, visitSupport])
+        stack.axis = .vertical
+        stack.alignment = .center
+        
+        return stack
+    }
+    
+    @objc func tappedAddToDevice(){
+        navigateToAddDevice(
+            with: navigationController,
+            for: .button(authType),
+            config: config
+        )
+    }
+    
+    @objc func tappedRecoverAccount(){
+        navigationController?.dismiss(animated: true, completion: { [weak self] in
+            self?.config.recoverUserAction()
+        })
+    }
+    
+    @objc func tappedVisitSupport(){
+        openSupport(url: config.supportURL)
+    }
+    
     @available(*, unavailable)
     required init?(coder aDecoder: Coder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension SignUpViewController: TextViewDelegate {
-    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        guard let option = UITextView.TappableOption(rawValue: url.absoluteString) else { return false }
-        
-        switch option {
-        case .addToDevice:
-            navigateToAddDevice(
-                with: navigationController,
-                for: .button(authType),
-                config: self.config
-            )
-        case .recoverAccount:
-            navigationController?.dismiss(animated: true, completion: { [weak self] in
-                self?.config.recoverUserAction()
-            })
-            
-        case .visitSupport:
-            openSupport(url: config.supportURL)
-        }
-        
-        return false
     }
 }
 
@@ -120,8 +137,7 @@ func navigateToAddDevice(
         flow: flow
     )
     navigationController?.pushViewController(codeEntryVC, animated: true)
-    return
-#endif
+#else
     if case .restricted = AVCaptureDevice.authorizationStatus(for: .video) {
         let codeEntryVC = CodeEntryViewController(
             cameraRestricted: true,
@@ -136,11 +152,11 @@ func navigateToAddDevice(
         )
         navigationController?.pushViewController(qrScanVC, animated: true)
     }
+#endif
 }
 
 func openSupport(url: URL){
     guard UIApplication.shared.canOpenURL(url) else { return }
-        
     UIApplication.shared.open(url, options: [:], completionHandler: nil)
 }
 #endif

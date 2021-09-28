@@ -93,7 +93,7 @@ class AuthenticationView: UIView {
     /// Warning: This demo is simulating what your confidential server can do. Never store a client secret in your app.
     @objc func authenticateUnsafe() {
         guard let authCode = authCode, let pkce = pkce else {
-            authenticateUnsafeLabel.text = "First complete \"Authorize\" to complete authentication. This will simulate your backend making the token exchange with the provided Authentication Code."
+            authenticateUnsafeLabel.text = "First register a user and then complete \"Authorize\". This unsafe function will simulate your backend making the token exchange with the provided Authentication Code returned from \"Authorize\"."
             return
         }
                 

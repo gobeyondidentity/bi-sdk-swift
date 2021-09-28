@@ -4,7 +4,7 @@ import SharedDesign
 #if os(iOS)
 import UIKit
 
-open class ScrollableViewController: ViewController {
+class ScrollableViewController: ViewController {
     let contentView = UIView()
     let scrollView = UIScrollView()
 

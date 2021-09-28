@@ -8,7 +8,7 @@ class SignUpViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         view.backgroundColor = UIColor.systemBackground
-        navigationItem.title = "Sign up"
+        navigationItem.title = "Your Sign up Screen"
     }
     
     override func viewDidLoad() {

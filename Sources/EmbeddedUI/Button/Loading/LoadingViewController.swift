@@ -19,8 +19,8 @@ class LoadingViewController: ViewController {
     let supportURL: URL
     
     let loadingView = LoadingView()
-    let visitSupportLabel = TextView()
-    let recoverAccountLabel = TextView()
+    let visitSupportLabel = Button()
+    let recoverAccountLabel = Button()
     
     init(
         for actionType: ActionType,
@@ -33,7 +33,7 @@ class LoadingViewController: ViewController {
         self.recoverUserAction = recoverUserAction
         self.supportURL = supportURL
         
-        super.init(nibName: nil, bundle: nil) 
+        super.init(nibName: nil, bundle: nil)
     }
     
     override func viewDidLoad() {
@@ -44,10 +44,13 @@ class LoadingViewController: ViewController {
         
         view.backgroundColor = Colors.background.value
         
-        recoverAccountLabel.setTappableText(with: self, text: LocalizedString.alternateOptionsRecoverAccountText.string, tappableText: LocalizedString.alternateOptionsRecoverAccountTappableText.string, for: .recoverAccount)
+        recoverAccountLabel.setTappableText(text: LocalizedString.alternateOptionsRecoverAccountText.string, tappableText: LocalizedString.alternateOptionsRecoverAccountTappableText.string)
+        recoverAccountLabel.addTarget(self, action: #selector(tappedRecoverAccount), for: .touchUpInside)
         recoverAccountLabel.isHidden = true
         
-        visitSupportLabel.setTappableText(with: self, text: LocalizedString.alternateOptionsVisitSupportText.string, tappableText: LocalizedString.alternateOptionsVisitSupportTappableText.string, for: .visitSupport)
+        visitSupportLabel.setTappableText(text: LocalizedString.alternateOptionsVisitSupportText.string, tappableText: LocalizedString.alternateOptionsVisitSupportTappableText.string)
+        visitSupportLabel.addTarget(self, action: #selector(tappedVisitSupport), for: .touchUpInside)
+        
         visitSupportLabel.isHidden = true
         
         let poweredByBILogo = ImageView(image: .poweredByBILogo)
@@ -159,28 +162,19 @@ class LoadingViewController: ViewController {
         }
     }
     
+    @objc func tappedRecoverAccount(){
+        navigationController?.dismiss(animated: true, completion: { [weak self] in
+            self?.recoverUserAction()
+        })
+    }
+    
+    @objc func tappedVisitSupport(){
+        openSupport(url: supportURL)
+    }
+    
     @available(*, unavailable)
     required init?(coder aDecoder: Coder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension LoadingViewController: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        guard let option = UITextView.TappableOption(rawValue: url.absoluteString) else { return false }
-        
-        switch option {
-        case .addToDevice:
-            return false
-        case .recoverAccount:
-            navigationController?.dismiss(animated: true, completion: { [weak self] in
-                self?.recoverUserAction()
-            })
-        case .visitSupport:
-            openSupport(url: supportURL)
-        }
-        
-        return false
     }
 }
 #endif

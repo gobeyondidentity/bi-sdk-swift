@@ -263,7 +263,7 @@ extension Embedded {
                 callback(.success(.done))
             }
         })
-        .export(handles.map({ $0.value }), Configuration.migratedAddress) { result in
+        .export(handles.map({ $0.value })) { result in
             switch result {
             case .success: break
             case let .failure(error):
@@ -301,7 +301,7 @@ extension Embedded {
          - callback: returns a list of registered credentials.
      */
     public func `import`(token: CredentialToken, callback: @escaping(Result<[Credential], BISDKError>) -> Void) {
-        core.import(token.value, Configuration.migratedAddress) { result in
+        core.import(token.value) { result in
             switch result {
             case let .success(profiles):
                 callback(.success(profiles.map(Credential.init)))

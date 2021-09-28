@@ -10,7 +10,6 @@ struct Configuration {
     #endif
 
     static let deviceGateway = "https://device-gateway.byndid.com"
-    static let migratedAddress = "https://migrated.grpc.byndid.com:443"
 }
 
 enum Endpoint: String, CaseIterable {

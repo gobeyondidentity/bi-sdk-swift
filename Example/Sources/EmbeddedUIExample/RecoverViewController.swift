@@ -8,7 +8,7 @@ class RecoverViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         view.backgroundColor = UIColor.systemBackground
-        navigationItem.title = "Recover"
+        navigationItem.title = "Your Recover Screen"
     }
     
     override func viewDidLoad() {

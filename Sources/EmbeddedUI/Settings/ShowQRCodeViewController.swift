@@ -12,8 +12,6 @@ class ShowQRCodeViewController: ViewController {
     // used to track which error to display
     private(set) var exportHasStarted = false
     
-    private(set) var qrCode = ImageView()
-    
     private let qrCodeErrorImage = UIImageView(image: .qrCodeUnavailable)
     
     private let exportErrorLabel = Label()
@@ -30,6 +28,8 @@ class ShowQRCodeViewController: ViewController {
         .wrap()
         .withFont(Fonts.body)
         .withColor(Colors.body.value)
+    
+    let qrCodeStack = StackView()
     
     init(credential: Credential, appName: String) {
         super.init(nibName: nil, bundle: nil)
@@ -58,8 +58,6 @@ class ShowQRCodeViewController: ViewController {
         let cancelButton = UIBarButtonItem(title: LocalizedString.settingCancelExportButton.string, style: .plain, target: self, action: #selector(cancelExportBeforeGoingBack))
         navigationItem.leftBarButtonItem = cancelButton
         
-        qrCode.contentMode = .scaleAspectFit
-        
         qrCodeErrorImage.contentMode = .scaleAspectFit
         qrCodeErrorImage.isHidden = true
         qrCodeErrorImage.heightAnchor == view.bounds.width / 2
@@ -69,7 +67,7 @@ class ShowQRCodeViewController: ViewController {
         
         tokenLabel.textAlignment = .center
         
-        let stack = StackView(arrangedSubviews: [cancelErrorMessage, activityIndicator, qrCode, qrCodeErrorImage, exportErrorLabel, infoLabel, tokenLabel])
+        let stack = StackView(arrangedSubviews: [cancelErrorMessage, activityIndicator, qrCodeStack, qrCodeErrorImage, exportErrorLabel, infoLabel, tokenLabel])
         stack.axis = .vertical
         stack.spacing = Spacing.large
         
@@ -135,11 +133,19 @@ class ShowQRCodeViewController: ViewController {
         }
     }
     
-    func updateCodes(image: Image?, token: String) {
-        qrCode.image = image
+    private func updateCodes(image: QRCode?, token: String) {
+        updateQRCode(image: image)
         infoLabel.isHidden = false
         let formattedToken = token.separate(with: "-")
         tokenLabel.text = LocalizedString.settingNoCameraCode.format(formattedToken)
+    }
+    
+    private func updateQRCode(image: QRCode?) {
+        qrCodeStack.clear()
+        let qrCode = ImageView()
+        qrCode.contentMode = .scaleAspectFit
+        qrCode.image = image
+        qrCodeStack.addArrangedSubview(qrCode)
     }
     
 }
@@ -150,6 +156,16 @@ fileprivate extension String {
         return String(enumerated().map { $0 > 0 && $0 % stride == 0 ? [separator, $1] : [$1]}.joined())
     }
 }
+
+fileprivate extension UIStackView {
+    func clear() {
+        for arrangedSubview in self.arrangedSubviews {
+            self.removeArrangedSubview(arrangedSubview)
+            arrangedSubview.removeFromSuperview()
+        }
+    }
+}
+
 
 class CancelErrorMessage: UIView {
     private let errorMessage = Label()

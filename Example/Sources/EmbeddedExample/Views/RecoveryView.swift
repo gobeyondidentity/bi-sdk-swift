@@ -52,7 +52,7 @@ class RecoveryView: UIView {
     }
     
     @objc func recoverUser() {
-        guard let email = recoverUserEmail else {
+        guard let email = recoverUserEmail, email.contains("@") else {
             recoverUserLabel.text = "enter an email first"
             return
         }

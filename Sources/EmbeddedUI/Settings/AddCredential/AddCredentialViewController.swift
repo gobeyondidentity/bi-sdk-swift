@@ -29,8 +29,12 @@ class AddCredentialViewController: ScrollableViewController {
         let createNewCredentialButton = StandardButton(title: LocalizedString.settingCreateNewCredentialButton.string)
         createNewCredentialButton.addTarget(self, action: #selector(tappedCreateNewCredential), for: .touchUpInside)
         
-        let addToDevice = TextView()
-        addToDevice.setTappableText(with: self, text: LocalizedString.alternateOptionsAddDeviceText.string, tappableText: LocalizedString.alternateOptionsAddDeviceTappableText.string, for: .addToDevice)
+        let addToDevice = Button()
+        addToDevice.setTappableText(
+            text: LocalizedString.alternateOptionsAddDeviceText.string,
+            tappableText: LocalizedString.alternateOptionsAddDeviceTappableText.string
+        )
+        addToDevice.addTarget(self, action: #selector(tappedAddToDevice), for: .touchUpInside)
         
         let stack = StackView(arrangedSubviews: [info, createNewCredentialButton, addToDevice])
         stack.axis = .vertical
@@ -44,11 +48,21 @@ class AddCredentialViewController: ScrollableViewController {
         stack.horizontalAnchors == contentView.safeAreaLayoutGuide.horizontalAnchors + Spacing.padding
     }
     
+    @objc func tappedAddToDevice(){
+        navigateToAddDevice(
+            with: navigationController,
+            for: .setting,
+            config: config
+        )
+    }
+    
     @objc func tappedCreateNewCredential(){
         navigationController?.dismiss(animated: true, completion: { [weak self] in
             self?.config.signUpAction()
         })
     }
+    
+    
     
     @available(*, unavailable)
     required init?(coder aDecoder: Coder) {
@@ -56,24 +70,4 @@ class AddCredentialViewController: ScrollableViewController {
     }
 }
 
-extension AddCredentialViewController: TextViewDelegate {
-    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        guard let option = UITextView.TappableOption(rawValue: url.absoluteString) else { return false }
-        
-        switch option {
-        case .addToDevice:
-            navigateToAddDevice(
-                with: navigationController,
-                for: .setting,
-                config: config
-            )
-        case .recoverAccount:
-            break
-        case .visitSupport:
-            break
-        }
-        
-        return false
-    }
-}
 #endif

@@ -49,7 +49,7 @@ class RegistrationView: UIView {
     }
     
     @objc func createUser() {
-        guard let email = createUserEmail else {
+        guard let email = createUserEmail, email.contains("@") else {
             createUserLabel.text = "enter an email first"
             return
         }

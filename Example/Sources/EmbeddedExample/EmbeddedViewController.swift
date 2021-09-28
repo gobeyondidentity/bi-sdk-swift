@@ -28,7 +28,13 @@ class EmbeddedViewController: UIViewController {
         
         setUpScrollView()
         
+        let infoLabel = UILabel().wrap()
+        infoLabel.text = "The following functions are provided to you through the `Embedded` namespace."
+        infoLabel.textAlignment = .center
+        infoLabel.font = UIFont.preferredFont(forTextStyle: .title2)
+        
         let stack = UIStackView(arrangedSubviews: [
+            infoLabel,
             CredentialsView(viewModel: viewModel),
             RegistrationView(registrationURL: viewModel.registrationEndpoint, for: self),
             RecoveryView(recoveryURL: viewModel.recoverUserEndpoint, for: self),

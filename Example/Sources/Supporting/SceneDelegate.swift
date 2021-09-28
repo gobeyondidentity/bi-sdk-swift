@@ -10,19 +10,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         _ scene: UIScene,
         willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions) {
-        
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-        
-        window.rootViewController = UINavigationController(rootViewController: DemoViewController())
-        
-        self.window = window
-        window.makeKeyAndVisible()
-        
-        if let url = connectionOptions.urlContexts.first?.url {
-            register(url)
+            guard let windowScene = (scene as? UIWindowScene) else { return }
+            let window = UIWindow(windowScene: windowScene)
+            
+            window.rootViewController = UINavigationController(rootViewController: DemoViewController())
+            UINavigationBar.appearance().tintColor = .systemBlue
+            
+            self.window = window
+            window.makeKeyAndVisible()
+            
+            if let url = connectionOptions.urlContexts.first?.url {
+                register(url)
+            }
         }
-    }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {

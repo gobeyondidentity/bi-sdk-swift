@@ -19,7 +19,7 @@ class MigrationView: UIView {
 
     // ExportStackView
     let exportView = UIStackView().vertical()
-
+    
     // User input
     var tokenToImport: CredentialToken?
     
@@ -87,17 +87,14 @@ class MigrationView: UIView {
                     self.exportLabel.text = "Missing Credential, create a user first"
                     return
                 }
-                Embedded.shared.export(handles: [firstCredential.handle]) { result in
+                Embedded.shared.export(handles: [firstCredential.handle]) { [weak self] result in
+                    guard let self = self else { return }
                     switch result {
                     case let .success(export):
                         switch export {
                         case let .started(token, qrcode),
                              let .tokenUpdated(token, qrcode):
-                            self.exportLabel.text = "\(token)"
-                            if let qrcode = qrcode {
-                                let image = UIImageView(image: qrcode)
-                                self.exportView.addArrangedSubview(image)
-                            }
+                            self.updateView(with: token, qrcode)
                         case .done:
                             self.exportLabel.text = "done"
                         }
@@ -110,6 +107,17 @@ class MigrationView: UIView {
                 self.exportLabel.text = error.localizedDescription
             }
         }
+    }
+    
+    private func updateView(with token: CredentialToken, _ qrcode: QRCode?) {
+        exportView.clear()
+        
+        exportLabel.text = "\(token)"
+        let QRCodeImage = UIImageView(image: qrcode)
+        
+        exportView.addArrangedSubview(exportButton)
+        exportView.addArrangedSubview(exportLabel)
+        exportView.addArrangedSubview(QRCodeImage)
     }
     
     @objc func importCredential() {
@@ -139,5 +147,14 @@ class MigrationView: UIView {
     
     @objc func textFieldDidEnd(_ textField: UITextField) {
         textField.resignFirstResponder()
+    }
+}
+
+extension UIStackView {
+    func clear() {
+        for arrangedSubview in self.arrangedSubviews {
+            self.removeArrangedSubview(arrangedSubview)
+            arrangedSubview.removeFromSuperview()
+        }
     }
 }
