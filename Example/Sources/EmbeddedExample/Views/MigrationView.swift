@@ -36,7 +36,7 @@ class MigrationView: UIView {
     }
     
     func setUpSubviews() {
-        exportButton.addTarget(self, action: #selector(export), for: .touchUpInside)
+        exportButton.addTarget(self, action: #selector(exportCredential), for: .touchUpInside)
         exportCancelButton.addTarget(self, action: #selector(cancelExport), for: .touchUpInside)
         importButton.addTarget(self, action: #selector(importCredential), for: .touchUpInside)
         importField.addTarget(self, action: #selector(importFieldDidChange(_:)), for: .editingChanged)
@@ -78,7 +78,7 @@ class MigrationView: UIView {
         }
     }
     
-    @objc func export() {
+    @objc func exportCredential() {
         // swiftlint:disable closure_body_length
         Embedded.shared.getCredentials { result in
             switch result {
@@ -87,7 +87,7 @@ class MigrationView: UIView {
                     self.exportLabel.text = "Missing Credential, create a user first"
                     return
                 }
-                Embedded.shared.export(handles: [firstCredential.handle]) { [weak self] result in
+                Embedded.shared.exportCredentials(handles: [firstCredential.handle]) { [weak self] result in
                     guard let self = self else { return }
                     switch result {
                     case let .success(export):
@@ -129,7 +129,7 @@ class MigrationView: UIView {
                 """
             return
         }
-        Embedded.shared.import(token: tokenToImport) { result in
+        Embedded.shared.importCredentials(token: tokenToImport) { result in
             switch result {
             case let .success(credentials):
                 self.importLabel.text = "\(credentials)"

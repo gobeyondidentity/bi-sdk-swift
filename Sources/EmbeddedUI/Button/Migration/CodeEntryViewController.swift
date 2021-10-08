@@ -183,7 +183,7 @@ extension CodeEntryViewController: UITextFieldDelegate, CodeEntryTextFieldDelega
     func submitCode() {
         let code = textFields.map{ $0.text ?? "" }.joined(separator: "")
         
-        Embedded.shared.import(token: CredentialToken(value: code)) { [weak self] result in
+        Embedded.shared.importCredentials(token: CredentialToken(value: code)) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
@@ -209,7 +209,7 @@ func handleImportSuccess(
     switch flow {
     case let .button(authType):
         let loadingVC = LoadingViewController(
-            for: .import(authType),
+            for: .importCredential(authType),
             appName:  config.appName,
             supportURL: config.supportURL,
             recoverUserAction: config.recoverUserAction
@@ -217,7 +217,7 @@ func handleImportSuccess(
         navigationController?.pushViewController(loadingVC, animated: true)
     case .setting:
         let loadingVC = LoadingViewController(
-            for: .importWithoutAuth,
+            for: .importCredentialWithoutAuth,
             appName: config.appName,
             supportURL: config.supportURL,
             recoverUserAction: config.recoverUserAction

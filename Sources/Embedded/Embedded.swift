@@ -199,7 +199,7 @@ extension Embedded {
     /**
      Get all current credentials.
      
-     Only one credential per device is supported currently.
+     Only one credential per device is currently supported.
      
      - Parameters:
          - callback: returns all registered credentials
@@ -243,14 +243,16 @@ extension Embedded {
 extension Embedded {
     /**
      Export a list of credentials. The user must be in an authenticated state to export any credentials.
-     
+          
      Use this function to export credentials from one device to another.
+     
+     Only one credential per device is currently supported.
      
      - Parameters:
          - handles: list of `Credential` handles to be exported.
          - callback: returns an `ExportStatus` with a random 9 digit token that the user wants to export. Pass this token to import.
      */
-    public func export(handles: [Credential.Handle], callback: @escaping(Result<ExportStatus, BISDKError>) -> Void) {
+    public func exportCredentials(handles: [Credential.Handle], callback: @escaping(Result<ExportStatus, BISDKError>) -> Void) {
         core.copy(withExportProgress: { status in
             switch status {
             case let .started(token):
@@ -296,11 +298,13 @@ extension Embedded {
      
      Use this function to import a `Credential` from one device to another.
      
+     Note: If a Credential already exists on a device then importing won't work. The previous Credential will still be on the device and the new imported Credential will be ignored.
+          
      - Parameters:
-         - token: the 9 digit code that the user entered.
+         - token: the 9 digit code that the user entered. This may represent one or more credentials, but only one credential per device is currently supported.
          - callback: returns a list of registered credentials.
      */
-    public func `import`(token: CredentialToken, callback: @escaping(Result<[Credential], BISDKError>) -> Void) {
+    public func importCredentials(token: CredentialToken, callback: @escaping(Result<[Credential], BISDKError>) -> Void) {
         core.import(token.value) { result in
             switch result {
             case let .success(profiles):

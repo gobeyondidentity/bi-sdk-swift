@@ -100,7 +100,7 @@ class ShowQRCodeViewController: ViewController {
     func startExport(with handle: Credential.Handle) {
         activityIndicator.startAnimating()
         
-        Embedded.shared.export(handles: [handle]) { [weak self] result in
+        Embedded.shared.exportCredentials(handles: [handle]) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(exportStatus):

@@ -9,8 +9,8 @@ class LoadingViewController: ViewController {
     enum ActionType {
         case login(FlowType)
         case registerOrRecover(URL, FlowType)
-        case `import`(FlowType)
-        case importWithoutAuth
+        case importCredential(FlowType)
+        case importCredentialWithoutAuth
     }
     
     let actionType: ActionType
@@ -75,9 +75,9 @@ class LoadingViewController: ViewController {
             loadingView.setMessage(LocalizedString.loadingLoginInitialMessage.format(appName))
         case .registerOrRecover:
             loadingView.setMessage(LocalizedString.loadingRecoverOrRegisterInitialMessage.format(appName))
-        case .import:
+        case .importCredential:
             loadingView.setMessage(LocalizedString.loadingRecoverOrRegisterInitialMessage.format(appName))
-        case .importWithoutAuth:
+        case .importCredentialWithoutAuth:
             loadingView.setMessage(LocalizedString.loadingRecoverOrRegisterInitialMessage.format(appName))
         }
     }
@@ -100,9 +100,9 @@ class LoadingViewController: ViewController {
                     )
                 }
             }
-        case let .import(authType):
+        case let .importCredential(authType):
             handleAuth(authType)
-        case .importWithoutAuth:
+        case .importCredentialWithoutAuth:
             let confirmationVC = AddCredentialSuccessViewController(appName: appName)
             navigationController?.pushViewController(confirmationVC, animated: true)
         }

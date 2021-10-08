@@ -44,18 +44,18 @@ let package = Package(
          ),
 	.binaryTarget(
 	    name: "CoreSDK",
-	    url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/0.1.1/CoreSDK.xcframework.zip",
-	    checksum: "73902e2a79c37341235793c6bb011f80bf0e31d5332cea309684f15edc36144b"
+	    url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/0.2.0/CoreSDK.xcframework.zip",
+	    checksum: "3571c888885065a5e654037440a0e90ba63814d9c3f7161a2fd1db672a990513"
 	),
 	.binaryTarget(
 	    name: "DeviceInfoSDK",
-	    url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/0.1.1/DeviceInfoSDK.xcframework.zip",
-	    checksum: "041ad9d9bc8a597399e933ad3a07cab5f191af89169c893ce54c1333bc912e26"
+	    url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/0.2.0/DeviceInfoSDK.xcframework.zip",
+	    checksum: "1d2fcb73184de14493f0345849f81d50d6cdf0213784ab853afc3a7d2d2a486c"
 	),
 	.binaryTarget(
 	    name: "EnclaveSDK",
-	    url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/0.1.1/EnclaveSDK.xcframework.zip",
-	    checksum: "e4a7bf99a2e46412a0e87e234d8bce7141c4885f46fa6a49c5cb56a8f1116399"
+	    url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/0.2.0/EnclaveSDK.xcframework.zip",
+	    checksum: "a7328edf0ef1149cd24f475632a15c60a29a62d584c367679cc5903801f31b44"
 	),
         .testTarget(
             name: "BISDKUnitTests",
