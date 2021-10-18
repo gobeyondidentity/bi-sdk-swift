@@ -133,7 +133,7 @@ class LoadingViewController: ViewController {
             guard let self = self else { return }
             switch response {
             case let .success(authorizationCode):
-                self.dismissAllPreviousViewContollers(completion: {
+                self.dismissAllPreviousCustomViewContollers(completion: {
                     completion(authorizationCode)
                 })
             case .failure:
@@ -150,7 +150,7 @@ class LoadingViewController: ViewController {
             guard let self = self else { return }
             switch response {
             case let .success(tokenResponse):
-                self.dismissAllPreviousViewContollers(completion: {
+                self.dismissAllPreviousCustomViewContollers(completion: {
                     completion(tokenResponse)
                 })
             case .failure:

@@ -4,19 +4,14 @@ import SharedDesign
 import UIKit
 
 extension UIViewController {
-    func dismissAllPreviousViewContollers(completion: (() -> Void)? = nil){
-        var firstPresentingVC: UIViewController = self
-        
-        while let first = firstPresentingVC.presentingViewController {
-            firstPresentingVC = first
+    func dismissAllPreviousCustomViewContollers(completion: (() -> Void)? = nil){
+        if let first = self.navigationController?.viewControllers.first {
+            first.dismiss(animated: true, completion: {
+                if let completion = completion {
+                    completion()
+                }
+            })
         }
-        
-        firstPresentingVC.dismiss(animated: true, completion: {
-            if let completion = completion {
-                completion()
-            }
-        })
     }
 }
 #endif
-
