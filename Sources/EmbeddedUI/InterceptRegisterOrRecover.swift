@@ -47,7 +47,28 @@ public func registerCredentialAndLogin(window: UIWindow, url: URL, config: Regis
            supportURL: config.supportURL,
            recoverUserAction: config.recoverUserAction
     )
-    let currentVC = window.rootViewController?.presentedViewController ?? window.rootViewController
-    currentVC?.present(vc, animated: true, completion: nil)
+    window.topMostViewController()?.present(vc, animated: true, completion: nil)
 }
 #endif
+
+extension UIWindow {
+    func topMostViewController() -> UIViewController? {
+        guard let root = self.rootViewController else {
+            return nil
+        }
+        
+        return UIWindow.getTopMostViewController(root)
+    }
+
+    private static func getTopMostViewController(_ vc: UIViewController) -> UIViewController {
+        if let visibleController = (vc as? UINavigationController)?.visibleViewController {
+            return UIWindow.getTopMostViewController(visibleController)
+        } else if let selectedTabController = (vc as? UITabBarController)?.selectedViewController {
+            return UIWindow.getTopMostViewController(selectedTabController)
+        } else if let presentedViewController = vc.presentedViewController {
+            return UIWindow.getTopMostViewController(presentedViewController)
+        } else {
+            return vc
+        }
+    }
+}

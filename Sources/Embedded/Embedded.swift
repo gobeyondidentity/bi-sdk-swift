@@ -1,4 +1,5 @@
 import CoreSDK
+import DeviceInfoSDK
 import Foundation
 import os
 
@@ -16,14 +17,18 @@ public class Embedded {
             let appInstanceId = UserDefaults.get(forKey: .appInstanceId)
                 ?? UserDefaults.setString(UUID().uuidString, forKey: .appInstanceId)
 
-            let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
-
             self.core = Core.live(
-                appVersion: appVersion,
+                // This is the version of the native platform authenticator. Since this SDK has nothing to do
+                // with the native platform authenticator, we set this to a dummy value.
+                appVersion: "0.0.0",
                 appInstanceId: appInstanceId,
                 authenticationPrompt: { _, _ in },
                 deviceGatewayUrl: Configuration.deviceGateway,
                 isProduction: true,
+                biSdkInfo: .init(
+                    sdkVersion: Configuration.sdkVersion,
+                    appVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "not specified",
+                    clientId: "<TODO>: Pass this in through initializer"),
                 with: logger ?? Embedded.logger
             )
 
