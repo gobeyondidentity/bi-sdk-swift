@@ -33,7 +33,7 @@ public struct Credential: Equatable {
 
     init(_ profile: CoreSDK.Profile) {
         created = profile.created
-        handle = Handle(value: profile.handle)
+        handle = Handle(profile.handle)
         keyHandle = profile.keyHandle
         name = profile.name
         logoURL = profile.logoURL
@@ -48,5 +48,10 @@ public struct Credential: Equatable {
         
         /// string value for `Credential.Handle`
         public let value: String
+        
+        /// initialize a `Credential.Handle` with a value
+        public init(_ value: String){
+            self.value = value
+        }
     }
 }

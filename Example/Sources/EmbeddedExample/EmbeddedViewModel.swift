@@ -4,6 +4,9 @@ import Foundation
 
 // swiftlint:disable line_length
 struct EmbeddedViewModel {
+    /// SDK version
+    let sdkVersion = "0.3.0"
+
     /// Your support URL
     let supportURL = URL(string: "mailto:acme@mail.com")!
 

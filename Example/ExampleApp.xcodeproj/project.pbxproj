@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		952EEE2026852C8A00206D79 /* Authenticator in Frameworks */ = {isa = PBXBuildFile; productRef = 952EEE1F26852C8A00206D79 /* Authenticator */; };
-		952EEE2226852C8A00206D79 /* Embedded in Frameworks */ = {isa = PBXBuildFile; productRef = 952EEE2126852C8A00206D79 /* Embedded */; };
+		9508D70B2734534200981636 /* ScrollableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9508D70A2734534200981636 /* ScrollableViewController.swift */; };
 		9536F8442682304500159945 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9536F8432682304500159945 /* DemoViewController.swift */; };
 		9536F8462682363A00159945 /* EmbeddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9536F8452682363A00159945 /* EmbeddedViewController.swift */; };
 		9536F851268294C300159945 /* EmbeddedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9536F850268294C300159945 /* EmbeddedViewModel.swift */; };
 		954E8F7526D0061F002DCEF2 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E8F7426D0061F002DCEF2 /* UserDefaults.swift */; };
+		9564CCBD27275E9300A4717B /* BeyondIdentityAuthenticator in Frameworks */ = {isa = PBXBuildFile; productRef = 9564CCBC27275E9300A4717B /* BeyondIdentityAuthenticator */; };
+		9564CCBF27275E9300A4717B /* BeyondIdentityEmbedded in Frameworks */ = {isa = PBXBuildFile; productRef = 9564CCBE27275E9300A4717B /* BeyondIdentityEmbedded */; };
+		9564CCC127275E9300A4717B /* BeyondIdentityEmbeddedUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9564CCC027275E9300A4717B /* BeyondIdentityEmbeddedUI */; };
 		95694CDB25F81A34000A06F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694CDA25F81A34000A06F7 /* AppDelegate.swift */; };
 		95694CDD25F81A34000A06F7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694CDC25F81A34000A06F7 /* SceneDelegate.swift */; };
 		95694CDF25F81A34000A06F7 /* PreLoggedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694CDE25F81A34000A06F7 /* PreLoggedInViewController.swift */; };
@@ -28,7 +30,6 @@
 		95AFBF4026A601960021785E /* CredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AFBF3F26A601960021785E /* CredentialsView.swift */; };
 		95AFBF4226A6029B0021785E /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AFBF4126A6029B0021785E /* RegistrationView.swift */; };
 		95AFBF4426A603300021785E /* RecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AFBF4326A603300021785E /* RecoveryView.swift */; };
-		95D60C6C26B88C880092C2E4 /* EmbeddedUI in Frameworks */ = {isa = PBXBuildFile; productRef = 95D60C6B26B88C880092C2E4 /* EmbeddedUI */; };
 		95D60C8D26B9D0AD0092C2E4 /* EmbeddedUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D60C8C26B9D0AD0092C2E4 /* EmbeddedUIViewController.swift */; };
 		95E8489F26DFD5CF000F2553 /* RecoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E8489E26DFD5CF000F2553 /* RecoverViewController.swift */; };
 		95E848A126DFD5E1000F2553 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E848A026DFD5E1000F2553 /* SignUpViewController.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9508D70A2734534200981636 /* ScrollableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableViewController.swift; sourceTree = "<group>"; };
 		952EEE1E26852C6C00206D79 /* bi-sdk-swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "bi-sdk-swift"; path = ..; sourceTree = "<group>"; };
 		9536F8432682304500159945 /* DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
 		9536F8452682363A00159945 /* EmbeddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedViewController.swift; sourceTree = "<group>"; };
@@ -72,9 +74,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95D60C6C26B88C880092C2E4 /* EmbeddedUI in Frameworks */,
-				952EEE2226852C8A00206D79 /* Embedded in Frameworks */,
-				952EEE2026852C8A00206D79 /* Authenticator in Frameworks */,
+				9564CCBD27275E9300A4717B /* BeyondIdentityAuthenticator in Frameworks */,
+				9564CCBF27275E9300A4717B /* BeyondIdentityEmbedded in Frameworks */,
+				9564CCC127275E9300A4717B /* BeyondIdentityEmbeddedUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +89,7 @@
 				95AFBF4526A607580021785E /* Views */,
 				9536F8452682363A00159945 /* EmbeddedViewController.swift */,
 				9536F850268294C300159945 /* EmbeddedViewModel.swift */,
+				9508D70A2734534200981636 /* ScrollableViewController.swift */,
 				95AFBF3B26A5FB9C0021785E /* UIHelpers.swift */,
 			);
 			path = EmbeddedExample;
@@ -204,9 +207,9 @@
 			);
 			name = ExampleApp;
 			packageProductDependencies = (
-				952EEE1F26852C8A00206D79 /* Authenticator */,
-				952EEE2126852C8A00206D79 /* Embedded */,
-				95D60C6B26B88C880092C2E4 /* EmbeddedUI */,
+				9564CCBC27275E9300A4717B /* BeyondIdentityAuthenticator */,
+				9564CCBE27275E9300A4717B /* BeyondIdentityEmbedded */,
+				9564CCC027275E9300A4717B /* BeyondIdentityEmbeddedUI */,
 			);
 			productName = "sdk-swift";
 			productReference = 95694CD725F81A34000A06F7 /* ExampleApp.app */;
@@ -263,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95AFBF3E26A5FF8C0021785E /* MigrationView.swift in Sources */,
+				9508D70B2734534200981636 /* ScrollableViewController.swift in Sources */,
 				95694D6525FACEC4000A06F7 /* InputViewController.swift in Sources */,
 				95D60C8D26B9D0AD0092C2E4 /* EmbeddedUIViewController.swift in Sources */,
 				95E8489F26DFD5CF000F2553 /* RecoverViewController.swift in Sources */,
@@ -490,17 +494,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		952EEE1F26852C8A00206D79 /* Authenticator */ = {
+		9564CCBC27275E9300A4717B /* BeyondIdentityAuthenticator */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Authenticator;
+			productName = BeyondIdentityAuthenticator;
 		};
-		952EEE2126852C8A00206D79 /* Embedded */ = {
+		9564CCBE27275E9300A4717B /* BeyondIdentityEmbedded */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Embedded;
+			productName = BeyondIdentityEmbedded;
 		};
-		95D60C6B26B88C880092C2E4 /* EmbeddedUI */ = {
+		9564CCC027275E9300A4717B /* BeyondIdentityEmbeddedUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = EmbeddedUI;
+			productName = BeyondIdentityEmbeddedUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

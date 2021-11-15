@@ -1,6 +1,6 @@
 import AuthenticationServices
 import XCTest
-@testable import Authenticator
+@testable import BeyondIdentityAuthenticator
 @testable import SharedDesign
 
 class AuthViewTests: XCTestCase {

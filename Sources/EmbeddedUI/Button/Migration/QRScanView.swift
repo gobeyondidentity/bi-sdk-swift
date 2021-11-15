@@ -1,6 +1,6 @@
 import Anchorage
 import AVFoundation
-import Embedded
+import BeyondIdentityEmbedded
 import SharedDesign
 #if os(iOS)
 import UIKit

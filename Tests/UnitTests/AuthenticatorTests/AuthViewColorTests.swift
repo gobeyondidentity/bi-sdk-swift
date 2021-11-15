@@ -1,6 +1,5 @@
 import XCTest
-@testable import Authenticator
-
+@testable import BeyondIdentityAuthenticator
 class AuthViewColorTests: XCTestCase {
     func test_primaryButtonText_notEmpty() throws {
         _ = try XCTUnwrap(UIColor.primaryButtonText)
