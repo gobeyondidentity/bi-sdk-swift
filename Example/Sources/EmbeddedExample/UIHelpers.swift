@@ -1,4 +1,4 @@
-import Embedded
+import BeyondIdentityEmbedded
 import Foundation
 import UIKit
 
@@ -47,23 +47,6 @@ func makeButton(with name: String) -> UIButton {
     button.setTitle(name, for: .normal)
     button.setTitleColor(.blue, for: .normal)
     return button
-}
-
-extension User: CustomStringConvertible {
-    public var description: String {
-        """
-        You will recieve an email shortly!
-
-        internalID: \(internalID)\n
-        externalID: \(externalID)\n
-        email: \(email)\n
-        userName: \(userName)\n
-        displayName: \(displayName)\n
-        dateCreated: \(dateCreated)\n
-        dateModified: \(dateModified)\n
-        status: \(status)\n
-        """
-    }
 }
 
 extension PKCE: CustomStringConvertible {

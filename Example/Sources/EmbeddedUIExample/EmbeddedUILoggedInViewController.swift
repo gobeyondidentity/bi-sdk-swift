@@ -1,17 +1,17 @@
 import UIKit
-import Embedded
+import BeyondIdentityEmbedded
 
 enum AuthResponse {
     case authenticate(TokenResponse)
     case authorize(AuthorizationCode)
 }
 
-class EmbeddedUILoggedInViewController: UIViewController {
+class EmbeddedUILoggedInViewController: ScrollableViewController {
     private let authResponse: AuthResponse
     
     init(authResponse: AuthResponse) {
         self.authResponse = authResponse
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     override func viewDidLoad() {
@@ -32,15 +32,20 @@ class EmbeddedUILoggedInViewController: UIViewController {
             label.text = "Authorization Code: \(authCode.value)"
         }
         
-        view.addSubview(label)
+        let stack = UIStackView(arrangedSubviews: [label])
+        stack.axis = .vertical
         
-        label.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(stack)
+        
+        stack.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20),
-            label.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-            label.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor)
+            stack.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 5),
+            stack.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            stack.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            stack.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor)
         ])
+        
     }
     
     @available(*, unavailable)

@@ -1,14 +1,12 @@
-import Embedded
+import BeyondIdentityEmbedded
 import UIKit
 
-class EmbeddedViewController: UIViewController {
-    private let scrollView = UIScrollView()
-    private let contentView = UIView()
+class EmbeddedViewController: ScrollableViewController {
     let viewModel: EmbeddedViewModel
     
     init(viewModel: EmbeddedViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init()
         
         view.backgroundColor = UIColor.systemBackground
         navigationItem.title = "Embedded Demo"
@@ -67,23 +65,6 @@ class EmbeddedViewController: UIViewController {
         }
         
         scrollView.scrollIndicatorInsets = scrollView.contentInset
-    }
-    
-    func setUpScrollView() {
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        
-        scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
-        contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
     }
     
 }

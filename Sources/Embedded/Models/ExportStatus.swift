@@ -8,6 +8,8 @@ import Cocoa
 /// Status of Exporting Credentials
 @frozen
 public enum ExportStatus {
+    /// User aborted the export operation
+    case aborted
     
     /// First time a token is received.
     case started(CredentialToken, QRCode?)

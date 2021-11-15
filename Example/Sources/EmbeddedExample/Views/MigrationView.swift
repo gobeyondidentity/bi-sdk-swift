@@ -1,4 +1,4 @@
-import Embedded
+import BeyondIdentityEmbedded
 import UIKit
 
 class MigrationView: UIView {
@@ -92,13 +92,19 @@ class MigrationView: UIView {
                     switch result {
                     case let .success(export):
                         switch export {
+                        case .aborted:
+                            self.resetExportView()
+                            self.exportLabel.text = "aborted"
                         case let .started(token, qrcode),
                              let .tokenUpdated(token, qrcode):
+                            self.resetExportView()
                             self.updateView(with: token, qrcode)
                         case .done:
+                            self.resetExportView()
                             self.exportLabel.text = "done"
                         }
                     case let .failure(error):
+                        self.resetExportView()
                         self.exportLabel.text = error.localizedDescription
                     }
                 }
@@ -109,14 +115,15 @@ class MigrationView: UIView {
         }
     }
     
-    private func updateView(with token: CredentialToken, _ qrcode: QRCode?) {
+    private func resetExportView(){
         exportView.clear()
-        
-        exportLabel.text = "\(token)"
-        let QRCodeImage = UIImageView(image: qrcode)
-        
         exportView.addArrangedSubview(exportButton)
         exportView.addArrangedSubview(exportLabel)
+    }
+    
+    private func updateView(with token: CredentialToken, _ qrcode: QRCode?) {
+        exportLabel.text = "\(token)"
+        let QRCodeImage = UIImageView(image: qrcode)
         exportView.addArrangedSubview(QRCodeImage)
     }
     

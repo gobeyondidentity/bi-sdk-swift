@@ -1,4 +1,4 @@
-@testable import Embedded
+@testable import BeyondIdentityEmbedded
  import XCTest
 
 class QRCodeTests: XCTestCase {

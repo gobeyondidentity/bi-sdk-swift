@@ -1,6 +1,6 @@
 import UIKit
-import Embedded
-import EmbeddedUI
+import BeyondIdentityEmbedded
+import BeyondIdentityEmbeddedUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     

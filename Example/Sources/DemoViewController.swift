@@ -12,6 +12,8 @@ class DemoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.systemBackground
         navigationItem.title = "BISDK Demos"
+        
+        let version = UILabel().wrap().withTitle("Version: \(EmbeddedViewModel().sdkVersion)")
 
         let authButton = makeButton(with: "Authenticator Demo")
         authButton.addTarget(self, action: #selector(toAuth), for: .touchUpInside)
@@ -22,17 +24,21 @@ class DemoViewController: UIViewController {
         let embeddedUIButton = makeButton(with: "Embedded UI Demo")
         embeddedUIButton.addTarget(self, action: #selector(toEmbeddedUI), for: .touchUpInside)
         
+        view.addSubview(version)
         view.addSubview(authButton)
         view.addSubview(embeddedButton)
         view.addSubview(embeddedUIButton)
 
+        version.translatesAutoresizingMaskIntoConstraints = false
         authButton.translatesAutoresizingMaskIntoConstraints = false
         embeddedButton.translatesAutoresizingMaskIntoConstraints = false
         embeddedUIButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            authButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            authButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
+            version.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            version.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -60),
+            authButton.topAnchor.constraint(equalTo: version.bottomAnchor, constant: 10),
+            authButton.centerXAnchor.constraint(equalTo: version.centerXAnchor),
             embeddedButton.topAnchor.constraint(equalTo: authButton.bottomAnchor, constant: 10),
             embeddedButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             embeddedUIButton.topAnchor.constraint(equalTo: embeddedButton.bottomAnchor, constant: 10),

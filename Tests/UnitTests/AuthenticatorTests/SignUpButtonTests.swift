@@ -1,5 +1,5 @@
 import XCTest
-@testable import Authenticator
+@testable import BeyondIdentityAuthenticator
 @testable import SharedDesign
 
 class SignUpButtonTests: XCTestCase {

@@ -1,4 +1,4 @@
-import Authenticator
+import BeyondIdentityAuthenticator
 import UIKit
 
 class PreLoggedInViewController: UIViewController {

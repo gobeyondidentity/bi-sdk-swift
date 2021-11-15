@@ -1,0 +1,27 @@
+name: Push podspecs to CocoaPods
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+
+  pods:
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Cocoapods
+        run: 
+          gem install cocoapods
+
+      - name: Deploy to Cocoapods Trunk
+        run: |
+          set -euo pipefail
+          pod trunk push BeyondIdentityCoreSDK.podspec
+          pod trunk push BeyondIdentityDeviceInfoSDK.podspec
+          pod trunk push BeyondIdentityEnclaveSDK.podspec
+          pod trunk push BeyondIdentityEmbedded.podspec
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}

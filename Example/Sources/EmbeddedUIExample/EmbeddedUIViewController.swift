@@ -1,5 +1,5 @@
-import Embedded
-import EmbeddedUI
+import BeyondIdentityEmbedded
+import BeyondIdentityEmbeddedUI
 import UIKit
 
 class EmbeddedUIViewController: UIViewController {

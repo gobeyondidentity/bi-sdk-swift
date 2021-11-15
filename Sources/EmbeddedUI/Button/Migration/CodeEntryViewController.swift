@@ -1,5 +1,5 @@
 import Anchorage
-import Embedded
+import BeyondIdentityEmbedded
 import Foundation
 import SharedDesign
 

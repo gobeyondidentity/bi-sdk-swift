@@ -255,7 +255,7 @@ extension Embedded {
      
      - Parameters:
          - handles: list of `Credential` handles to be exported.
-         - callback: returns an `ExportStatus` with a random 9 digit token that the user wants to export. Pass this token to import.
+         - callback: returns an `ExportStatus` with a random 9 digit token that the user wants to export. Pass this token to `importCredentials`.
      */
     public func exportCredentials(handles: [Credential.Handle], callback: @escaping(Result<ExportStatus, BISDKError>) -> Void) {
         core.copy(withExportProgress: { status in
@@ -274,6 +274,10 @@ extension Embedded {
             switch result {
             case .success: break
             case let .failure(error):
+                let message = error.localizedDescription.lowercased()
+                if message.contains("most likely user canceled") || message.contains("aborted") {
+                    return callback(.success(.aborted))
+                }
                 callback(.failure(.from(error)))
             }
         }
@@ -310,7 +314,7 @@ extension Embedded {
          - callback: returns a list of registered credentials.
      */
     public func importCredentials(token: CredentialToken, callback: @escaping(Result<[Credential], BISDKError>) -> Void) {
-        core.import(token.value) { result in
+        core.import(token.value, overwrite: true) { result in
             switch result {
             case let .success(profiles):
                 callback(.success(profiles.map(Credential.init)))

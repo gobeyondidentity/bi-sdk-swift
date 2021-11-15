@@ -1,4 +1,4 @@
-import Embedded
+import BeyondIdentityEmbedded
 import UIKit
 
 class RegistrationView: UIView {

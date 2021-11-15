@@ -1,5 +1,5 @@
 import Anchorage
-import Embedded
+import BeyondIdentityEmbedded
 import SharedDesign
 
 #if os(iOS)
@@ -105,6 +105,8 @@ class ShowQRCodeViewController: ViewController {
             switch result {
             case let .success(exportStatus):
                 switch exportStatus {
+                case .aborted:
+                    break
                 case let .started(token, qrImage), let .tokenUpdated(token, qrImage):
                     self.exportHasStarted = true
                     self.activityIndicator.stopAnimating()
@@ -114,20 +116,17 @@ class ShowQRCodeViewController: ViewController {
                 case .done:
                     self.navigationController?.popViewController(animated: true)
                 }
-            case let .failure(error):
-                if !error.localizedDescription.lowercased().contains("aborted") {
-                    print(error.localizedDescription)
-                    if self.exportHasStarted {
-                        // problem with exporting
-                        self.exportErrorLabel.text = LocalizedString.settingExportError.string
-                        self.exportErrorLabel.isHidden = false
-                    } else {
-                        // problem loading
-                        self.activityIndicator.stopAnimating()
-                        self.exportErrorLabel.text = LocalizedString.settingExportQRError.string
-                        self.exportErrorLabel.isHidden = false
-                        self.qrCodeErrorImage.isHidden = false
-                    }
+            case .failure:
+                if self.exportHasStarted {
+                    // problem with exporting
+                    self.exportErrorLabel.text = LocalizedString.settingExportError.string
+                    self.exportErrorLabel.isHidden = false
+                } else {
+                    // problem loading
+                    self.activityIndicator.stopAnimating()
+                    self.exportErrorLabel.text = LocalizedString.settingExportQRError.string
+                    self.exportErrorLabel.isHidden = false
+                    self.qrCodeErrorImage.isHidden = false
                 }
             }
         }
