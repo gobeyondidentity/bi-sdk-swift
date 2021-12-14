@@ -1,6 +1,7 @@
-import UIKit
 import BeyondIdentityEmbedded
 import BeyondIdentityEmbeddedUI
+import os
+import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -19,6 +20,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
             
+            let viewModel = EmbeddedViewModel()
+                  
+            Embedded.initialize(
+                biometricAskPrompt: viewModel.biometricAskPrompt,
+                clientID: "Embedded Example: \(viewModel.publicClientID): \(viewModel.confidentialClientID)",
+                logger: logger
+            )
+            
+            initializeBeyondIdentity(
+                biometricAskPrompt: viewModel.biometricAskPrompt,
+                clientID: viewModel.confidentialClientID,
+                logger: logger
+            )
+            
             if let url = connectionOptions.urlContexts.first?.url {
                 register(url)
             }
@@ -30,19 +45,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
+    func logger(type: OSLogType, message: String) {
+        print(message)
+    }
+    
     private func register(_ url: URL){
         guard let demo = UserDefaults.getDemo() else { return }
-        
         switch demo {
         case .authenticator:
             break
         case .embedded:
-            Embedded.shared.registerCredential(url) { result in
+            Embedded.shared.registerCredential(url) { [weak self] result in
                 switch result {
-                case let .success(response):
-                    print(response)
+                case let .success(credential):
+                    let dialog = UIAlertController(title: "Registered Credential: \(credential.name)", message: nil, preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                    dialog.addAction(action)
+                    self?.window?.rootViewController?.present(dialog, animated: true, completion: nil)
                 case let .failure(error):
-                    print(error.localizedDescription)
+                    let dialog = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                    dialog.addAction(action)
+                    self?.window?.rootViewController?.present(dialog, animated: true, completion: nil)
                 }
             }
         case .embeddedUI:

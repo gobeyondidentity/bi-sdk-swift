@@ -27,7 +27,7 @@ class EmbeddedViewController: ScrollableViewController {
         setUpScrollView()
         
         let infoLabel = UILabel().wrap()
-        infoLabel.text = "The following functions are provided to you through the `Embedded` namespace."
+        infoLabel.text = "The following functions are available in the Embedded SDK."
         infoLabel.textAlignment = .center
         infoLabel.font = UIFont.preferredFont(forTextStyle: .title2)
         

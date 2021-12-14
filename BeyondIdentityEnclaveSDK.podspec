@@ -2,7 +2,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'BeyondIdentityEnclaveSDK'
-  s.version          = '0.3.0'
+  s.version          = '0.4.0'
   s.summary          = 'Enclave for bi-sdk-swift'
   s.description      = 'EnclaveSDK binary target'
   s.homepage         = 'https://beyondidentity.com'
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
                         LICENSE
                        }  
   s.author           = 'Beyond Identity'
-  s.source           = { :http => 'https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/0.3.0/EnclaveSDK.xcframework.zip'  }
+  s.source           = { :http => 'https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/0.4.0/EnclaveSDK.xcframework.zip'  }
   s.vendored_frameworks = 'EnclaveSDK.xcframework'
   s.ios.deployment_target = '12'
 end

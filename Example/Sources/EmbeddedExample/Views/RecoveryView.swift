@@ -70,7 +70,7 @@ class RecoveryView: UIView {
         
         let body = [
             "binding_token_delivery_method": "email",
-            "external_id" : email
+            "external_id" : email,
         ]
         let bodyData = try? JSONSerialization.data(
             withJSONObject: body,
@@ -105,8 +105,12 @@ func send(for vc: UIViewController, with request: URLRequest) {
                 message = "Error: response is nil"
             } else if let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode != 200 {
                 message = "Error: got status code \(statusCode)"
-            } else if let _ = data {
-                message = "check your email!"
+            } else if let data = data {
+                if let error = try? JSONDecoder().decode(DataError.self, from: data) {
+                    message = error.message
+                }else {
+                    message = "check your email!"
+                }
             } else {
                 message = "Error: missing data"
             }
@@ -120,4 +124,9 @@ func send(for vc: UIViewController, with request: URLRequest) {
         })
     
     webTask.resume()
+}
+
+struct DataError: Codable {
+    let error: String
+    let message: String
 }

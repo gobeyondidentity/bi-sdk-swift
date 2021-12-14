@@ -26,7 +26,6 @@ public class BeyondIdentityButton: View {
         self.authFlowType = authFlowType
         self.config = config
         super.init(frame: .zero)
-        
         setUpButton()
     }
     

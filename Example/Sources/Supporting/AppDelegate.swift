@@ -1,4 +1,3 @@
-import BeyondIdentityEmbedded
 import UIKit
 
 @main

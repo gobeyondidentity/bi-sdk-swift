@@ -31,17 +31,6 @@
 			<array>
 				<string>$(XCCONFIG_APP_SCHEME)</string>
 			</array>
-			<key>CFBundleURLTypes</key>
-			<array>
-				<dict>
-					<key>CFBundleURLName</key>
-					<string>com.yourcompany.acme</string>
-					<key>CFBundleURLSchemes</key>
-					<array>
-						<string>acme</string>
-					</array>
-				</dict>
-			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>

@@ -6,41 +6,60 @@ import os
 /// Use the `Embedded.shared` singleton to access all embedded sdk functionality
 public class Embedded {
     private let core: Core
-
-    /// Use this shared property to access functionality
-    public static let shared: Embedded = Embedded(logger: logger(type:message:))
-
-    init(_ core: Core? = nil, logger: ((OSLogType, String) -> Void)? = nil) {
-        if let core = core {
-            self.core = core
-        } else {
-            let appInstanceId = UserDefaults.get(forKey: .appInstanceId)
-                ?? UserDefaults.setString(UUID().uuidString, forKey: .appInstanceId)
-
-            self.core = Core.live(
-                // This is the version of the native platform authenticator. Since this SDK has nothing to do
-                // with the native platform authenticator, we set this to a dummy value.
-                appVersion: "0.0.0",
-                appInstanceId: appInstanceId,
-                authenticationPrompt: { _, _ in },
-                deviceGatewayUrl: Configuration.deviceGateway,
-                isProduction: true,
-                biSdkInfo: .init(
-                    sdkVersion: Configuration.sdkVersion,
-                    appVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "not specified",
-                    clientId: "<TODO>: Pass this in through initializer"),
-                with: logger ?? Embedded.logger
-            )
-
+    
+    private struct Config {
+        let askPrompt: String
+        let clientID: String
+        let logger: ((OSLogType, String) -> Void)?
+    }
+    
+    private static var config: Config?
+    
+    /// Use this shared property to access functionality. `Embedded.initialize` must be called first.
+    public static let shared: Embedded = Embedded()
+    
+    /// Initialize the `Embedded.shared` singleton before using it. This must be called first.
+    /// - Parameters:
+    ///   - biometricAskPrompt: A prompt the user will see when asked for biometrics during credential export
+    ///   - clientID: The public or confidential client ID generated during the OIDC configuration
+    ///   - logger: optional function to log output
+    public static func initialize(
+        biometricAskPrompt: String,
+        clientID: String,
+        logger: ((OSLogType, String) -> Void)? = nil
+    ){
+        Embedded.config = Config(askPrompt: biometricAskPrompt, clientID: clientID, logger: logger)
+    }
+    
+    private init() {
+        guard let config = Embedded.config else {
+            fatalError("Error - you must call Embedded.initialize before accessing Embedded.shared")
         }
-
+        
+        let appInstanceId = UserDefaults.get(forKey: .appInstanceId)
+        ?? UserDefaults.setString(UUID().uuidString, forKey: .appInstanceId)
+        
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "not specified"
+        
+        self.core = Core.live(
+            // This is the version of the native platform authenticator. Since this SDK has nothing to do
+            // with the native platform authenticator, we set this to a dummy value.
+            appVersion: "0.0.0",
+            appInstanceId: appInstanceId,
+            authenticationPrompt: { _, _ in },
+            deviceGatewayUrl: Configuration.deviceGateway,
+            isProduction: true,
+            askPrompt: config.askPrompt,
+            biSdkInfo: .init(
+                sdkVersion: Configuration.sdkVersion,
+                appVersion: appVersion,
+                clientId: config.clientID),
+            with: config.logger
+        )
+        
         setUpDirectory()
     }
-
-    static func logger(type: OSLogType, message: String) {
-        print(message)
-    }
-
+    
     private func setUpDirectory() {
         core.setUpDirectory(
             catalogFolderName: Configuration.catalogFolderName
@@ -70,7 +89,8 @@ extension Embedded {
     ) {
         core.register(
             from: url.absoluteString,
-            trusted: .embedded
+            trusted: .embedded,
+            flowType: .embedded
         ) { result in
             switch result {
             case let .success(response):
@@ -101,7 +121,7 @@ extension Embedded {
      and can exchange the authorization code for an access and id token.
      
      - Parameters:
-         - clientID: The client ID generated during the OIDC configuration.
+         - clientID: The confidential client ID generated during the OIDC configuration.
          - pkceChallenge: Optional but recommended to prevent authorization code injection. Use `createPKCE` to generate a `PKCE.CodeChallenge`.
          - redirectURI: URI where the user will be redirected after the authorization has completed. The redirect URI must be one of the URIs passed in the OIDC configuration.
          - scope: string list of OIDC scopes used during authentication to authorize access to a user's specific details. Only "openid" is currently supported.
@@ -144,7 +164,7 @@ extension Embedded {
      The app will get the access and id token.
      
      - Parameters:
-         - clientID: The client ID generated during the OIDC configuration.
+         - clientID: The public client ID generated during the OIDC configuration.
          - redirectURI: URI where the user will be redirected after the authorization has completed. The redirect URI must be one of the URIs passed in the OIDC configuration.
          - callback: returns a `TokenResponse` that contains the access and id token.
      */
