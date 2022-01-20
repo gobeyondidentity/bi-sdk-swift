@@ -11,13 +11,13 @@ class CredentialExistsViewController: ScrollableViewController {
         case addAnotherCredential
     }
     
-    let authFlowType: FlowType
+    let authFlowType: AuthFlowType
     let config: BeyondIdentityConfig
     let credentialExistsText: CredentialExistsView.TextConfig
     let screenType: Screen
     
     init(
-        authFlowType: FlowType,
+        authFlowType: AuthFlowType,
         config: BeyondIdentityConfig,
         credentialExistsText: CredentialExistsView.TextConfig,
         screenType: Screen

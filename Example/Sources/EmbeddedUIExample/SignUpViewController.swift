@@ -14,6 +14,8 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.hideKeyboardWhenTappedOutside()
+        
         let registrationView = RegistrationView(registrationURL: registrationURL, for: self)
         
         view.addSubview(registrationView)

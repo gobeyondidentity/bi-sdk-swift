@@ -69,11 +69,11 @@
 "settingShowQRCodeInfo" = "Scan this code to a device that you’d like to set up a credential for %@";
 "settingNoCameraCode" = "No camera? Use code: %@";
 
-"settingExportError" = "Could not complete export. Please try again.";
-"settingExportQRError" = "Could not display QR code. Please try again.";
+"settingExtendCredentialsError" = "Could not complete extend credential. Please try again.";
+"settingExtendCredentialsQRError" = "Could not display QR code. Please try again.";
 
-"settingCancelExportError" = "Could not cancel. Please try again to go back.";
-"settingCancelExportButton" = "Cancel";
+"settingCancelExtendCredentialsError" = "Could not cancel. Please try again to go back.";
+"settingCancelExtendCredentialsButton" = "Cancel";
 
 "settingCredentialInfoTitle" = "Credential info";
 "settingDeviceName" = "Credential for %@";

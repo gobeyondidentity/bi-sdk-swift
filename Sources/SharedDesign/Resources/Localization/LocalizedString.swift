@@ -74,11 +74,11 @@ public enum LocalizedString: String, CaseIterable {
     case settingShowQRCodeInfo
     case settingNoCameraCode
     
-    case settingExportError
-    case settingExportQRError
+    case settingExtendCredentialsError
+    case settingExtendCredentialsQRError
     
-    case settingCancelExportError
-    case settingCancelExportButton
+    case settingCancelExtendCredentialsError
+    case settingCancelExtendCredentialsButton
     
     case settingCredentialInfoTitle
     case settingDeviceName

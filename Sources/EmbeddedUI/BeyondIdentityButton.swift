@@ -6,13 +6,10 @@ import SharedDesign
 #if os(iOS)
 import UIKit
 
-/// Beyond Identity Login Button
+/// Begins Beyond Identity's custom UI Passwordless flow
 public class BeyondIdentityButton: View {
     
-    /// Your app's authentication flow
-    let authFlowType: FlowType
-    
-    /// structure holding required information and callbacks
+    let authFlow: AuthFlowType
     let config: BeyondIdentityConfig
     
     /// Intialize a BeyondIdentityButton
@@ -20,10 +17,10 @@ public class BeyondIdentityButton: View {
     ///   - authFlowType: Your app's authentication flow
     ///   - config: structure holding required information and callbacks
     public init(
-        authFlowType: FlowType,
+        authFlow: AuthFlowType,
         config: BeyondIdentityConfig
     ){
-        self.authFlowType = authFlowType
+        self.authFlow = authFlow
         self.config = config
         super.init(frame: .zero)
         setUpButton()
@@ -48,49 +45,8 @@ public class BeyondIdentityButton: View {
     }
     
     @objc private func signIn(){
-        Embedded.shared.getCredentials { [weak self] result in
-            guard let self = self else { return }
-            
-            var viewController: ViewController? = nil
-            
-            switch result {
-            case let .success(credentials):
-                if credentials.isEmpty {
-                    viewController = SignUpViewController(
-                        authType: self.authFlowType,
-                        config: self.config,
-                        type: .noCredential
-                    )
-                } else if credentials.count == 1 {
-                    viewController = CredentialExistsViewController(
-                        authFlowType: self.authFlowType,
-                        config: self.config,
-                        credentialExistsText: CredentialExistsView.TextConfig(
-                            infoText: LocalizedString.signUpCredentialAlreadyExisitsTitle.string,
-                            primaryText: LocalizedString.signUpLoginInButton.string,
-                            secondaryText: LocalizedString.signUpUseDifferentCredentialButton.string
-                        ),
-                        screenType: .exisitingCredential
-                    )
-                } else {
-                    // show selection, currently not supported
-                    break
-                }
-                
-                if let parentVC = self.parentViewController, let rootVC = viewController {
-                    parentVC.present(CustomNavigationController(rootViewController: rootVC), animated: true, completion: nil)
-                }
-            case let .failure(error):
-                let alert = ErrorAlert(
-                    title: LocalizedString.primaryButtonError.string,
-                    message: error.localizedDescription,
-                    responseTitle: LocalizedString.alertErrorAction.string
-                )
-                if let vc = self.parentViewController {
-                    alert.show(with: vc)
-                }
-            }
-            
+        if let parentVC = self.parentViewController {
+            continueWithBeyondIdentity(for: parentVC, authFlow: authFlow, config: config)
         }
     }
     

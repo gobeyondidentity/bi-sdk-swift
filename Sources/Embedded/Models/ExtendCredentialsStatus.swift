@@ -5,10 +5,10 @@ import UIKit
 import Cocoa
 #endif
 
-/// Status of Exporting Credentials
+/// Status of Extending Credentials
 @frozen
-public enum ExportStatus {
-    /// User aborted the export operation
+public enum ExtendCredentialsStatus {
+    /// User aborted the extend credential operation
     case aborted
     
     /// First time a token is received.
@@ -17,6 +17,6 @@ public enum ExportStatus {
     /// New token received. A token will be cycled every few minutes.
     case tokenUpdated(CredentialToken, QRCode?)
     
-    /// Export complete.
+    /// Extend credential complete.
     case done
 }

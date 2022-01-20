@@ -30,7 +30,6 @@ class RegistrationView: UIView {
         createUserEmailField.addTarget(self, action: #selector(textFieldDidEnd(_:)), for: .editingDidEndOnExit)
         
         let stack = UIStackView(arrangedSubviews: [
-            UILabel().wrap().withTitle("Registration"),
             createUserEmailField,
             createUserButton,
             createUserLabel,
@@ -90,6 +89,7 @@ class RegistrationView: UIView {
     
     @objc func textFieldDidEnd(_ textField: UITextField) {
         textField.resignFirstResponder()
+        createUser()
     }
 }
 

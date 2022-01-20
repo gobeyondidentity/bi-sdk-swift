@@ -7,12 +7,12 @@ import SharedDesign
 import UIKit
 
 class SignUpViewController: ScrollableViewController {
-    private let authType: FlowType
+    private let authType: AuthFlowType
     private let config: BeyondIdentityConfig
     private let type: SignUpView.CredentialType
     
     init(
-        authType: FlowType,
+        authType: AuthFlowType,
         config: BeyondIdentityConfig,
         type: SignUpView.CredentialType
     ) {

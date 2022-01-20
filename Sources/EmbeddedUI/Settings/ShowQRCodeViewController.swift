@@ -14,7 +14,7 @@ class ShowQRCodeViewController: ViewController {
     
     private let qrCodeErrorImage = UIImageView(image: .qrCodeUnavailable)
     
-    private let exportErrorLabel = Label()
+    private let extendErrorLabel = Label()
         .wrap()
         .withFont(Fonts.body)
         .withColor(Colors.error.value)
@@ -42,7 +42,7 @@ class ShowQRCodeViewController: ViewController {
         infoLabel.text = LocalizedString.settingShowQRCodeInfo.format(appName)
         
         if #available(iOS 13.0, *) {
-            // Removed option to swipe down on modal. This forces the user to leave screen by tapping "Cancel" button in order to properly cancel an export
+            // Removed option to swipe down on modal. This forces the user to leave screen by tapping "Cancel" button in order to properly cancel an extend
             isModalInPresentation = true
         }
     }
@@ -51,11 +51,11 @@ class ShowQRCodeViewController: ViewController {
         super.viewDidLoad()
         view.backgroundColor = Colors.background.value
         
-        exportErrorLabel.isHidden = true
-        exportErrorLabel.textAlignment = .center
+        extendErrorLabel.isHidden = true
+        extendErrorLabel.textAlignment = .center
         cancelErrorMessage.isHidden = true
         
-        let cancelButton = UIBarButtonItem(title: LocalizedString.settingCancelExportButton.string, style: .plain, target: self, action: #selector(cancelExportBeforeGoingBack))
+        let cancelButton = UIBarButtonItem(title: LocalizedString.settingCancelExtendCredentialsButton.string, style: .plain, target: self, action: #selector(cancelExtendCredentialsBeforeGoingBack))
         navigationItem.leftBarButtonItem = cancelButton
         
         qrCodeErrorImage.contentMode = .scaleAspectFit
@@ -67,7 +67,7 @@ class ShowQRCodeViewController: ViewController {
         
         tokenLabel.textAlignment = .center
         
-        let stack = StackView(arrangedSubviews: [cancelErrorMessage, activityIndicator, qrCodeStack, qrCodeErrorImage, exportErrorLabel, infoLabel, tokenLabel])
+        let stack = StackView(arrangedSubviews: [cancelErrorMessage, activityIndicator, qrCodeStack, qrCodeErrorImage, extendErrorLabel, infoLabel, tokenLabel])
         stack.axis = .vertical
         stack.spacing = Spacing.large
         
@@ -83,8 +83,8 @@ class ShowQRCodeViewController: ViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func cancelExportBeforeGoingBack(sender: UIBarButtonItem) {
-        Embedded.shared.cancelExport { [weak self] result in
+    @objc func cancelExtendCredentialsBeforeGoingBack(sender: UIBarButtonItem) {
+        Embedded.shared.cancelExtendCredentials { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success():
@@ -100,17 +100,17 @@ class ShowQRCodeViewController: ViewController {
     func startExport(with handle: Credential.Handle) {
         activityIndicator.startAnimating()
         
-        Embedded.shared.exportCredentials(handles: [handle]) { [weak self] result in
+        Embedded.shared.extendCredentials(handles: [handle]) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case let .success(exportStatus):
-                switch exportStatus {
+            case let .success(extendCredentialsStatus):
+                switch extendCredentialsStatus {
                 case .aborted:
                     break
                 case let .started(token, qrImage), let .tokenUpdated(token, qrImage):
                     self.exportHasStarted = true
                     self.activityIndicator.stopAnimating()
-                    self.exportErrorLabel.isHidden = true
+                    self.extendErrorLabel.isHidden = true
                     self.qrCodeErrorImage.isHidden = true
                     self.updateCodes(image: qrImage, token: token.value)
                 case .done:
@@ -119,13 +119,13 @@ class ShowQRCodeViewController: ViewController {
             case .failure:
                 if self.exportHasStarted {
                     // problem with exporting
-                    self.exportErrorLabel.text = LocalizedString.settingExportError.string
-                    self.exportErrorLabel.isHidden = false
+                    self.extendErrorLabel.text = LocalizedString.settingExtendCredentialsError.string
+                    self.extendErrorLabel.isHidden = false
                 } else {
                     // problem loading
                     self.activityIndicator.stopAnimating()
-                    self.exportErrorLabel.text = LocalizedString.settingExportQRError.string
-                    self.exportErrorLabel.isHidden = false
+                    self.extendErrorLabel.text = LocalizedString.settingExtendCredentialsQRError.string
+                    self.extendErrorLabel.isHidden = false
                     self.qrCodeErrorImage.isHidden = false
                 }
             }
@@ -170,7 +170,7 @@ class CancelErrorMessage: UIView {
     private let errorMessage = Label()
         .wrap()
         .withFont(Fonts.body)
-        .withText(LocalizedString.settingCancelExportError.string)
+        .withText(LocalizedString.settingCancelExtendCredentialsError.string)
         .withColor(Colors.error.value)
     
     init(){

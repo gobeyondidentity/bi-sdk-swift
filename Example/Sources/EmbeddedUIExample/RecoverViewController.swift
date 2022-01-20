@@ -14,6 +14,8 @@ class RecoverViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.hideKeyboardWhenTappedOutside()
+        
         let recoveryView = RecoveryView(recoveryURL: recoveryURL, for: self)
         
         view.addSubview(recoveryView)

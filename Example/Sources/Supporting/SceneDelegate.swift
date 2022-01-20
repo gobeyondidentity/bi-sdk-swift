@@ -25,12 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             Embedded.initialize(
                 biometricAskPrompt: viewModel.biometricAskPrompt,
                 clientID: "Embedded Example: \(viewModel.publicClientID): \(viewModel.confidentialClientID)",
-                logger: logger
-            )
-            
-            initializeBeyondIdentity(
-                biometricAskPrompt: viewModel.biometricAskPrompt,
-                clientID: viewModel.confidentialClientID,
+                redirectURI: viewModel.redirectURI,
                 logger: logger
             )
             
@@ -55,7 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         case .authenticator:
             break
         case .embedded:
-            Embedded.shared.registerCredential(url) { [weak self] result in
+            Embedded.shared.registerCredentials(url) { [weak self] result in
                 switch result {
                 case let .success(credential):
                     let dialog = UIAlertController(title: "Registered Credential: \(credential.name)", message: nil, preferredStyle: .alert)
@@ -81,12 +76,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     url: url,
                     config: RegisterConfig(
                         authFlowType: .authorize(
-                            AuthorizeLoginConfig(
-                                clientID: vm.confidentialClientID,
-                                redirectURI: vm.redirectURI,
-                                pkce: nil,
-                                scope: "openid"),
-                            { [weak self] authCode in
+                            pkce: nil,
+                            scope: "openid",
+                            callback: { [weak self] authCode in
                                 (self?.window?.rootViewController as? UINavigationController)?.pushViewController(
                                     EmbeddedUILoggedInViewController(authResponse: .authorize(authCode)),
                                     animated: true
@@ -102,10 +94,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     url: url,
                     config: RegisterConfig(
                         authFlowType: .authenticate(
-                            AuthenticateLoginConfig(
-                                clientID: vm.publicClientID,
-                                redirectURI: vm.redirectURI
-                            ), { [weak self] tokenResponse in
+                            callback: { [weak self] tokenResponse in
                                 (self?.window?.rootViewController as? UINavigationController)?.pushViewController(
                                     EmbeddedUILoggedInViewController(authResponse: .authenticate(tokenResponse)),
                                     animated: true

@@ -1,5 +1,7 @@
 xcuserdata/
+xcshareddata/
 Carthage/
 .swiftpm
 .build/
 libs/
+.DS_Store

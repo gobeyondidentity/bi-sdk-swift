@@ -7,7 +7,7 @@ import SharedDesign
 import UIKit
 
 enum Flow {
-    case button(FlowType)
+    case button(AuthFlowType)
     case setting
 }
 
@@ -183,7 +183,7 @@ extension CodeEntryViewController: UITextFieldDelegate, CodeEntryTextFieldDelega
     func submitCode() {
         let code = textFields.map{ $0.text ?? "" }.joined(separator: "")
         
-        Embedded.shared.importCredentials(token: CredentialToken(value: code)) { [weak self] result in
+        Embedded.shared.registerCredentials(token: CredentialToken(value: code)) { [weak self] result in
             guard let self = self else { return }
             
             switch result {

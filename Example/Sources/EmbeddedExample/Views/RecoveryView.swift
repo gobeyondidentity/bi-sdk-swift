@@ -33,7 +33,6 @@ class RecoveryView: UIView {
         recoverUserEmailField.addTarget(self, action: #selector(textFieldDidEnd(_:)), for: .editingDidEndOnExit)
         
         let stack = UIStackView(arrangedSubviews: [
-            UILabel().wrap().withTitle("Recovery"),
             recoverUserEmailField,
             recoverUserButton,
             recoverUserLabel,
@@ -90,7 +89,9 @@ class RecoveryView: UIView {
     
     @objc func textFieldDidEnd(_ textField: UITextField) {
         textField.resignFirstResponder()
+        recoverUser()
     }
+
 }
 
 func send(for vc: UIViewController, with request: URLRequest) {

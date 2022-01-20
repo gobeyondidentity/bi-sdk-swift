@@ -11,6 +11,9 @@
 		9536F8442682304500159945 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9536F8432682304500159945 /* DemoViewController.swift */; };
 		9536F8462682363A00159945 /* EmbeddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9536F8452682363A00159945 /* EmbeddedViewController.swift */; };
 		9536F851268294C300159945 /* EmbeddedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9536F850268294C300159945 /* EmbeddedViewModel.swift */; };
+		954957832786254600503722 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954957822786254600503722 /* AuthenticationViewController.swift */; };
+		954957852786254E00503722 /* ExtendCredentialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954957842786254E00503722 /* ExtendCredentialsViewController.swift */; };
+		954957872786256F00503722 /* ManageCredentialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954957862786256F00503722 /* ManageCredentialsViewController.swift */; };
 		954E8F7526D0061F002DCEF2 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E8F7426D0061F002DCEF2 /* UserDefaults.swift */; };
 		9564CCBD27275E9300A4717B /* BeyondIdentityAuthenticator in Frameworks */ = {isa = PBXBuildFile; productRef = 9564CCBC27275E9300A4717B /* BeyondIdentityAuthenticator */; };
 		9564CCBF27275E9300A4717B /* BeyondIdentityEmbedded in Frameworks */ = {isa = PBXBuildFile; productRef = 9564CCBE27275E9300A4717B /* BeyondIdentityEmbedded */; };
@@ -24,10 +27,7 @@
 		95694D4425F9BBF4000A06F7 /* PreLoggedInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D4325F9BBF4000A06F7 /* PreLoggedInViewModel.swift */; };
 		95694D6525FACEC4000A06F7 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D6425FACEC4000A06F7 /* InputViewController.swift */; };
 		958DF55226C1ACBA0026145A /* EmbeddedUILoggedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958DF55126C1ACBA0026145A /* EmbeddedUILoggedInViewController.swift */; };
-		95AFBF3A26A5FB390021785E /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AFBF3926A5FB390021785E /* AuthenticationView.swift */; };
 		95AFBF3C26A5FB9C0021785E /* UIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AFBF3B26A5FB9C0021785E /* UIHelpers.swift */; };
-		95AFBF3E26A5FF8C0021785E /* MigrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AFBF3D26A5FF8C0021785E /* MigrationView.swift */; };
-		95AFBF4026A601960021785E /* CredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AFBF3F26A601960021785E /* CredentialsView.swift */; };
 		95AFBF4226A6029B0021785E /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AFBF4126A6029B0021785E /* RegistrationView.swift */; };
 		95AFBF4426A603300021785E /* RecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AFBF4326A603300021785E /* RecoveryView.swift */; };
 		95D60C8D26B9D0AD0092C2E4 /* EmbeddedUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D60C8C26B9D0AD0092C2E4 /* EmbeddedUIViewController.swift */; };
@@ -43,6 +43,9 @@
 		9536F8432682304500159945 /* DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
 		9536F8452682363A00159945 /* EmbeddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedViewController.swift; sourceTree = "<group>"; };
 		9536F850268294C300159945 /* EmbeddedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedViewModel.swift; sourceTree = "<group>"; };
+		954957822786254600503722 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
+		954957842786254E00503722 /* ExtendCredentialsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExtendCredentialsViewController.swift; path = Sources/EmbeddedExample/ExtendCredentialsViewController.swift; sourceTree = SOURCE_ROOT; };
+		954957862786256F00503722 /* ManageCredentialsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCredentialsViewController.swift; sourceTree = "<group>"; };
 		954E8F7426D0061F002DCEF2 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		95694CD725F81A34000A06F7 /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95694CDA25F81A34000A06F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,10 +58,7 @@
 		95694D4325F9BBF4000A06F7 /* PreLoggedInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreLoggedInViewModel.swift; sourceTree = "<group>"; };
 		95694D6425FACEC4000A06F7 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
 		958DF55126C1ACBA0026145A /* EmbeddedUILoggedInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedUILoggedInViewController.swift; sourceTree = "<group>"; };
-		95AFBF3926A5FB390021785E /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		95AFBF3B26A5FB9C0021785E /* UIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelpers.swift; sourceTree = "<group>"; };
-		95AFBF3D26A5FF8C0021785E /* MigrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationView.swift; sourceTree = "<group>"; };
-		95AFBF3F26A601960021785E /* CredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsView.swift; sourceTree = "<group>"; };
 		95AFBF4126A6029B0021785E /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		95AFBF4326A603300021785E /* RecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryView.swift; sourceTree = "<group>"; };
 		95D60C8C26B9D0AD0092C2E4 /* EmbeddedUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedUIViewController.swift; sourceTree = "<group>"; };
@@ -87,8 +87,11 @@
 			isa = PBXGroup;
 			children = (
 				95AFBF4526A607580021785E /* Views */,
-				9536F8452682363A00159945 /* EmbeddedViewController.swift */,
 				9536F850268294C300159945 /* EmbeddedViewModel.swift */,
+				9536F8452682363A00159945 /* EmbeddedViewController.swift */,
+				954957822786254600503722 /* AuthenticationViewController.swift */,
+				954957842786254E00503722 /* ExtendCredentialsViewController.swift */,
+				954957862786256F00503722 /* ManageCredentialsViewController.swift */,
 				9508D70A2734534200981636 /* ScrollableViewController.swift */,
 				95AFBF3B26A5FB9C0021785E /* UIHelpers.swift */,
 			);
@@ -162,9 +165,6 @@
 		95AFBF4526A607580021785E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				95AFBF3926A5FB390021785E /* AuthenticationView.swift */,
-				95AFBF3F26A601960021785E /* CredentialsView.swift */,
-				95AFBF3D26A5FF8C0021785E /* MigrationView.swift */,
 				95AFBF4126A6029B0021785E /* RegistrationView.swift */,
 				95AFBF4326A603300021785E /* RecoveryView.swift */,
 			);
@@ -265,10 +265,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95AFBF3E26A5FF8C0021785E /* MigrationView.swift in Sources */,
+				954957832786254600503722 /* AuthenticationViewController.swift in Sources */,
 				9508D70B2734534200981636 /* ScrollableViewController.swift in Sources */,
 				95694D6525FACEC4000A06F7 /* InputViewController.swift in Sources */,
 				95D60C8D26B9D0AD0092C2E4 /* EmbeddedUIViewController.swift in Sources */,
+				954957852786254E00503722 /* ExtendCredentialsViewController.swift in Sources */,
 				95E8489F26DFD5CF000F2553 /* RecoverViewController.swift in Sources */,
 				95694CDF25F81A34000A06F7 /* PreLoggedInViewController.swift in Sources */,
 				95694D2125F9340B000A06F7 /* LoggedInViewController.swift in Sources */,
@@ -282,11 +283,10 @@
 				9536F8442682304500159945 /* DemoViewController.swift in Sources */,
 				954E8F7526D0061F002DCEF2 /* UserDefaults.swift in Sources */,
 				95E848A126DFD5E1000F2553 /* SignUpViewController.swift in Sources */,
-				95AFBF4026A601960021785E /* CredentialsView.swift in Sources */,
+				954957872786256F00503722 /* ManageCredentialsViewController.swift in Sources */,
 				9536F851268294C300159945 /* EmbeddedViewModel.swift in Sources */,
 				958DF55226C1ACBA0026145A /* EmbeddedUILoggedInViewController.swift in Sources */,
 				9536F8462682363A00159945 /* EmbeddedViewController.swift in Sources */,
-				95AFBF3A26A5FB390021785E /* AuthenticationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

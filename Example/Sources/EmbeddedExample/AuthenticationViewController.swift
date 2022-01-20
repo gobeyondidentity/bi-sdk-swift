@@ -1,14 +1,16 @@
+import Anchorage
 import BeyondIdentityEmbedded
+import os
 import UIKit
 
-class AuthenticationView: UIView {
-    let viewModel: EmbeddedViewModel
-
+class AuthenticationViewController: ScrollableViewController {
+    private let viewModel: EmbeddedViewModel
+    
     // Buttons
     let authorizeButton = makeButton(with: "Authorize")
-    let authenticateUnsafeButton = makeButton(with: "Unsafe Authentication")
+    let authenticateUnsafeButton = makeButton(with: "Exchange code")
     let authenticateButton = makeButton(with: "Authenticate")
-    let pkceButton = makeButton(with: "Generate PKCE Params")
+    let pkceButton = makeButton(with: "Generate PKCE Challenge")
 
     // Labels
     let authorizeLabel = UILabel().wrap()
@@ -19,59 +21,69 @@ class AuthenticationView: UIView {
     // User input
     var authCode: String?
     var pkce: PKCE?
-
+    
     init(viewModel: EmbeddedViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
+        super.init()
         
-        setUpSubviews()
+        view.backgroundColor = UIColor.systemBackground
+        navigationItem.title = "Authenticate"
     }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func setUpSubviews() {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         authorizeButton.addTarget(self, action: #selector(authorize), for: .touchUpInside)
         authenticateUnsafeButton.addTarget(self, action: #selector(authenticateUnsafe), for: .touchUpInside)
         authenticateButton.addTarget(self, action: #selector(authenticate), for: .touchUpInside)
         pkceButton.addTarget(self, action: #selector(getPKCE), for: .touchUpInside)
 
         let stack = UIStackView(arrangedSubviews: [
-            UILabel().wrap().withTitle("Authentication"),
-            pkceButton,
-            pkceLabel,
-            authorizeButton,
-            authorizeLabel,
-            authenticateUnsafeButton,
-            authenticateUnsafeLabel,
+            UILabel().wrap().withTitle("OIDC Public Client"),
+            UILabel().wrap().withTitle("Authenticate a user from a public client and receive a TokenResponse which will contain the access and id token. PKCE is handled internally to mitigate against an authorization code interception attack. This assumes there is no backend and the client secret can’t be safely stored.").withFont(UIFont.preferredFont(forTextStyle: .body)),
             authenticateButton,
             authenticateLabel,
+            UILabel().wrap().withTitle("OIDC Confidential Client"),
+            UILabel().wrap().withTitle("Authorize a user from a confidential client and receive an AuthorizationCode to exchange for an access and id token.").withFont(UIFont.preferredFont(forTextStyle: .body)),
+            UILabel().wrap().withTitle("STEP 1: PKCE CHALLENGE (OPTIONAL)").withFont(UIFont.preferredFont(forTextStyle: .callout)),
+            pkceButton,
+            pkceLabel,
+            UILabel().wrap().withTitle("STEP 2: AUTHORIZE").withFont(UIFont.preferredFont(forTextStyle: .callout)),
+            authorizeButton,
+            authorizeLabel,
+            UILabel().wrap().withTitle("STEP 3: AUTHORIZATION CODE / TOKEN EXCHANGE").withFont(UIFont.preferredFont(forTextStyle: .callout)),
+            UILabel().wrap().withTitle("Important Note: this should only be done for demo purposes. Use a back channel in production.").withFont(UIFont.preferredFont(forTextStyle: .body)),
+            authenticateUnsafeButton,
+            authenticateUnsafeLabel,
         ]).vertical()
 
-        addSubview(stack)
+        contentView.addSubview(stack)
 
-        stack.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            stack.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            stack.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            stack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-        ])
+        stack.horizontalAnchors == contentView.horizontalAnchors + 16
+        stack.verticalAnchors == contentView.verticalAnchors + 16
     }
-
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     @objc func authorize() {
+        Embedded.initialize(
+            biometricAskPrompt: viewModel.biometricAskPrompt,
+            clientID: viewModel.confidentialClientID,
+            redirectURI: viewModel.redirectURI,
+            logger: {(type: OSLogType, message: String) in
+                print(message)
+            }
+        )
         Embedded.shared.createPKCE { result in
             switch result {
             case let .success(pkce):
                 self.pkce = pkce
                 self.pkceLabel.text = pkce.description
                 Embedded.shared.authorize(
-                    clientID: self.viewModel.confidentialClientID,
                     pkceChallenge: pkce.codeChallenge,
-                    redirectURI: self.viewModel.redirectURI,
                     scope: "openid"
                 ) { result in
                     switch result {
@@ -97,7 +109,7 @@ class AuthenticationView: UIView {
             return
         }
                 
-        let parameters = "code=\(authCode)&code_verifier=\(pkce.codeVerifier)&client_secret=\(viewModel.confidentialClientSecret)&redirect_uri=\(viewModel.redirectURI)&grant_type=authorization_code"
+        let parameters = "code=\(authCode)&code_verifier=\(pkce.codeVerifier)&redirect_uri=\(viewModel.redirectURI)&grant_type=authorization_code"
         let postData =  parameters.data(using: .utf8)
         
         let clientSecretBasic = "\(viewModel.confidentialClientID):\(viewModel.confidentialClientSecret)".data(using: .utf8)?.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
@@ -130,7 +142,7 @@ class AuthenticationView: UIView {
                 }
             } else if let data = data, let result = String(data: data, encoding: .utf8) {
                 DispatchQueue.main.async {
-                    self.authenticateUnsafeLabel.text = "Warning, this API call would happen in your backend. Do not store client secrets in your app. \n\n Result:\(result)"
+                    self.authenticateUnsafeLabel.text = "Warning, this API call should happen in your backend. Do not store client secrets in your app. \n\n Result:\(result)"
                 }
             } else {
                 DispatchQueue.main.async {
@@ -142,10 +154,15 @@ class AuthenticationView: UIView {
     }
 
     @objc func authenticate() {
-        Embedded.shared.authenticate(
+        Embedded.initialize(
+            biometricAskPrompt: viewModel.biometricAskPrompt,
             clientID: viewModel.publicClientID,
-            redirectURI: viewModel.redirectURI
-        ) { result in
+            redirectURI: viewModel.redirectURI,
+            logger: {(type: OSLogType, message: String) in
+                print(message)
+            }
+        )
+        Embedded.shared.authenticate { result in
             switch result {
             case let .success(tokenResponse):
                 self.authenticateLabel.text = tokenResponse.description
@@ -166,3 +183,4 @@ class AuthenticationView: UIView {
         }
     }
 }
+

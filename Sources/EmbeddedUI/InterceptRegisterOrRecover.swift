@@ -9,7 +9,7 @@ public struct RegisterConfig {
     var appName: String {
         return getAppName(for: .main)
     }
-    let authFlowType: FlowType
+    let authFlowType: AuthFlowType
     let supportURL: URL
     let recoverUserAction: () -> Void
     
@@ -19,7 +19,7 @@ public struct RegisterConfig {
     ///   - supportURL: Either your support email "mailto:acme@mail.com" or a url to your support page "https://support-page.com
     ///   - recoverUserAction: An action that will be called when the user requests to recover an account. This could be an action that navigates to your recover screen.
     public init(
-        authFlowType: FlowType,
+        authFlowType: AuthFlowType,
         supportURL: URL,
         recoverUserAction: @escaping () -> Void
     ){

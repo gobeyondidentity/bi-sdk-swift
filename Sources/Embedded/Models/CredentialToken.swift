@@ -1,6 +1,6 @@
 import Foundation
 
-/// A random 9 digit token associated with a list of Credentials being imported or exported
+/// A random 9 digit token associated with a list of Credentials being registered or extended
 public struct CredentialToken {
     
     /// string value for the random 9 digit token

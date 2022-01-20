@@ -7,9 +7,9 @@ import UIKit
 
 class LoadingViewController: ViewController {
     enum ActionType {
-        case login(FlowType)
-        case registerOrRecover(URL, FlowType)
-        case importCredential(FlowType)
+        case login(AuthFlowType)
+        case registerOrRecover(URL, AuthFlowType)
+        case importCredential(AuthFlowType)
         case importCredentialWithoutAuth
     }
     
@@ -87,7 +87,7 @@ class LoadingViewController: ViewController {
         case let .login(authType):
             handleAuth(authType)
         case let .registerOrRecover(url, authType):
-            Embedded.shared.registerCredential(url){ [weak self] response in
+            Embedded.shared.registerCredentials(url){ [weak self] response in
                 guard let self = self else { return }
                 switch response {
                 case .success:
@@ -114,21 +114,23 @@ class LoadingViewController: ViewController {
         loadingView.setError(message, info)
     }
     
-    func handleAuth(_ authType: FlowType){
+    func handleAuth(_ authType: AuthFlowType){
         switch authType {
-        case let .authorize(config, completion):
-            authorize(config, completion)
-        case let .authenticate(config, completion):
-            authenticate(config, completion)
+        case let .authorize(pkce, scope, completion):
+            authorize(pkce: pkce, scope: scope, completion)
+        case let .authenticate(completion):
+            authenticate(completion)
         }
     }
     
-    private func authorize(_ config: AuthorizeLoginConfig, _ completion: @escaping (AuthorizationCode) -> Void){
+    private func authorize(
+        pkce: PKCE.CodeChallenge?,
+        scope: String,
+        _ completion: @escaping (AuthorizationCode) -> Void
+    ){
         Embedded.shared.authorize(
-            clientID: config.clientID,
-            pkceChallenge: config.pkce,
-            redirectURI: config.redirectURI,
-            scope: config.scope
+            pkceChallenge: pkce,
+            scope: scope
         ){ [weak self] response in
             guard let self = self else { return }
             switch response {
@@ -145,8 +147,8 @@ class LoadingViewController: ViewController {
         }
     }
     
-    private func authenticate(_ config: AuthenticateLoginConfig, _ completion: @escaping (TokenResponse) -> Void){
-        Embedded.shared.authenticate(clientID: config.clientID, redirectURI: config.redirectURI){ [weak self] response in
+    private func authenticate(_ completion: @escaping (TokenResponse) -> Void){
+        Embedded.shared.authenticate { [weak self] response in
             guard let self = self else { return }
             switch response {
             case let .success(tokenResponse):

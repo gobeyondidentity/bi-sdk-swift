@@ -19,7 +19,6 @@ extension UILabel {
 
 extension UITextField {
     func with(placeholder: String, type: UIKeyboardType) -> UITextField {
-        self.keyboardType = .emailAddress
         self.backgroundColor = .white
         self.borderStyle = .roundedRect
         self.autocapitalizationType = .none
@@ -39,6 +38,18 @@ extension UIStackView {
         self.spacing = 10
         self.alignment = .leading
         return self
+    }
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedOutside() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 

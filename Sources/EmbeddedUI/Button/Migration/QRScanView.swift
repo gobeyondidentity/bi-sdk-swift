@@ -202,7 +202,7 @@ extension CameraView: AVCaptureMetadataOutputObjectsDelegate {
                   let code = readableObject.stringValue,
                   let callback = callback else { return }
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-            Embedded.shared.importCredentials(token: CredentialToken(value: code)) { [weak self] result in
+            Embedded.shared.registerCredentials(token: CredentialToken(value: code)) { [weak self] result in
                 switch result {
                 case .success:
                     callback(.success(()))
