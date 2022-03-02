@@ -6,42 +6,61 @@ class ManageCredentialsViewController: ScrollableViewController {
     private let viewModel: EmbeddedViewModel
     
     // Buttons
-    let deleteCredentialButton = makeButton(with: "Delete A Credential")
-    let getCredentialsButton = makeButton(with: "Get All Credentials")
+    let deleteCredentialButton = makeButton(with: Localized.deleteCredentialButton.string)
+    let getCredentialsButton = makeButton(with: Localized.getCredentialsButton.string)
 
     // Labels
     let deleteCredentialLabel = UILabel().wrap()
     let getCredentialsLabel = UILabel().wrap()
+    lazy var customLine: CustomUiLine = {
+        let line = CustomUiLine()
+        return line
+    }()
     
     init(viewModel: EmbeddedViewModel) {
         self.viewModel = viewModel
         super.init()
-        
-        view.backgroundColor = UIColor.systemBackground
-        navigationItem.title = "Credential Management"
+        view.backgroundColor = UIColor(named: Colors.background.rawValue)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        deleteCredentialButton.addTarget(self, action: #selector(deleteCredential), for: .touchUpInside)
+
         getCredentialsButton.addTarget(self, action: #selector(getCredentials), for: .touchUpInside)
+        
+        deleteCredentialButton.addTarget(self, action: #selector(deleteCredential), for: .touchUpInside)
+
+        let credentialTitle = UILabel().wrap().withTitle(Localized.credentialTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
+        let viewCredentialTitle = UILabel().wrap().withTitle(Localized.viewCredentialTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let credentialText = UILabel().wrap().withTitle(Localized.credentialText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let deleteTitle = UILabel().wrap().withTitle(Localized.deleteTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let deleteText = UILabel().wrap().withTitle(Localized.deleteText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
 
         let stack = UIStackView(arrangedSubviews: [
-            UILabel().wrap().withTitle("View Credentials"),
-            UILabel().wrap().withTitle("Display all current credentials on this device.").withFont(UIFont.preferredFont(forTextStyle: .body)),
+            credentialTitle,
+            viewCredentialTitle,
+            credentialText,
             getCredentialsButton,
             getCredentialsLabel,
-            UILabel().wrap().withTitle("Delete Credential"),
-            UILabel().wrap().withTitle("This is destructive and will remove the current credential from this device. If no other device contains the Credential to extend it back to this device, then the Credential will be lost unless a recovery is done.").withFont(UIFont.preferredFont(forTextStyle: .body)),
+            customLine,
+            deleteTitle,
+            deleteText,
             deleteCredentialButton,
             deleteCredentialLabel,
         ]).vertical()
 
         contentView.addSubview(stack)
 
-        stack.horizontalAnchors == contentView.horizontalAnchors + 16
-        stack.verticalAnchors == contentView.verticalAnchors + 16
+        stack.alignment = .fill
+        stack.setCustomSpacing(32, after: credentialTitle)
+        stack.setCustomSpacing(16, after: getCredentialsLabel)
+        stack.setCustomSpacing(32, after: customLine)
+
+        stack.isLayoutMarginsRelativeArrangement = true
+        stack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0)
+        stack.verticalAnchors == contentView.safeAreaLayoutGuide.verticalAnchors - 16
+        stack.horizontalAnchors == contentView.safeAreaLayoutGuide.horizontalAnchors + 16
+
     }
     
     @available(*, unavailable)
@@ -54,7 +73,7 @@ class ManageCredentialsViewController: ScrollableViewController {
             switch result {
             case let .success(credentials):
                 guard let credential = credentials.first else {
-                    self.deleteCredentialLabel.text = "No Credential found, register or recover a credential first"
+                    self.deleteCredentialLabel.text = Localized.noCredentialFound.string
                     return
                 }
                 Embedded.shared.deleteCredential(for: credential.handle) { result in
@@ -76,7 +95,7 @@ class ManageCredentialsViewController: ScrollableViewController {
             switch result {
             case let .success(credentials):
                 guard !credentials.isEmpty else {
-                    self.getCredentialsLabel.text = "No Credentials found, register or recover a credential first"
+                    self.getCredentialsLabel.text = Localized.noCredentialFound.string
                     return
                 }
                 self.getCredentialsLabel.text = credentials.map({$0.description}).joined()

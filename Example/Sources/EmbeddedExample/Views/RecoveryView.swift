@@ -1,5 +1,6 @@
 import BeyondIdentityEmbedded
 import UIKit
+import Anchorage
 
 class RecoveryView: UIView {
     let recoverUserButton = makeButton(with: "Recover User")
@@ -37,17 +38,13 @@ class RecoveryView: UIView {
             recoverUserButton,
             recoverUserLabel,
         ]).vertical()
-        
+
         addSubview(stack)
+
+        stack.horizontalAnchors == horizontalAnchors
+        stack.verticalAnchors == verticalAnchors
+        stack.alignment = .fill
         
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            stack.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            stack.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            stack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-        ])
     }
     
     @objc func recoverUser() {

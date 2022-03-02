@@ -1,7 +1,7 @@
 import Foundation
 
 /// A random 9 digit token associated with a list of Credentials being registered or extended
-public struct CredentialToken {
+public struct CredentialToken: Equatable {
     
     /// string value for the random 9 digit token
     public let value: String

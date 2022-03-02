@@ -15,6 +15,7 @@ extension UILabel {
         adjustsFontForContentSizeCategory = true
         return self
     }
+
 }
 
 extension UITextField {
@@ -56,7 +57,10 @@ extension UIViewController {
 func makeButton(with name: String) -> UIButton {
     let button = UIButton()
     button.setTitle(name, for: .normal)
-    button.setTitleColor(.blue, for: .normal)
+    button.layer.cornerRadius = 4
+    button.contentEdgeInsets = UIEdgeInsets(top: 8.0, left: 16.0, bottom: 8.0, right: 16.0)
+    button.setTitleColor(UIColor(named: Colors.titleTextColor.rawValue), for: .normal)
+    button.layer.backgroundColor = UIColor(named: Colors.primaryButton.rawValue)?.cgColor
     return button
 }
 
@@ -107,3 +111,4 @@ extension TokenResponse: CustomStringConvertible {
         """
     }
 }
+

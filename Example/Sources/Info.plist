@@ -95,5 +95,10 @@
 	<string>This application needs access to your camera to scan QR codes</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Authentication with Touch ID or FaceID</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Overpass-Bold.ttf</string>
+		<string>Overpass-Regular.ttf</string>
+	</array>
 </dict>
 </plist>

@@ -1,0 +1,93 @@
+// Common
+"noCredentialFound" = "No Credential found, register or recover a Credential first";
+"missingCredential" = "Missing Credential, register or recover a Credential first";
+
+// Embedded SDK
+"authButton" = "View Authenticator UI SDK";
+"embeddedButton" = "View Embedded SDK";
+"embeddedUIButton" = "View Embedded UI SDK";
+"beyondIdentityTitle" = "Beyond Identity Swift SDKs";
+"beyondIdentityText" = "Beyond Identity provides the strongest authentication on the planet, eliminating passwords completely for customers, as well as from your database.";
+"embeddedSdkTitle" = "Embedded SDK";
+"embeddedSdkText" = "The Embedded SDK is a holistic SDK solution offering the entire Passwordless authentication embedded into your app. A set of functions are provided to you through the Embedded SDK. This SDK supports OIDC and OAuth2.";
+"embeddedUiTitle" = "Embedded UI SDK";
+"embeddedUiText" = "The Embedded UI SDK provides view wrappers around the Embedded SDK functions.";
+"authenticatorTitle" = "Authenticator SDK";
+"authenticatorText" = "Embed Passwordless authentication into your app with the support of the Beyond Identity Authenticator. Users will need to download the Beyond Identity Authenticator.";
+
+// View Embedded SDK
+"manageCredentialsButton" = "Manage Credentials";
+"extendCredentialsButton" = "Extend Credentials";
+"authenticateButton" = "Authenticate";
+"developerDocsButton" = "View Developer Docs";
+"supportButton" = "Visit Support";
+"createUserEmailField" = "Email address";
+"createUserButton" = "Register Credential";
+"viewEmbeddedSdkTitle" = "Embedded SDK";
+"getStartedTitle" = "Get Started";
+"registerTitle" = "REGISTER CREDENTIAL";
+"registerText" = "To get started using the Embedded SDK sample app, enter your email to begin registering a Credential.";
+"recoverTitle" = "RECOVER ACCOUNT";
+"recoverText" = "If a Credential was already registered but the Credential has been lost, recover the user instead.";
+"recoverNote" = "Note: If you recover an account, it will deactivate all existing credentials attached to the account.";
+
+// SDK Functionality
+"sdkFunctionalityTitle" = "SDK Functionality";
+"sdkFunctionalityText" = "Explore the various functions available when a Credential exists on the device.";
+
+// Questions or Issues?
+"supportTitle" = "Questions or Issues?";
+"supportText" = "Read through our developer docs for more details on our embedded SDK or reach out to support.";
+
+// Manage Credentials
+"deleteCredentialButton" = "Delete A Credential";
+"getCredentialsButton" = "View Credential";
+"credentialTitle" = "Credential Management";
+"viewCredentialTitle" = "View Credentials";
+"credentialText" = "View details of your Credential, such as date created, root fingerprint, chain length, and information related to your device.";
+"deleteTitle" = "Delete Credential";
+"deleteText" = "This is destructive and will remove the current Credential from this device. If no other device contains the Credential to extend it back to this device, then the Credential will be lost unless a recovery is done.";
+
+// Extend Credentials
+"extendButton" = "Extend Credential";
+"extendCancelButton" = "Cancel Extension";
+"registerButton" = "Register Credential";
+"registerField" = "Enter token to register";
+"extendRegisterTitle" = "Register/Extend Credential";
+"extendRegisterText" = "If you’d like to authenticate on another device, extend your Credential on this to device to the other device.";
+"extendTitle" = "Extend Credential";
+"extendText" = "Click “Extend Credential” to generate a 9-digit export token that’ll be used to extend your Credential to another device.";
+"noteText" = "Note: Lock screen needs to be set on the device.";
+"cancelTitle" = "Cancel Credential Extension";
+"cancelText" = "The “Extend Credential” action blocks the Embedded SDK from performing other actions. The extended Credential needs to finish or be explicitly cancelled.";
+"registerCredentialTitle" = "Register Credential";
+"registerCredentialText" = "To register a Credential from another device, enter the extended token generated on your device with a Credential.";
+"cancelExtendCredentials" = "Canceled Extension.";
+
+//Authenticate
+"authorizeButton" = "Authorize";
+"authenticateUnsafeButton" = "Exchange Code";
+"pkceButton" = "Generate PKCE Challenge";
+"authenticateAuthButon" = "Authenticate";
+"AuthenticateTitle" = "Authenticate";
+"accessText" = "After authentication, you’ll receive and access and ID token, which will be used to get information on the user and authenticate on APIs. The flow of getting tokens depends on your OIDC configuration, and there are two types - Public (without client secret) and Confidential (with client secret).";
+"oidcPublicText" = "OIDC Public Client";
+"publicClientText" = "Public clients are unable to keep the secret secure, i.e. front-end app with no back-end. Use the following “Authenticate” function for a public client, which will go through the whole flow to get the Access and ID tokens.";
+"oidcConfidentialText" = "OIDC Confidential Client";
+"ConfidentialClientText" = "Confidential clients are able to keep the secret secure, i.e. your backend.";
+"stepOneText" = "Step 1: PKCE Challenge (optional)";
+"stepTwoText" = "Step 2: Authorize";
+"useAuthorizeText" = "Use the “Authorize” function for a confidential client. You will get an authorization code that needs to be exchanged for the Access and ID token.";
+"stepThreeText" = "Step 3: Authorization Code / Token Exchange";
+"clientSecretText" = "We need the client secret in order to exchange the authorization code for Access and ID tokens.";
+"importantNoteText" = "Important note: The client secret is stored on the device for demo purposes only. This should not be done in production.";
+"authenticateUnsafeText" = "First register a user and then complete \"Authorize\". This simulates your backend making the token exchange with the provided Authorization Code returned from \"Authorize\".";
+"base64Error" = "Unable to base64 encode client secret";
+
+// Developer Docs
+"DeveloperDocsUrl" = "https://developer.beyondidentity.com/docs/ios-swift-embedded-sdk";
+
+// Support Page
+"supportPageUrl" = "https://beyondidentity.atlassian.net/wiki/spaces/CS/overview";
+
+

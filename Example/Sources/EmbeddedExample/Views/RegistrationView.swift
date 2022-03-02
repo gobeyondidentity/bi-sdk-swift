@@ -1,5 +1,6 @@
 import BeyondIdentityEmbedded
 import UIKit
+import Anchorage
 
 class RegistrationView: UIView {
     let createUserButton = makeButton(with: "Create User")
@@ -37,14 +38,9 @@ class RegistrationView: UIView {
         
         addSubview(stack)
         
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            stack.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            stack.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            stack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-        ])
+        stack.horizontalAnchors == horizontalAnchors
+        stack.verticalAnchors == verticalAnchors
+        stack.alignment = .fill
     }
     
     @objc func createUser() {

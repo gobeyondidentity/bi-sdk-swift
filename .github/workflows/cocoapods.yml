@@ -18,8 +18,6 @@ jobs:
         run: |
           set -euo pipefail
           pod trunk push BeyondIdentityCoreSDK.podspec
-          pod trunk push BeyondIdentityDeviceInfoSDK.podspec
-          pod trunk push BeyondIdentityEnclaveSDK.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
 
@@ -35,6 +33,7 @@ jobs:
       - name: Deploy to Cocoapods Trunk
         run: |
           set -euo pipefail
+          pod repo update
           pod trunk push BeyondIdentityEmbedded.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}

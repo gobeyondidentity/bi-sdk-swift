@@ -7,17 +7,21 @@ class AuthenticationViewController: ScrollableViewController {
     private let viewModel: EmbeddedViewModel
     
     // Buttons
-    let authorizeButton = makeButton(with: "Authorize")
-    let authenticateUnsafeButton = makeButton(with: "Exchange code")
-    let authenticateButton = makeButton(with: "Authenticate")
-    let pkceButton = makeButton(with: "Generate PKCE Challenge")
+    let authorizeButton = makeButton(with: Localized.authorizeButton.string)
+    let authenticateUnsafeButton = makeButton(with: Localized.authenticateUnsafeButton.string)
+    let authenticateButton = makeButton(with: Localized.authenticateAuthButon.string)
+    let pkceButton = makeButton(with: Localized.pkceButton.string)
 
     // Labels
     let authorizeLabel = UILabel().wrap()
     let authenticateUnsafeLabel = UILabel().wrap()
     let authenticateLabel = UILabel().wrap()
     let pkceLabel = UILabel().wrap()
-
+    lazy var customLine: CustomUiLine = {
+        let line = CustomUiLine()
+        return line
+    }()
+   
     // User input
     var authCode: String?
     var pkce: PKCE?
@@ -26,8 +30,7 @@ class AuthenticationViewController: ScrollableViewController {
         self.viewModel = viewModel
         super.init()
         
-        view.backgroundColor = UIColor.systemBackground
-        navigationItem.title = "Authenticate"
+        view.backgroundColor = .systemBackground
     }
     
     override func viewDidLoad() {
@@ -39,28 +42,40 @@ class AuthenticationViewController: ScrollableViewController {
         pkceButton.addTarget(self, action: #selector(getPKCE), for: .touchUpInside)
 
         let stack = UIStackView(arrangedSubviews: [
-            UILabel().wrap().withTitle("OIDC Public Client"),
-            UILabel().wrap().withTitle("Authenticate a user from a public client and receive a TokenResponse which will contain the access and id token. PKCE is handled internally to mitigate against an authorization code interception attack. This assumes there is no backend and the client secret can’t be safely stored.").withFont(UIFont.preferredFont(forTextStyle: .body)),
+            UILabel().wrap().withTitle(Localized.AuthenticateTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle)),
+            UILabel().wrap().withTitle(Localized.accessText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
+            UILabel().wrap().withTitle(Localized.oidcPublicText.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle)),
+            UILabel().wrap().withTitle(Localized.publicClientText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
             authenticateButton,
             authenticateLabel,
-            UILabel().wrap().withTitle("OIDC Confidential Client"),
-            UILabel().wrap().withTitle("Authorize a user from a confidential client and receive an AuthorizationCode to exchange for an access and id token.").withFont(UIFont.preferredFont(forTextStyle: .body)),
-            UILabel().wrap().withTitle("STEP 1: PKCE CHALLENGE (OPTIONAL)").withFont(UIFont.preferredFont(forTextStyle: .callout)),
+            customLine,
+            UILabel().wrap().withTitle(Localized.oidcConfidentialText.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle)),
+            UILabel().wrap().withTitle(Localized.ConfidentialClientText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
+            UILabel().wrap().withTitle(Localized.stepOneText.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
             pkceButton,
             pkceLabel,
-            UILabel().wrap().withTitle("STEP 2: AUTHORIZE").withFont(UIFont.preferredFont(forTextStyle: .callout)),
+            UILabel().wrap().withTitle(Localized.stepTwoText.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
+            UILabel().wrap().withTitle(Localized.useAuthorizeText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
             authorizeButton,
             authorizeLabel,
-            UILabel().wrap().withTitle("STEP 3: AUTHORIZATION CODE / TOKEN EXCHANGE").withFont(UIFont.preferredFont(forTextStyle: .callout)),
-            UILabel().wrap().withTitle("Important Note: this should only be done for demo purposes. Use a back channel in production.").withFont(UIFont.preferredFont(forTextStyle: .body)),
+            UILabel().wrap().withTitle(Localized.stepThreeText.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
+            UILabel().wrap().withTitle(Localized.clientSecretText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
+            UILabel().wrap().withTitle(Localized.importantNoteText.string).withColor(UIColor.systemRed).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
             authenticateUnsafeButton,
             authenticateUnsafeLabel,
         ]).vertical()
 
         contentView.addSubview(stack)
 
-        stack.horizontalAnchors == contentView.horizontalAnchors + 16
-        stack.verticalAnchors == contentView.verticalAnchors + 16
+        stack.alignment = .fill
+        stack.setCustomSpacing(16, after: authenticateLabel)
+        stack.setCustomSpacing(32, after: customLine)
+
+        stack.isLayoutMarginsRelativeArrangement = true
+        stack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0)
+        stack.verticalAnchors == contentView.safeAreaLayoutGuide.verticalAnchors - 16
+        stack.horizontalAnchors == contentView.safeAreaLayoutGuide.horizontalAnchors + 16
+        
     }
     
     @available(*, unavailable)
@@ -105,7 +120,7 @@ class AuthenticationViewController: ScrollableViewController {
     /// Warning: This demo is simulating what your confidential server can do. Never store a client secret in your app.
     @objc func authenticateUnsafe() {
         guard let authCode = authCode, let pkce = pkce else {
-            authenticateUnsafeLabel.text = "First register a user and then complete \"Authorize\". This unsafe function will simulate your backend making the token exchange with the provided Authentication Code returned from \"Authorize\"."
+            authenticateUnsafeLabel.text = Localized.authenticateUnsafeText.string
             return
         }
                 
@@ -115,7 +130,7 @@ class AuthenticationViewController: ScrollableViewController {
         let clientSecretBasic = "\(viewModel.confidentialClientID):\(viewModel.confidentialClientSecret)".data(using: .utf8)?.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
         
         guard let clientSecretBasic = clientSecretBasic else {
-            authenticateUnsafeLabel.text = "Unable to base64 encode client secret"
+            authenticateUnsafeLabel.text = Localized.base64Error.string
             return
         }
         

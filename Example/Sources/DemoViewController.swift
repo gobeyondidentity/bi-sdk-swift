@@ -9,40 +9,75 @@ enum DemoState {
 
 class DemoViewController: ScrollableViewController {
 
+    lazy var customLineSdk: CustomUiLine = {
+        let line = CustomUiLine()
+        return line
+    }()
+
+    lazy var customLineUI: CustomUiLine = {
+        let line = CustomUiLine()
+        return line
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.systemBackground
-        navigationItem.title = "Beyond Identity SDK Demos"
-        
-        let authButton = makeButton(with: "Authenticator Demo")
+        view.backgroundColor = .systemBackground
+
+        let imageView = UIImageView(image: .vector)
+        navigationItem.titleView = imageView
+
+        let authButton = makeButton(with: Localized.authButton.string)
         authButton.addTarget(self, action: #selector(toAuth), for: .touchUpInside)
 
-        let embeddedButton = makeButton(with: "Embedded Demo")
+        let embeddedButton = makeButton(with: Localized.embeddedButton.string)
         embeddedButton.addTarget(self, action: #selector(toEmbedded), for: .touchUpInside)
         
-        let embeddedUIButton = makeButton(with: "Embedded UI Demo")
+        let embeddedUIButton = makeButton(with: Localized.embeddedUIButton.string)
         embeddedUIButton.addTarget(self, action: #selector(toEmbeddedUI), for: .touchUpInside)
-        
-        let stack = UIStackView(arrangedSubviews: [
-            UILabel().wrap().withTitle("Beyond Identity Swift SDKs"),
-            UILabel().wrap().withTitle("Version: \(EmbeddedViewModel().sdkVersion)").withFont(UIFont.preferredFont(forTextStyle: .caption1)),
 
-            UILabel().wrap().withTitle("Beyond Identity provides the strongest authentication on the planet, eliminating passwords completely for customers, as well as from your database.").withFont(UIFont.preferredFont(forTextStyle: .body)),
-            UILabel().wrap().withTitle("Embedded SDK"),
-            UILabel().wrap().withTitle("The Embedded SDK is a holistic SDK solution offering the entire Passwordless authentication embedded into your app. A set of functions are provided to you through the Embedded SDK. This SDK supports OIDC and OAuth2").withFont(UIFont.preferredFont(forTextStyle: .body)),
+        let beyondIdentityTitle = UILabel().wrap().withTitle(Localized.beyondIdentityTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
+        let beyondIdentityText =  UILabel().wrap().withTitle(Localized.beyondIdentityText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let embeddedSdkTitle = UILabel().wrap().withTitle(Localized.embeddedSdkTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let embeddedSdkText =  UILabel().wrap().withTitle(Localized.embeddedSdkText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let sdkVersion = UILabel().wrap().withTitle("Version: \(EmbeddedViewModel().sdkVersion)").withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.medium) ??  UIFont.systemFont(ofSize: Size.medium))
+        let embeddedUiTitle = UILabel().wrap().withTitle(Localized.embeddedUiTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let embeddedUiText = UILabel().wrap().withTitle(Localized.embeddedUiText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let authenticatorTitle = UILabel().wrap().withTitle(Localized.authenticatorTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let authenticatorText = UILabel().wrap().withTitle(Localized.authenticatorText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+
+
+        let stack = UIStackView(arrangedSubviews: [
+            beyondIdentityTitle,
+            beyondIdentityText,
+            embeddedSdkTitle,
+            embeddedSdkText,
+            sdkVersion,
             embeddedButton,
-            UILabel().wrap().withTitle("Embedded UI SDK"),
-            UILabel().wrap().withTitle("The Embedded UI SDK provides view wrappers around the Embedded SDK functions.").withFont(UIFont.preferredFont(forTextStyle: .body)),
+            customLineSdk,
+            embeddedUiTitle,
+            embeddedUiText,
             embeddedUIButton,
-            UILabel().wrap().withTitle("Authenticator SDK"),
-            UILabel().wrap().withTitle("Embed Passwordless authentication into your app with the support of the Beyond Identity Authenticator. Users will need to download the Beyond Identity Authenticator.").withFont(UIFont.preferredFont(forTextStyle: .body)),
+            customLineUI,
+            authenticatorTitle,
+            authenticatorText,
             authButton,
         ]).vertical()
         
         contentView.addSubview(stack)
+        stack.setCustomSpacing(32, after: beyondIdentityText)
+        stack.setCustomSpacing(16, after: sdkVersion)
+        stack.setCustomSpacing(32, after: embeddedButton)
+        stack.setCustomSpacing(32, after: customLineSdk)
+        stack.setCustomSpacing(32, after: embeddedUIButton)
+        stack.setCustomSpacing(32, after: customLineUI)
+        stack.setCustomSpacing(16, after: authenticatorText)
 
         stack.horizontalAnchors == contentView.horizontalAnchors + 16
         stack.verticalAnchors == contentView.verticalAnchors + 16
+        customLineSdk.leadingAnchor == stack.leadingAnchor
+        customLineSdk.trailingAnchor == stack.trailingAnchor
+        customLineUI.leadingAnchor == stack.leadingAnchor
+        customLineUI.trailingAnchor == stack.trailingAnchor
     }
 
     @objc func toAuth() {

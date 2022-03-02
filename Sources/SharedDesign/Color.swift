@@ -13,7 +13,7 @@ public enum Colors: String, CaseIterable {
     /// #000000 / #FFFFFF used on BeyondIdentityButton, QR code border
     case border2 = "border2"
     
-    /// #DDDDDD / Clear used on setting credentail card
+    /// #DDDDDD / Clear used on setting credential card
     case border3 = "border3"
     
     /// #D22121 / #D22121 dark red in darkmode used on icons and buttons

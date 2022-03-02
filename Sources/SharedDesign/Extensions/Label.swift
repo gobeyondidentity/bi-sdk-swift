@@ -32,7 +32,7 @@ extension UILabel {
         self.font = font
         adjustsFontForContentSizeCategory = true
     }
-    
+
     public func withColor(_ color: UIColor) -> UILabel {
         textColor = color
         return self

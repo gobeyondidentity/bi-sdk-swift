@@ -6,17 +6,25 @@ class ExtendCredentialsViewController: ScrollableViewController {
     private let viewModel: EmbeddedViewModel
     
     // Buttons
-    let extendButton = makeButton(with: "Extend Credentials")
-    let extendCancelButton = makeButton(with: "Cancel Extending Credentials")
-    let registerButton = makeButton(with: "Register Credentials")
+    let extendButton = makeButton(with: Localized.extendButton.string)
+    let extendCancelButton = makeButton(with: Localized.extendCancelButton.string)
+    let registerButton = makeButton(with: Localized.registerButton.string)
 
     // Labels
     let extendLabel = UILabel().wrap()
     let extendCancelLabel = UILabel().wrap()
     let registerLabel = UILabel().wrap()
+    lazy var customLine: CustomUiLine = {
+        let line = CustomUiLine()
+        return line
+    }()
+    lazy var cancelCustomLine: CustomUiLine = {
+        let line = CustomUiLine()
+        return line
+    }()
     
     // TextFields
-    let registerField = UITextField().with(placeholder: "Enter token to register", type: .namePhonePad)
+    let registerField = UITextField().with(placeholder: Localized.registerField.string, type: .namePhonePad)
 
     // ExtendStackView
     let extendView = UIStackView().vertical()
@@ -28,8 +36,7 @@ class ExtendCredentialsViewController: ScrollableViewController {
         self.viewModel = viewModel
         super.init()
         
-        view.backgroundColor = UIColor.systemBackground
-        navigationItem.title = "Import / Export Credentials"
+        view.backgroundColor = .systemBackground
     }
     
     override func viewDidLoad() {
@@ -45,17 +52,35 @@ class ExtendCredentialsViewController: ScrollableViewController {
 
         extendView.addArrangedSubview(extendButton)
         extendView.addArrangedSubview(extendLabel)
-        
+
+        let registerTitle = UILabel().wrap().withTitle(Localized.extendRegisterTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
+        let registerText = UILabel().wrap().withTitle(Localized.extendRegisterText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let extendTitle =  UILabel().wrap().withTitle(Localized.extendTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
+        let extendText = UILabel().wrap().withTitle(Localized.extendText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let noteText = UILabel().wrap().withTitle(Localized.noteText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let cancelTitle = UILabel().wrap().withTitle(Localized.cancelTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
+        let cancelText = UILabel().wrap().withTitle(Localized.cancelText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let registerCredentialTitle = UILabel().wrap().withTitle(Localized.registerCredentialTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
+        let registerCredentialText = UILabel().wrap().withTitle(Localized.registerCredentialText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+
         let stack = UIStackView(arrangedSubviews: [
-            UILabel().wrap().withTitle("Extend Credential (Export)"),
-            UILabel().wrap().withTitle("Extend the current device credential to another device.").withFont(UIFont.preferredFont(forTextStyle: .body)),
+            registerTitle,
+            registerText,
+            extendTitle,
+            extendText,
+            noteText,
+            extendButton,
+            extendLabel,
             extendView,
-            UILabel().wrap().withTitle("Cancel Credential Extension"),
-            UILabel().wrap().withTitle("Stop the extend process.").withFont(UIFont.preferredFont(forTextStyle: .body)),
+            customLine,
+            cancelTitle,
+            cancelText,
+            extendView,
             extendCancelButton,
             extendCancelLabel,
-            UILabel().wrap().withTitle("Register Credential (Import)"),
-            UILabel().wrap().withTitle("Register a Credential on this device with a token from another credential on another device.").withFont(UIFont.preferredFont(forTextStyle: .body)),
+            cancelCustomLine,
+            registerCredentialTitle,
+            registerCredentialText,
             registerField,
             registerButton,
             registerLabel
@@ -63,8 +88,19 @@ class ExtendCredentialsViewController: ScrollableViewController {
 
         contentView.addSubview(stack)
 
-        stack.horizontalAnchors == contentView.horizontalAnchors + 16
-        stack.verticalAnchors == contentView.verticalAnchors + 16
+        stack.alignment = .fill
+        stack.setCustomSpacing(32, after: registerText)
+        stack.setCustomSpacing(32, after: extendText)
+        stack.setCustomSpacing(16, after: extendLabel)
+        stack.setCustomSpacing(32, after: customLine)
+        stack.setCustomSpacing(16, after: extendCancelLabel)
+        stack.setCustomSpacing(32, after: cancelCustomLine)
+
+        stack.isLayoutMarginsRelativeArrangement = true
+        stack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0)
+        stack.verticalAnchors == contentView.safeAreaLayoutGuide.verticalAnchors - 16
+        stack.horizontalAnchors == contentView.safeAreaLayoutGuide.horizontalAnchors + 16
+
     }
     
     @available(*, unavailable)
@@ -76,7 +112,7 @@ class ExtendCredentialsViewController: ScrollableViewController {
         Embedded.shared.cancelExtendCredentials { result in
             switch result {
             case .success:
-                self.extendCancelLabel.text = "Canceled Extend"
+                self.extendCancelLabel.text = Localized.cancelExtendCredentials.string
             case let .failure(error):
                 self.extendCancelLabel.text = error.localizedDescription
             }
@@ -89,7 +125,7 @@ class ExtendCredentialsViewController: ScrollableViewController {
             switch result {
             case let .success(Credentials):
                 guard let firstCredential = Credentials.first else {
-                    self.extendLabel.text = "Missing Credential, register or recover a credential first"
+                    self.extendLabel.text = Localized.missingCredential.string
                     return
                 }
                 Embedded.shared.extendCredentials(handles: [firstCredential.handle]) { [weak self] result in

@@ -8,7 +8,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Goodbye, passwords!
+Goodbye, passwords! The Beyond Identity SDKs allow you to embed the Passwordless experience into your product. These SDKs supports OIDC and OAuth2.
 
 ## SDKs
 
@@ -51,3 +51,7 @@ dependencies: [
 ```
 
 2. Run `swift build`
+
+## Usage
+
+Check out the [documentation](https://developer.beyondidentity.com) for more information.
