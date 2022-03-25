@@ -54,8 +54,14 @@ public enum Colors: String, CaseIterable {
     
     /// #FFFFFF / #FFFFFF
     case standardButtonText = "standard-button-text"
-    
-    
+
+    /// #DDDDDD / #444444
+    case line = "line"
+
+    // example app values
+    /// #F7F7F7 / #333333
+    case cardBackground = "cardBackground"
+
     public var value: Color {
         Colors.getColor(for: self.rawValue)!
     }

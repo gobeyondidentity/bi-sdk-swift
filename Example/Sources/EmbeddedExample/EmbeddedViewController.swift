@@ -1,6 +1,7 @@
 import BeyondIdentityEmbedded
 import UIKit
 import Anchorage
+import SharedDesign
 
 class EmbeddedViewController: ScrollableViewController {
     let viewModel: EmbeddedViewModel
@@ -38,7 +39,7 @@ class EmbeddedViewController: ScrollableViewController {
         super.init()
         let imageView = UIImageView(image: .vector)
         navigationItem.titleView = imageView
-        view.backgroundColor = UIColor(named: Colors.nuetralGrey.rawValue)
+        view.backgroundColor = Colors.cardBackground.value
     }
     
     @available(*, unavailable)
@@ -68,14 +69,14 @@ class EmbeddedViewController: ScrollableViewController {
 
         setUpScrollView()
 
-        let viewEmbeddedSdkTitle = UILabel().wrap().withTitle(Localized.viewEmbeddedSdkTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
-        let sdkVersion = UILabel().wrap().withTitle("Version: \(EmbeddedViewModel().sdkVersion)").withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.medium) ??  UIFont.systemFont(ofSize: Size.medium))
-        let getStartedTitle = UILabel().wrap().withTitle(Localized.getStartedTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let registerTitle = UILabel().wrap().withTitle(Localized.registerTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let registerText = UILabel().wrap().withTitle(Localized.registerText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let recoverTitle = UILabel().wrap().withTitle(Localized.recoverTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let recoverText = UILabel().wrap().withTitle(Localized.recoverText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let recoverNote = UILabel().wrap().withTitle(Localized.recoverNote.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let viewEmbeddedSdkTitle = UILabel().wrap().withTitle(Localized.viewEmbeddedSdkTitle.string).withFont(Fonts.largeTitle)
+        let sdkVersion = UILabel().wrap().withTitle("Version: \(EmbeddedViewModel().sdkVersion)").withFont(Fonts.medium)
+        let getStartedTitle = UILabel().wrap().withTitle(Localized.getStartedTitle.string).withFont(Fonts.navTitle)
+        let registerTitle = UILabel().wrap().withTitle(Localized.registerTitle.string).withFont(Fonts.navTitle)
+        let registerText = UILabel().wrap().withTitle(Localized.registerText.string).withFont(Fonts.title2)
+        let recoverTitle = UILabel().wrap().withTitle(Localized.recoverTitle.string).withFont(Fonts.navTitle)
+        let recoverText = UILabel().wrap().withTitle(Localized.recoverText.string).withFont(Fonts.title2)
+        let recoverNote = UILabel().wrap().withTitle(Localized.recoverNote.string).withFont(Fonts.title2)
 
         let stackEmbeddedSdk = UIStackView(arrangedSubviews: [
             viewEmbeddedSdkTitle,
@@ -92,21 +93,21 @@ class EmbeddedViewController: ScrollableViewController {
             recoverView
         ]).vertical()
 
-        let sdkFunctionalityTitle = UILabel().wrap().withTitle(Localized.sdkFunctionalityTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
+        let sdkFunctionalityTitle = UILabel().wrap().withTitle(Localized.sdkFunctionalityTitle.string).withFont(Fonts.largeTitle)
 
         let stackSdkFunctionality = UIStackView(arrangedSubviews: [
             sdkFunctionalityTitle,
-            UILabel().wrap().withTitle(Localized.sdkFunctionalityText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
+            UILabel().wrap().withTitle(Localized.sdkFunctionalityText.string).withFont(Fonts.title2),
             manageCredentialsButton,
             extendCredentialsButton,
             authenticateButton,
         ]).vertical()
 
-        let supportTitle =  UILabel().wrap().withTitle(Localized.supportTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
+        let supportTitle =  UILabel().wrap().withTitle(Localized.supportTitle.string).withFont(Fonts.largeTitle)
 
         let stackSdkSupport = UIStackView(arrangedSubviews: [
             supportTitle,
-            UILabel().wrap().withTitle(Localized.supportText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
+            UILabel().wrap().withTitle(Localized.supportText.string).withFont(Fonts.title2),
             developerDocsButton,
             supportButton,
         ]).vertical()
@@ -131,13 +132,13 @@ class EmbeddedViewController: ScrollableViewController {
         ]).vertical()
 
         contentView.addSubview(stack)
-        contentView.backgroundColor = UIColor(named: Colors.nuetralGrey.rawValue)
+        contentView.backgroundColor = Colors.cardBackground.value
 
         stack.horizontalAnchors == contentView.safeAreaLayoutGuide.horizontalAnchors
         stack.verticalAnchors == contentView.safeAreaLayoutGuide.verticalAnchors
         stack.alignment = .fill
 
-        embeddedContainer.backgroundColor = UIColor(named: Colors.background.rawValue)
+        embeddedContainer.backgroundColor = Colors.background.value
         embeddedContainer.isLayoutMarginsRelativeArrangement = true
         embeddedContainer.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
 
@@ -147,13 +148,13 @@ class EmbeddedViewController: ScrollableViewController {
         stackEmbeddedSdk.setCustomSpacing(16, after: recoverText)
         stackEmbeddedSdk.alignment = .fill
 
-        sdkFunctionalityContainer.backgroundColor = UIColor(named: Colors.background.rawValue)
+        sdkFunctionalityContainer.backgroundColor = Colors.background.value
         sdkFunctionalityContainer.isLayoutMarginsRelativeArrangement = true
         sdkFunctionalityContainer.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 15, trailing: 5)
         stackSdkFunctionality.alignment = .fill
         stack.setCustomSpacing(16, after: sdkFunctionalityContainer)
 
-        supportContainer.backgroundColor = UIColor(named: Colors.background.rawValue)
+        supportContainer.backgroundColor = Colors.background.value
         supportContainer.isLayoutMarginsRelativeArrangement = true
         supportContainer.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 5)
         stackSdkSupport.alignment = .fill
@@ -238,5 +239,4 @@ class EmbeddedViewController: ScrollableViewController {
     @objc func toSupportPage() {
         navigationController?.pushViewController(SupportPageViewController(viewModel: viewModel), animated: true)
     }
-
 }

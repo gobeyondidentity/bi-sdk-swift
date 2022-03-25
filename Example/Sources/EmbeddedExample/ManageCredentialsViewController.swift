@@ -1,26 +1,23 @@
 import Anchorage
 import BeyondIdentityEmbedded
 import UIKit
+import SharedDesign
 
 class ManageCredentialsViewController: ScrollableViewController {
     private let viewModel: EmbeddedViewModel
     
-    // Buttons
     let deleteCredentialButton = makeButton(with: Localized.deleteCredentialButton.string)
     let getCredentialsButton = makeButton(with: Localized.getCredentialsButton.string)
 
-    // Labels
     let deleteCredentialLabel = UILabel().wrap()
     let getCredentialsLabel = UILabel().wrap()
-    lazy var customLine: CustomUiLine = {
-        let line = CustomUiLine()
-        return line
-    }()
+    
+    private let line = Line()
     
     init(viewModel: EmbeddedViewModel) {
         self.viewModel = viewModel
         super.init()
-        view.backgroundColor = UIColor(named: Colors.background.rawValue)
+        view.backgroundColor = .systemBackground
     }
     
     override func viewDidLoad() {
@@ -29,12 +26,15 @@ class ManageCredentialsViewController: ScrollableViewController {
         getCredentialsButton.addTarget(self, action: #selector(getCredentials), for: .touchUpInside)
         
         deleteCredentialButton.addTarget(self, action: #selector(deleteCredential), for: .touchUpInside)
+        
+        deleteCredentialLabel.backgroundColor = .lightGray
+        getCredentialsLabel.backgroundColor = .lightGray
 
-        let credentialTitle = UILabel().wrap().withTitle(Localized.credentialTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
-        let viewCredentialTitle = UILabel().wrap().withTitle(Localized.viewCredentialTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let credentialText = UILabel().wrap().withTitle(Localized.credentialText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let deleteTitle = UILabel().wrap().withTitle(Localized.deleteTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let deleteText = UILabel().wrap().withTitle(Localized.deleteText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let credentialTitle = UILabel().wrap().withTitle(Localized.credentialTitle.string).withFont(Fonts.largeTitle)
+        let viewCredentialTitle = UILabel().wrap().withTitle(Localized.viewCredentialTitle.string).withFont(Fonts.navTitle)
+        let credentialText = UILabel().wrap().withTitle(Localized.credentialText.string).withFont(Fonts.title2)
+        let deleteTitle = UILabel().wrap().withTitle(Localized.deleteTitle.string).withFont(Fonts.navTitle)
+        let deleteText = UILabel().wrap().withTitle(Localized.deleteText.string).withFont(Fonts.title2)
 
         let stack = UIStackView(arrangedSubviews: [
             credentialTitle,
@@ -42,7 +42,7 @@ class ManageCredentialsViewController: ScrollableViewController {
             credentialText,
             getCredentialsButton,
             getCredentialsLabel,
-            customLine,
+            line,
             deleteTitle,
             deleteText,
             deleteCredentialButton,
@@ -54,7 +54,7 @@ class ManageCredentialsViewController: ScrollableViewController {
         stack.alignment = .fill
         stack.setCustomSpacing(32, after: credentialTitle)
         stack.setCustomSpacing(16, after: getCredentialsLabel)
-        stack.setCustomSpacing(32, after: customLine)
+        stack.setCustomSpacing(32, after: line)
 
         stack.isLayoutMarginsRelativeArrangement = true
         stack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0)
@@ -76,7 +76,11 @@ class ManageCredentialsViewController: ScrollableViewController {
                     self.deleteCredentialLabel.text = Localized.noCredentialFound.string
                     return
                 }
-                Embedded.shared.deleteCredential(for: credential.handle) { result in
+                guard let handle = credential.handle else {
+                    self.getCredentialsLabel.text = Localized.missingHandle.string
+                    return
+                }
+                Embedded.shared.deleteCredential(for: handle) { result in
                     switch result {
                     case let .success(credential):
                         self.deleteCredentialLabel.text = "Deleted Credential: \(credential.value)"

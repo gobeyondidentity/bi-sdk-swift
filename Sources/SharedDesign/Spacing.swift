@@ -29,5 +29,17 @@ extension UIView {
         layer.cornerRadius = size.rawValue
     }
 }
+
+extension UILabel {
+    public func setTextWithLineSpacing(text: String, lineSpacing: CGFloat) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+
+        let attrString = NSMutableAttributedString(string: text)
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle,
+                                range:NSMakeRange(0, attrString.length))
+        self.attributedText = attrString
+    }
+}
 #endif
 

@@ -1,6 +1,7 @@
 import Anchorage
 import BeyondIdentityEmbedded
 import UIKit
+import SharedDesign
 
 class ExtendCredentialsViewController: ScrollableViewController {
     private let viewModel: EmbeddedViewModel
@@ -14,14 +15,10 @@ class ExtendCredentialsViewController: ScrollableViewController {
     let extendLabel = UILabel().wrap()
     let extendCancelLabel = UILabel().wrap()
     let registerLabel = UILabel().wrap()
-    lazy var customLine: CustomUiLine = {
-        let line = CustomUiLine()
-        return line
-    }()
-    lazy var cancelCustomLine: CustomUiLine = {
-        let line = CustomUiLine()
-        return line
-    }()
+
+    private let line = Line()
+
+    private let lineTwo = Line()
     
     // TextFields
     let registerField = UITextField().with(placeholder: Localized.registerField.string, type: .namePhonePad)
@@ -53,15 +50,15 @@ class ExtendCredentialsViewController: ScrollableViewController {
         extendView.addArrangedSubview(extendButton)
         extendView.addArrangedSubview(extendLabel)
 
-        let registerTitle = UILabel().wrap().withTitle(Localized.extendRegisterTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
-        let registerText = UILabel().wrap().withTitle(Localized.extendRegisterText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let extendTitle =  UILabel().wrap().withTitle(Localized.extendTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
-        let extendText = UILabel().wrap().withTitle(Localized.extendText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let noteText = UILabel().wrap().withTitle(Localized.noteText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let cancelTitle = UILabel().wrap().withTitle(Localized.cancelTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
-        let cancelText = UILabel().wrap().withTitle(Localized.cancelText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let registerCredentialTitle = UILabel().wrap().withTitle(Localized.registerCredentialTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
-        let registerCredentialText = UILabel().wrap().withTitle(Localized.registerCredentialText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let registerTitle = UILabel().wrap().withTitle(Localized.extendRegisterTitle.string).withFont(Fonts.largeTitle)
+        let registerText = UILabel().wrap().withTitle(Localized.extendRegisterText.string).withFont(Fonts.title2)
+        let extendTitle =  UILabel().wrap().withTitle(Localized.extendTitle.string).withFont(Fonts.largeTitle)
+        let extendText = UILabel().wrap().withTitle(Localized.extendText.string).withFont(Fonts.title2)
+        let noteText = UILabel().wrap().withTitle(Localized.noteText.string).withFont(Fonts.title2)
+        let cancelTitle = UILabel().wrap().withTitle(Localized.cancelTitle.string).withFont(Fonts.largeTitle)
+        let cancelText = UILabel().wrap().withTitle(Localized.cancelText.string).withFont(Fonts.title2)
+        let registerCredentialTitle = UILabel().wrap().withTitle(Localized.registerCredentialTitle.string).withFont(Fonts.largeTitle)
+        let registerCredentialText = UILabel().wrap().withTitle(Localized.registerCredentialText.string).withFont(Fonts.title2)
 
         let stack = UIStackView(arrangedSubviews: [
             registerTitle,
@@ -72,13 +69,12 @@ class ExtendCredentialsViewController: ScrollableViewController {
             extendButton,
             extendLabel,
             extendView,
-            customLine,
+            line,
             cancelTitle,
             cancelText,
-            extendView,
             extendCancelButton,
             extendCancelLabel,
-            cancelCustomLine,
+            lineTwo,
             registerCredentialTitle,
             registerCredentialText,
             registerField,
@@ -92,9 +88,9 @@ class ExtendCredentialsViewController: ScrollableViewController {
         stack.setCustomSpacing(32, after: registerText)
         stack.setCustomSpacing(32, after: extendText)
         stack.setCustomSpacing(16, after: extendLabel)
-        stack.setCustomSpacing(32, after: customLine)
+        stack.setCustomSpacing(32, after: line)
         stack.setCustomSpacing(16, after: extendCancelLabel)
-        stack.setCustomSpacing(32, after: cancelCustomLine)
+        stack.setCustomSpacing(32, after: lineTwo)
 
         stack.isLayoutMarginsRelativeArrangement = true
         stack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0)
@@ -128,7 +124,11 @@ class ExtendCredentialsViewController: ScrollableViewController {
                     self.extendLabel.text = Localized.missingCredential.string
                     return
                 }
-                Embedded.shared.extendCredentials(handles: [firstCredential.handle]) { [weak self] result in
+                guard let handle = firstCredential.handle else {
+                    self.extendLabel.text = Localized.missingHandle.string
+                    return
+                }
+                Embedded.shared.extendCredentials(handles: [handle]) { [weak self] result in
                     guard let self = self else { return }
                     switch result {
                     case let .success(extend):

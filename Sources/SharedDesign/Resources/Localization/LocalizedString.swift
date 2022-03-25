@@ -21,6 +21,7 @@ public enum LocalizedString: String, CaseIterable {
     case credentialTitle
     case credentialDescription
     case credentialAcknowledge
+    case credentialHandleError
     
     case loadingAuthenticationError
     case loadingAuthenticationErrorInfo
@@ -79,7 +80,6 @@ public enum LocalizedString: String, CaseIterable {
     
     case settingCancelExtendCredentialsError
     case settingCancelExtendCredentialsButton
-    
     case settingCredentialInfoTitle
     case settingDeviceName
     case settingDeviceInfoTitle

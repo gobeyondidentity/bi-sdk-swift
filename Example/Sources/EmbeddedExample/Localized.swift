@@ -4,6 +4,7 @@ public enum Localized: String, CaseIterable {
     // Common
     case noCredentialFound
     case missingCredential
+    case missingHandle
 
     // Embedded SDK
     case authButton

@@ -56,7 +56,16 @@ class CredentialInfoViewController: ScrollableViewController {
     }
     
     func deleteAction() {
-        Embedded.shared.deleteCredential(for: credential.handle) { [weak self] result in
+        guard let handle = credential.handle else {
+            let alert = ErrorAlert(
+                title: LocalizedString.settingDeleteCredentialError.string,
+                message: LocalizedString.credentialHandleError.string,
+                responseTitle: LocalizedString.alertErrorAction.string
+            )
+            alert.show(with: self)
+            return
+        }
+        Embedded.shared.deleteCredential(for: handle) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success:

@@ -44,8 +44,8 @@ let package = Package(
          ),
 	.binaryTarget(
 	    name: "CoreSDK",
-	    url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/0.6.0/CoreSDK.xcframework.zip",
-	    checksum: "b598d394bf8c4b8a584ee439a5c742937780d9904cc4cf28fd0705835bbe2891"
+	    url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/0.7.0/CoreSDK.xcframework.zip",
+	    checksum: "091d0a946cfcafdd76d4bf01489abdc4cb2583df5b0c297c80a8a2465ba0f31e"
 	),
         .testTarget(
             name: "UnitTests",

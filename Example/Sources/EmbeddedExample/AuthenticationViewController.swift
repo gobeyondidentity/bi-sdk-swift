@@ -2,6 +2,7 @@ import Anchorage
 import BeyondIdentityEmbedded
 import os
 import UIKit
+import SharedDesign
 
 class AuthenticationViewController: ScrollableViewController {
     private let viewModel: EmbeddedViewModel
@@ -17,10 +18,8 @@ class AuthenticationViewController: ScrollableViewController {
     let authenticateUnsafeLabel = UILabel().wrap()
     let authenticateLabel = UILabel().wrap()
     let pkceLabel = UILabel().wrap()
-    lazy var customLine: CustomUiLine = {
-        let line = CustomUiLine()
-        return line
-    }()
+
+    private let line = Line()
    
     // User input
     var authCode: String?
@@ -40,27 +39,32 @@ class AuthenticationViewController: ScrollableViewController {
         authenticateUnsafeButton.addTarget(self, action: #selector(authenticateUnsafe), for: .touchUpInside)
         authenticateButton.addTarget(self, action: #selector(authenticate), for: .touchUpInside)
         pkceButton.addTarget(self, action: #selector(getPKCE), for: .touchUpInside)
-
+        
+        authorizeLabel.backgroundColor = .lightGray
+        authenticateUnsafeLabel.backgroundColor = .lightGray
+        authenticateLabel.backgroundColor = .lightGray
+        pkceLabel.backgroundColor = .lightGray
+        
         let stack = UIStackView(arrangedSubviews: [
-            UILabel().wrap().withTitle(Localized.AuthenticateTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle)),
-            UILabel().wrap().withTitle(Localized.accessText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
-            UILabel().wrap().withTitle(Localized.oidcPublicText.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle)),
-            UILabel().wrap().withTitle(Localized.publicClientText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
+            UILabel().wrap().withTitle(Localized.AuthenticateTitle.string).withFont(Fonts.largeTitle),
+            UILabel().wrap().withTitle(Localized.accessText.string).withFont(Fonts.title2),
+            UILabel().wrap().withTitle(Localized.oidcPublicText.string).withFont(Fonts.largeTitle),
+            UILabel().wrap().withTitle(Localized.publicClientText.string).withFont(Fonts.title2),
             authenticateButton,
             authenticateLabel,
-            customLine,
-            UILabel().wrap().withTitle(Localized.oidcConfidentialText.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle)),
-            UILabel().wrap().withTitle(Localized.ConfidentialClientText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
-            UILabel().wrap().withTitle(Localized.stepOneText.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
+            line,
+            UILabel().wrap().withTitle(Localized.oidcConfidentialText.string).withFont(Fonts.largeTitle),
+            UILabel().wrap().withTitle(Localized.ConfidentialClientText.string).withFont(Fonts.title2),
+            UILabel().wrap().withTitle(Localized.stepOneText.string).withFont(Fonts.navTitle),
             pkceButton,
             pkceLabel,
-            UILabel().wrap().withTitle(Localized.stepTwoText.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
-            UILabel().wrap().withTitle(Localized.useAuthorizeText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
+            UILabel().wrap().withTitle(Localized.stepTwoText.string).withFont(Fonts.navTitle),
+            UILabel().wrap().withTitle(Localized.useAuthorizeText.string).withFont(Fonts.title2),
             authorizeButton,
             authorizeLabel,
-            UILabel().wrap().withTitle(Localized.stepThreeText.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
-            UILabel().wrap().withTitle(Localized.clientSecretText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
-            UILabel().wrap().withTitle(Localized.importantNoteText.string).withColor(UIColor.systemRed).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large)),
+            UILabel().wrap().withTitle(Localized.stepThreeText.string).withFont(Fonts.navTitle),
+            UILabel().wrap().withTitle(Localized.clientSecretText.string).withFont(Fonts.title2),
+            UILabel().wrap().withTitle(Localized.importantNoteText.string).withColor(UIColor.systemRed).withFont(Fonts.title2),
             authenticateUnsafeButton,
             authenticateUnsafeLabel,
         ]).vertical()
@@ -69,7 +73,7 @@ class AuthenticationViewController: ScrollableViewController {
 
         stack.alignment = .fill
         stack.setCustomSpacing(16, after: authenticateLabel)
-        stack.setCustomSpacing(32, after: customLine)
+        stack.setCustomSpacing(32, after: line)
 
         stack.isLayoutMarginsRelativeArrangement = true
         stack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0)
@@ -157,7 +161,7 @@ class AuthenticationViewController: ScrollableViewController {
                 }
             } else if let data = data, let result = String(data: data, encoding: .utf8) {
                 DispatchQueue.main.async {
-                    self.authenticateUnsafeLabel.text = "Warning, this API call should happen in your backend. Do not store client secrets in your app. \n\n Result:\(result)"
+                    self.authenticateUnsafeLabel.text = "\(result)"
                 }
             } else {
                 DispatchQueue.main.async {
@@ -198,4 +202,3 @@ class AuthenticationViewController: ScrollableViewController {
         }
     }
 }
-

@@ -1,6 +1,7 @@
 import BeyondIdentityEmbedded
 import Foundation
 import UIKit
+import SharedDesign
 
 extension UILabel {
     func wrap() -> UILabel {
@@ -59,8 +60,8 @@ func makeButton(with name: String) -> UIButton {
     button.setTitle(name, for: .normal)
     button.layer.cornerRadius = 4
     button.contentEdgeInsets = UIEdgeInsets(top: 8.0, left: 16.0, bottom: 8.0, right: 16.0)
-    button.setTitleColor(UIColor(named: Colors.titleTextColor.rawValue), for: .normal)
-    button.layer.backgroundColor = UIColor(named: Colors.primaryButton.rawValue)?.cgColor
+    button.setTitleColor(Colors.standardButtonText.value, for: .normal)
+    button.layer.backgroundColor = Colors.primary.value.cgColor
     return button
 }
 
@@ -79,16 +80,17 @@ extension PKCE: CustomStringConvertible {
 extension Credential: CustomStringConvertible {
     public var description: String {
         """
-        created: \(created)
-        handle: \(handle.value)
-        keyHandle: \(keyHandle)
+        created: \(created ?? "no created date available")
+        state: \(state.rawValue)
+        handle: \(handle?.value ?? "Missing handle")
+        keyHandle: \(keyHandle ?? "Missing keyHandle")
         name: \(name)
         logoURL: \(logoURL)
         loginURI: \(loginURI ?? "no loginURI available")
         enrollURI: \(enrollURI ?? "no enrollURI available")
         chain:
         \(chain)\n
-        rootFingerprint: \(rootFingerprint)
+        rootFingerprint: \(rootFingerprint ?? "Missing fingerprint")
         """
     }
 }
@@ -111,4 +113,3 @@ extension TokenResponse: CustomStringConvertible {
         """
     }
 }
-

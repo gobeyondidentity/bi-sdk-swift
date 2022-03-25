@@ -1,5 +1,6 @@
 import Anchorage
 import UIKit
+import SharedDesign
 
 enum DemoState {
     case Authenticator
@@ -9,15 +10,9 @@ enum DemoState {
 
 class DemoViewController: ScrollableViewController {
 
-    lazy var customLineSdk: CustomUiLine = {
-        let line = CustomUiLine()
-        return line
-    }()
+    private let line = Line()
 
-    lazy var customLineUI: CustomUiLine = {
-        let line = CustomUiLine()
-        return line
-    }()
+    private let lineTwo = Line()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,15 +30,15 @@ class DemoViewController: ScrollableViewController {
         let embeddedUIButton = makeButton(with: Localized.embeddedUIButton.string)
         embeddedUIButton.addTarget(self, action: #selector(toEmbeddedUI), for: .touchUpInside)
 
-        let beyondIdentityTitle = UILabel().wrap().withTitle(Localized.beyondIdentityTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.largeTitle) ??  UIFont.systemFont(ofSize: Size.largeTitle))
-        let beyondIdentityText =  UILabel().wrap().withTitle(Localized.beyondIdentityText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let embeddedSdkTitle = UILabel().wrap().withTitle(Localized.embeddedSdkTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let embeddedSdkText =  UILabel().wrap().withTitle(Localized.embeddedSdkText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let sdkVersion = UILabel().wrap().withTitle("Version: \(EmbeddedViewModel().sdkVersion)").withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.medium) ??  UIFont.systemFont(ofSize: Size.medium))
-        let embeddedUiTitle = UILabel().wrap().withTitle(Localized.embeddedUiTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let embeddedUiText = UILabel().wrap().withTitle(Localized.embeddedUiText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let authenticatorTitle = UILabel().wrap().withTitle(Localized.authenticatorTitle.string).withFont(UIFont(name: OverpassFontNames.bold.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
-        let authenticatorText = UILabel().wrap().withTitle(Localized.authenticatorText.string).withFont(UIFont(name: OverpassFontNames.regular.rawValue, size: Size.large) ??  UIFont.systemFont(ofSize: Size.large))
+        let beyondIdentityTitle = UILabel().wrap().withTitle(Localized.beyondIdentityTitle.string).withFont(Fonts.largeTitle)
+        let beyondIdentityText =  UILabel().wrap().withTitle(Localized.beyondIdentityText.string).withFont(Fonts.title2)
+        let embeddedSdkTitle = UILabel().wrap().withTitle(Localized.embeddedSdkTitle.string).withFont(Fonts.navTitle)
+        let embeddedSdkText =  UILabel().wrap().withTitle(Localized.embeddedSdkText.string).withFont(Fonts.title2)
+        let sdkVersion = UILabel().wrap().withTitle("Version: \(EmbeddedViewModel().sdkVersion)").withFont(Fonts.medium)
+        let embeddedUiTitle = UILabel().wrap().withTitle(Localized.embeddedUiTitle.string).withFont(Fonts.navTitle)
+        let embeddedUiText = UILabel().wrap().withTitle(Localized.embeddedUiText.string).withFont(Fonts.title2)
+        let authenticatorTitle = UILabel().wrap().withTitle(Localized.authenticatorTitle.string).withFont(Fonts.navTitle)
+        let authenticatorText = UILabel().wrap().withTitle(Localized.authenticatorText.string).withFont(Fonts.title2)
 
 
         let stack = UIStackView(arrangedSubviews: [
@@ -53,11 +48,11 @@ class DemoViewController: ScrollableViewController {
             embeddedSdkText,
             sdkVersion,
             embeddedButton,
-            customLineSdk,
+            line,
             embeddedUiTitle,
             embeddedUiText,
             embeddedUIButton,
-            customLineUI,
+            lineTwo,
             authenticatorTitle,
             authenticatorText,
             authButton,
@@ -67,17 +62,17 @@ class DemoViewController: ScrollableViewController {
         stack.setCustomSpacing(32, after: beyondIdentityText)
         stack.setCustomSpacing(16, after: sdkVersion)
         stack.setCustomSpacing(32, after: embeddedButton)
-        stack.setCustomSpacing(32, after: customLineSdk)
+        stack.setCustomSpacing(32, after: line)
         stack.setCustomSpacing(32, after: embeddedUIButton)
-        stack.setCustomSpacing(32, after: customLineUI)
+        stack.setCustomSpacing(32, after: lineTwo)
         stack.setCustomSpacing(16, after: authenticatorText)
 
         stack.horizontalAnchors == contentView.horizontalAnchors + 16
         stack.verticalAnchors == contentView.verticalAnchors + 16
-        customLineSdk.leadingAnchor == stack.leadingAnchor
-        customLineSdk.trailingAnchor == stack.trailingAnchor
-        customLineUI.leadingAnchor == stack.leadingAnchor
-        customLineUI.trailingAnchor == stack.trailingAnchor
+        line.leadingAnchor == stack.leadingAnchor
+        line.trailingAnchor == stack.trailingAnchor
+        lineTwo.leadingAnchor == stack.leadingAnchor
+        lineTwo.trailingAnchor == stack.trailingAnchor
     }
 
     @objc func toAuth() {

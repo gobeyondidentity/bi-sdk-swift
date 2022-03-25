@@ -1,6 +1,7 @@
 import BeyondIdentityEmbedded
 import UIKit
 import Anchorage
+import SharedDesign
 
 class CustomButtonWithLine: UIButton {
 
@@ -14,7 +15,7 @@ class CustomButtonWithLine: UIButton {
     private let iconImage: UIImageView = {
         let image = UIImage(systemName: "chevron.right")
         let imageView = UIImageView(image: image)
-        imageView.tintColor = UIColor(named: Colors.chevronTint.rawValue)
+        imageView.tintColor = Colors.navBarText.value
         imageView.contentMode = .scaleAspectFit
         return imageView
 
@@ -29,9 +30,9 @@ class CustomButtonWithLine: UIButton {
         clipsToBounds = true
         layer.cornerRadius = 4
         contentEdgeInsets = UIEdgeInsets(top: 8.0, left: 16.0, bottom: 8.0, right: 16.0)
-        addBottomBorder(UIColor(named: Colors.buttonLine.rawValue)!, height: 1.0)
+        addBottomBorder(Colors.line.value, height: 1.0)
         buttonLabel.text = title
-        buttonLabel.font = UIFont(name: OverpassFontNames.regular.rawValue, size: 16) ??  UIFont.systemFont(ofSize: 16)
+        buttonLabel.font = Fonts.medium
         buttonLabel.textColor = .label
         addSubviews()
     }

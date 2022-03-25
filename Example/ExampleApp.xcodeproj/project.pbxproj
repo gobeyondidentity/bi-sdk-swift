@@ -34,15 +34,10 @@
 		95E8489F26DFD5CF000F2553 /* RecoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E8489E26DFD5CF000F2553 /* RecoverViewController.swift */; };
 		95E848A126DFD5E1000F2553 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E848A026DFD5E1000F2553 /* SignUpViewController.swift */; };
 		95F2D4CD26F3FEBE00C68FEE /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95F2D4CC26F3FEBE00C68FEE /* Icons.xcassets */; };
-		990CBBE627A1C06200A24DF8 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 990CBBE527A1C06200A24DF8 /* Colors.xcassets */; };
 		990CBBE827A1C17A00A24DF8 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990CBBE727A1C17A00A24DF8 /* WebView.swift */; };
 		99266E3427BEF06300E4DEF1 /* Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99266E3327BEF06300E4DEF1 /* Localized.swift */; };
 		9949E908279742E300DBDAE5 /* CustomButtonWithLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949E907279742E300DBDAE5 /* CustomButtonWithLine.swift */; };
-		996D96E62798A15C00CA78BB /* CustomUiLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996D96E52798A15C00CA78BB /* CustomUiLine.swift */; };
 		9974025A27BFE47B00B420A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9974025C27BFE47B00B420A5 /* Localizable.strings */; };
-		99DDF41C27BAB1D500283F6E /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DDF41B27BAB1D500283F6E /* Size.swift */; };
-		99DDF42A27BC232E00283F6E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DDF42927BC232E00283F6E /* Fonts.swift */; };
-		99DDF42C27BC2A0000283F6E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DDF42B27BC2A0000283F6E /* Colors.swift */; };
 		99DDF42E27BC2E6C00283F6E /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DDF42D27BC2E6C00283F6E /* Icon.swift */; };
 		99EF73E6278F1405003B6123 /* Overpass-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99EF73E5278F13F8003B6123 /* Overpass-Regular.ttf */; };
 		99EF73E8278F1417003B6123 /* Overpass-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99EF73E7278F1417003B6123 /* Overpass-Bold.ttf */; };
@@ -79,15 +74,10 @@
 		95E8489E26DFD5CF000F2553 /* RecoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverViewController.swift; sourceTree = "<group>"; };
 		95E848A026DFD5E1000F2553 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		95F2D4CC26F3FEBE00C68FEE /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
-		990CBBE527A1C06200A24DF8 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		990CBBE727A1C17A00A24DF8 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		99266E3327BEF06300E4DEF1 /* Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localized.swift; sourceTree = "<group>"; };
 		9949E907279742E300DBDAE5 /* CustomButtonWithLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonWithLine.swift; sourceTree = "<group>"; };
-		996D96E52798A15C00CA78BB /* CustomUiLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUiLine.swift; sourceTree = "<group>"; };
 		9974025B27BFE47B00B420A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		99DDF41B27BAB1D500283F6E /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
-		99DDF42927BC232E00283F6E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
-		99DDF42B27BC2A0000283F6E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		99DDF42D27BC2E6C00283F6E /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		99EF73E5278F13F8003B6123 /* Overpass-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Overpass-Regular.ttf"; sourceTree = "<group>"; };
 		99EF73E7278F1417003B6123 /* Overpass-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Overpass-Bold.ttf"; sourceTree = "<group>"; };
@@ -124,7 +114,6 @@
 				99F2B40F2792130B001A7864 /* SupportPageViewController.swift */,
 				9508D70A2734534200981636 /* ScrollableViewController.swift */,
 				9949E907279742E300DBDAE5 /* CustomButtonWithLine.swift */,
-				996D96E52798A15C00CA78BB /* CustomUiLine.swift */,
 				990CBBE727A1C17A00A24DF8 /* WebView.swift */,
 				9974025C27BFE47B00B420A5 /* Localizable.strings */,
 				99266E3327BEF06300E4DEF1 /* Localized.swift */,
@@ -181,7 +170,6 @@
 				95694CDC25F81A34000A06F7 /* SceneDelegate.swift */,
 				95694CE525F81A34000A06F7 /* LaunchScreen.storyboard */,
 				BD47B28D269D30D900BC2E77 /* Assets.xcassets */,
-				990CBBE527A1C06200A24DF8 /* Colors.xcassets */,
 				95F2D4CC26F3FEBE00C68FEE /* Icons.xcassets */,
 			);
 			path = Supporting;
@@ -223,9 +211,6 @@
 			isa = PBXGroup;
 			children = (
 				95AFBF3B26A5FB9C0021785E /* UIHelpers.swift */,
-				99DDF41B27BAB1D500283F6E /* Size.swift */,
-				99DDF42927BC232E00283F6E /* Fonts.swift */,
-				99DDF42B27BC2A0000283F6E /* Colors.swift */,
 				99DDF42D27BC2E6C00283F6E /* Icon.swift */,
 			);
 			path = Helpers;
@@ -314,7 +299,6 @@
 				95F2D4CD26F3FEBE00C68FEE /* Icons.xcassets in Resources */,
 				99EF73E8278F1417003B6123 /* Overpass-Bold.ttf in Resources */,
 				9974025A27BFE47B00B420A5 /* Localizable.strings in Resources */,
-				990CBBE627A1C06200A24DF8 /* Colors.xcassets in Resources */,
 				99EF73E6278F1405003B6123 /* Overpass-Regular.ttf in Resources */,
 				BD47B28E269D30D900BC2E77 /* Assets.xcassets in Resources */,
 			);
@@ -333,20 +317,16 @@
 				95694D6525FACEC4000A06F7 /* InputViewController.swift in Sources */,
 				95D60C8D26B9D0AD0092C2E4 /* EmbeddedUIViewController.swift in Sources */,
 				99F2B40E27921169001A7864 /* DeveloperDocsViewController.swift in Sources */,
-				99DDF42C27BC2A0000283F6E /* Colors.swift in Sources */,
 				954957852786254E00503722 /* ExtendCredentialsViewController.swift in Sources */,
 				9949E908279742E300DBDAE5 /* CustomButtonWithLine.swift in Sources */,
 				95E8489F26DFD5CF000F2553 /* RecoverViewController.swift in Sources */,
-				99DDF41C27BAB1D500283F6E /* Size.swift in Sources */,
 				95694CDF25F81A34000A06F7 /* PreLoggedInViewController.swift in Sources */,
 				95694D2125F9340B000A06F7 /* LoggedInViewController.swift in Sources */,
-				996D96E62798A15C00CA78BB /* CustomUiLine.swift in Sources */,
 				95AFBF3C26A5FB9C0021785E /* UIHelpers.swift in Sources */,
 				99DDF42E27BC2E6C00283F6E /* Icon.swift in Sources */,
 				990CBBE827A1C17A00A24DF8 /* WebView.swift in Sources */,
 				95694CDB25F81A34000A06F7 /* AppDelegate.swift in Sources */,
 				99F2B4102792130B001A7864 /* SupportPageViewController.swift in Sources */,
-				99DDF42A27BC232E00283F6E /* Fonts.swift in Sources */,
 				95694CDD25F81A34000A06F7 /* SceneDelegate.swift in Sources */,
 				95AFBF4426A603300021785E /* RecoveryView.swift in Sources */,
 				95694D4425F9BBF4000A06F7 /* PreLoggedInViewModel.swift in Sources */,

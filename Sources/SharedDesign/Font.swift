@@ -32,6 +32,10 @@ public struct Fonts {
     public static let navTitle: Font  = scaledFont(.bold, 18)
     public static let body: Font  = scaledFont(.regular, 14)
     public static let caption: Font  = scaledFont(.regular, 12)
+
+    // example app values
+    public static let largeTitle: Font  = scaledFont(.bold, 22)
+    public static let medium: Font  = scaledFont(.regular, 16)
     
     static func loadOnce() {
         if !isLoaded {

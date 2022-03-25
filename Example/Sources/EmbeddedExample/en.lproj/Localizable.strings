@@ -1,6 +1,7 @@
 // Common
 "noCredentialFound" = "No Credential found, register or recover a Credential first";
 "missingCredential" = "Missing Credential, register or recover a Credential first";
+"missingHandle" = "Credential Handle is missing";
 
 // Embedded SDK
 "authButton" = "View Authenticator UI SDK";

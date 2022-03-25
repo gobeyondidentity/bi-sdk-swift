@@ -10,7 +10,7 @@ extension Image {
     public static let logo = getIcon(for: "logo")
     public static let poweredByBILogo = getIcon(for: "powered-by-bi")
     public static let qrCodeUnavailable = getIcon(for: "qr-unavailable")
-    
+
     public static func getIcon(for name: String) -> Image? {
         #if os(iOS)
         return Image(named: name, in: Bundle.module, compatibleWith: nil) ?? nil

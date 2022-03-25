@@ -32,6 +32,7 @@ jobs:
 
       - name: Deploy to Cocoapods Trunk
         run: |
+          sleep 900
           set -euo pipefail
           pod repo update
           pod trunk push BeyondIdentityEmbedded.podspec

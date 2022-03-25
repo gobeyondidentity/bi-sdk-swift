@@ -82,8 +82,9 @@ public class CoreEmbedded {
                 sdkVersion: Configuration.sdkVersion,
                 appVersion: appVersion,
                 clientId: config.clientID),
-            with: config.logger,
-            clientEnvironmentRequest: { ClientEnvironment() }
+            logger: config.logger,
+            clientEnvironmentRequest: { ClientEnvironment() },
+            keyProvenanceRequest: nil
         )
         
         setUpDirectory()
@@ -297,10 +298,10 @@ extension CoreEmbedded {
          - callback: returns all registered credentials
      */
     public func getCredentials(callback: @escaping (Result<[Credential], BISDKError>) -> Void) {
-        core.getProfiles { result in
+        core.getAllCredentials { result in
             switch result {
-            case let .success(profiles):
-                callback(.success(profiles.map(Credential.init)))
+            case let .success(credential):
+                callback(.success(credential.map(Credential.init)))
             case let .failure(error):
                 callback(.failure(.from(error)))
             }

@@ -17,6 +17,7 @@
 "credentialTitle" = "What is a credential?";
 "credentialDescription" = "A credential is a digital key that replaces your passwords to access your accounts. Credentials can be added across devices that you use to access these accounts.";
 "credentialAcknowledge" = "Got it";
+"credentialHandleError" = "Credential Handle is missing";
 
 "loadingAuthenticationError" = "Could not verify your identity.";
 "loadingAuthenticationErrorInfo" = "Please try again. If the issue persists, recover your credential or contact support using the link below.";
@@ -66,8 +67,8 @@
 "settingCredentialSetUpButton" = "Close & return to settings";
 
 "settingShowQRCodeTitle" = "Display QR code";
-"settingShowQRCodeInfo" = "Scan this code to a device that you’d like to set up a credential for %@";
-"settingNoCameraCode" = "No camera? Use code: %@";
+"settingShowQRCodeInfo" = "Scan this code to a device that you’d like to set up a credential for %@.";
+"settingNoCameraCode" = "No camera? Use code:";
 
 "settingExtendCredentialsError" = "Could not complete extend credential. Please try again.";
 "settingExtendCredentialsQRError" = "Could not display QR code. Please try again.";

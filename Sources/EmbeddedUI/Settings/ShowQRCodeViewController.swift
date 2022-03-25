@@ -18,19 +18,26 @@ class ShowQRCodeViewController: ViewController {
         .wrap()
         .withFont(Fonts.body)
         .withColor(Colors.error.value)
+
+    private let line = Line()
     
     private let infoLabel = Label()
         .wrap()
         .withFont(Fonts.body)
         .withColor(Colors.body.value)
     
-    private let tokenLabel = Label()
+    private let qrCodeText = Label()
         .wrap()
         .withFont(Fonts.body)
         .withColor(Colors.body.value)
+
+    private let tokenLabel = Label()
+        .wrap()
+        .withFont(Fonts.title2)
+        .withColor(Colors.body.value)
     
     let qrCodeStack = StackView()
-    
+
     init(credential: Credential, appName: String) {
         super.init(nibName: nil, bundle: nil)
         
@@ -54,20 +61,31 @@ class ShowQRCodeViewController: ViewController {
         extendErrorLabel.isHidden = true
         extendErrorLabel.textAlignment = .center
         cancelErrorMessage.isHidden = true
-        
+
         let cancelButton = UIBarButtonItem(title: LocalizedString.settingCancelExtendCredentialsButton.string, style: .plain, target: self, action: #selector(cancelExtendCredentialsBeforeGoingBack))
         navigationItem.leftBarButtonItem = cancelButton
-        
+
         qrCodeErrorImage.contentMode = .scaleAspectFit
         qrCodeErrorImage.isHidden = true
         qrCodeErrorImage.heightAnchor == view.bounds.width / 2
         
         infoLabel.isHidden = true
         infoLabel.textAlignment = .center
+
+        line.isHidden = true
         
+        qrCodeText.setTextWithLineSpacing(text: LocalizedString.settingNoCameraCode.string, lineSpacing: Spacing.large)
+        qrCodeText.textAlignment = .center
+        qrCodeText.isHidden = true
+
         tokenLabel.textAlignment = .center
-        
-        let stack = StackView(arrangedSubviews: [cancelErrorMessage, activityIndicator, qrCodeStack, qrCodeErrorImage, extendErrorLabel, infoLabel, tokenLabel])
+        tokenLabel.isHidden = true
+
+        let qrCodeTextContainer = StackView(arrangedSubviews: [infoLabel, line, qrCodeText, tokenLabel])
+        qrCodeTextContainer.axis = .vertical
+        qrCodeTextContainer.spacing = Spacing.large
+
+        let stack = StackView(arrangedSubviews: [cancelErrorMessage, activityIndicator, qrCodeStack, qrCodeErrorImage, extendErrorLabel, qrCodeTextContainer])
         stack.axis = .vertical
         stack.spacing = Spacing.large
         
@@ -97,7 +115,13 @@ class ShowQRCodeViewController: ViewController {
         }
     }
     
-    func startExport(with handle: Credential.Handle) {
+    func startExport(with handle: Credential.Handle?) {
+        guard let handle = handle else {
+            extendErrorLabel.text = LocalizedString.credentialHandleError.string
+            extendErrorLabel.isHidden = false
+            return
+        }
+        
         activityIndicator.startAnimating()
         
         Embedded.shared.extendCredentials(handles: [handle]) { [weak self] result in
@@ -135,8 +159,10 @@ class ShowQRCodeViewController: ViewController {
     private func updateCodes(image: QRCode?, token: String) {
         updateQRCode(image: image)
         infoLabel.isHidden = false
-        let formattedToken = token.separate(with: "-")
-        tokenLabel.text = LocalizedString.settingNoCameraCode.format(formattedToken)
+        qrCodeText.isHidden = false
+        line.isHidden = false
+        tokenLabel.isHidden = false
+        tokenLabel.text = token.separate(with: "-")
     }
     
     private func updateQRCode(image: QRCode?) {
@@ -164,7 +190,6 @@ fileprivate extension UIStackView {
         }
     }
 }
-
 
 class CancelErrorMessage: UIView {
     private let errorMessage = Label()
