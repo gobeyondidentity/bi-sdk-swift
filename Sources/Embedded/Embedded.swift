@@ -4,23 +4,22 @@ import os
 
 /// Use the `Embedded.shared` singleton to access all embedded sdk functionality.
 public class Embedded {
-    /// Initialize the `Embedded.shared` singleton before using it. This must be called first.
+    /// Initialize the `Embedded.shared` singleton before using it. This must be called first and is async.
     /// - Parameters:
+    ///   - allowedDomains: Optional array of domains that we whitelist against for network operations. This will default to Beyond Identity's allowed domains.
     ///   - biometricAskPrompt: A prompt the user will see when asked for biometrics while extending a credential to another device.
-    ///   - clientID: The public or confidential client ID generated during the OIDC configuration
-    ///   - redirectURI: URI where the user will be redirected after the authorization has completed. The redirect URI must be one of the URIs passed in the OIDC configuration.
-    ///   - logger: optional function to log output
+    ///   - logger: Optional function to log output
     public static func initialize(
+        allowedDomains: [String] = ["beyondidentity.com"],
         biometricAskPrompt: String,
-        clientID: String,
-        redirectURI: String,
-        logger: ((OSLogType, String) -> Void)? = nil
+        logger: ((OSLogType, String) -> Void)? = nil,
+        callback: @escaping(Result<Void, BISDKError>) -> Void
     ){
         CoreEmbedded.initialize(
+            allowedDomains: allowedDomains,
             biometricAskPrompt: biometricAskPrompt,
-            clientID: clientID,
-            redirectURI: redirectURI,
-            logger: logger
+            logger: logger,
+            callback: callback
         )
     }
     
@@ -30,46 +29,46 @@ public class Embedded {
 }
 
 public class CoreEmbedded {
-    struct Config {
-        let askPrompt: String
-        let clientID: String
-        let redirectURI: String
+    private struct Config {
+        let biometricAskPrompt: String
         let logger: ((OSLogType, String) -> Void)?
     }
     
     private let INIT_ERROR = "Error - you must call Embedded.initialize before accessing Embedded.shared"
-        
-    private let core: Core
+    
+    private static var config: Config?
+    
+    private static var core: Core?
     
     public static let shared: CoreEmbedded = CoreEmbedded()
     
-    static var config: Config?
-    
     public static func initialize(
+        allowedDomains: [String],
         biometricAskPrompt: String,
-        clientID: String,
-        redirectURI: String,
-        logger: ((OSLogType, String) -> Void)? = nil
+        logger: ((OSLogType, String) -> Void)? = nil,
+        callback: @escaping(Result<Void, BISDKError>) -> Void
     ){
-        CoreEmbedded.config = Config(
-            askPrompt: biometricAskPrompt,
-            clientID: clientID,
-            redirectURI: redirectURI,
+        let config = Config(
+            biometricAskPrompt: biometricAskPrompt,
             logger: logger
+        )
+        
+        setUpCore(with: config)
+        setUpDirectory(
+            allowedDomains: allowedDomains.joined(separator: ","),
+            callback: callback
         )
     }
     
-    private init() {
-        guard let config = CoreEmbedded.config else {
-            fatalError(INIT_ERROR)
-        }
-        
+    private static func setUpCore(with config: Config) {
         let appInstanceId = UserDefaults.get(forKey: .appInstanceId)
         ?? UserDefaults.setString(UUID().uuidString, forKey: .appInstanceId)
         
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "not specified"
         
-        self.core = Core.live(
+        CoreEmbedded.config = config
+        
+        CoreEmbedded.core = Core.live(
             // This is the version of the native platform authenticator. Since this SDK has nothing to do
             // with the native platform authenticator, we set this to a dummy value.
             appVersion: "0.0.0",
@@ -77,27 +76,30 @@ public class CoreEmbedded {
             authenticationPrompt: { _, _ in },
             deviceGatewayUrl: Configuration.deviceGateway,
             isProduction: true,
-            askPrompt: config.askPrompt,
+            askPrompt: config.biometricAskPrompt,
             biSdkInfo: CoreSDKInfo.init(
                 sdkVersion: Configuration.sdkVersion,
-                appVersion: appVersion,
-                clientId: config.clientID),
+                appVersion: appVersion),
             logger: config.logger,
             clientEnvironmentRequest: { ClientEnvironment() },
+            selectCredentialRequest: { _, _ in },
             keyProvenanceRequest: nil
         )
-        
-        setUpDirectory()
     }
     
-    private func setUpDirectory() {
-        core.setUpDirectory(
+    private static func setUpDirectory(
+        allowedDomains: String,
+        callback: @escaping(Result<Void, BISDKError>) -> Void
+    ) {
+        CoreEmbedded.core?.setUpDirectory(
+            allowedDomains: allowedDomains,
             catalogFolderName: Configuration.catalogFolderName
         ) { result in
             switch result {
-            case .success: break
+            case .success:
+                callback(.success(()))
             case let .failure(error):
-                fatalError(error.localizedDescription)
+                callback(.failure(.description(error.localizedDescription)))
             }
         }
     }
@@ -106,100 +108,94 @@ public class CoreEmbedded {
 // MARK: Functions
 
 extension CoreEmbedded {
-    /**
-     Used for OIDC public clients.
-     
-     Make sure you have configured your clientID to be a public client ID.
-     
-     Authentiate a user from a public client and receive a `TokenResponse` which contain the access and id token.
-     
-     PKCE is handled internally to mitigate against an authorization code interception attack. This function assumes there is no backend and the client secret can't be safely stored.
-     
-     - Parameters:
-         - callback: returns a `TokenResponse` that contains the access and id token.
-     */
-    public func authenticate(callback: @escaping(Result<TokenResponse, BISDKError>) -> Void) {
-        guard let authURL = Endpoint.url(for: .authorizeEndpoint) else {
-            return callback(.failure(.description("Error creating authorize URL")))
-        }
-
-        guard let tokenURL = Endpoint.url(for: .tokenEndpoint) else {
-            return callback(.failure(.description("Error creating token URL")))
+    /// Authenticate a user.
+    /// - Parameters:
+    ///   - url: URL used to authenticate
+    ///   - onSelectCredential: Callback used to display a list of filtered Credentials associated with the current authentication flow. To select a Credential, return the selected `CredentialID`.
+    ///   - callback: returns a `AuthenticateResponse`.
+    public func authenticate(
+        url: URL,
+        onSelectCredential: @escaping ([Credential], @escaping ((CredentialID?) -> Void)) -> Void,
+        callback: @escaping(Result<AuthenticateResponse, BISDKError>) -> Void
+    ) {
+        guard isAuthenticateUrl(url) else { return callback(.failure(.invalidUrlType)) }
+        
+        guard let core = CoreEmbedded.core else {
+            fatalError(INIT_ERROR)
         }
         
         guard let config = CoreEmbedded.config else {
             fatalError(INIT_ERROR)
         }
-
-        core.embeddedPublicOIDC(
-            authURL: authURL,
-            tokenURL: tokenURL,
-            clientId: config.clientID,
-            redirectURI: config.redirectURI
+        
+        core.copy(withSelectAuthNCredentials: { credentials in
+            var selectResult: Result<String?, BridgeError> = .success(nil)
+            let group = DispatchGroup()
+            group.enter()
+            DispatchQueue.main.async {
+                onSelectCredential(credentials.map(Credential.init)) { id in
+                    selectResult = .success(id?.value ?? nil)
+                    group.leave()
+                }
+            }
+            group.wait()
+            return selectResult
+        })
+        .authenticate(
+            url,
+            trusted: .embedded,
+            flowType: .embedded
         ) { result in
             switch result {
             case let .success(response):
-                callback(.success(TokenResponse(response)))
+                callback(.success(AuthenticateResponse(response)))
             case let .failure(error):
                 callback(.failure(.from(error)))
             }
         }
     }
     
-    /**
-     Used for OIDC confidential clients.
-     
-     Make sure you have configured your clientID to be a confidential client ID.
-     
-     Authorize a user from a confidential client and receive an `AuthorizationCode` to be used by your backend for a token exchange.
-     
-     This function assumes the existing of a secure backchannel that can safely store the client secret
-     and can exchange the authorization code for an access and id token.
-     
-     - Parameters:
-         - pkceChallenge: Optional but recommended to prevent authorization code injection. Use `createPKCE` to generate a `PKCE.CodeChallenge`.
-         - scope: string list of OIDC scopes used during authentication to authorize access to a user's specific details. Only "openid" is currently supported.
-         - callback: returns an AuthorizationCode to exchange for access and id token.
-     */
-    public func authorize(
-        pkceChallenge: PKCE.CodeChallenge?,
-        scope: String,
-        callback: @escaping(Result<AuthorizationCode, BISDKError>) -> Void
+    /// Bind a `Credential` to a device.
+    /// - Parameters:
+    ///   - url: URL used to bind a credential to a device
+    ///   - callback: Returns the bound `Credential` and  optional redirect URL set by the developer
+    public func bindCredential(
+        url: URL,
+        callback: @escaping(Result<BindCredentialResponse, BISDKError>) -> Void
     ) {
-        guard let authURL = Endpoint.url(for: .authorizeEndpoint) else {
-            return callback(.failure(.description("Error creating authorize URL")))
-        }
-        
-        guard let config = CoreEmbedded.config else {
+        guard let core = CoreEmbedded.core else {
             fatalError(INIT_ERROR)
         }
-
-        core.embeddedConfidentialOIDC(
-            authURL: authURL,
-            clientId: config.clientID,
-            redirectURI: config.redirectURI,
-            scope: scope,
-            PKCECodeChallenge: pkceChallenge.map({ CoreSDK.PKCE.CodeChallenge($0) })
+        
+        guard isBindUrl(url) else { return callback(.failure(.invalidUrlType)) }
+        
+        core.bindCredential(
+            url,
+            trusted: .embedded,
+            flowType: .embedded
         ) { result in
             switch result {
-            case let .success(code):
-                callback(.success(AuthorizationCode(value: code.value)))
+            case let .success(response):
+                callback(.success(BindCredentialResponse(response)))
             case let .failure(error):
                 callback(.failure(.from(error)))
             }
         }
     }
     
-    /**
-     Cancel an in-progress `extendCredentials`.
-     
-     This is handled implicitly if an `extendCredentials` succeeds or fails. Alternatively, this needs to be explicitly called if a user no longer wished to extend a Credential.
-          
-     - Parameters:
-         - callback: returns unit `()` on success
-     */
-    public func cancelExtendCredentials(callback: @escaping(Result<(), BISDKError>) -> Void) {
-        core.cancel { result in
+    /// Delete a `Credential` by its ID.
+    /// - Warning: deleting a `Credential` is destructive and will remove everything from the device. If no other device contains the credential then the user will need to complete a recovery in order to log in again on this device.
+    /// - Parameters:
+    ///   - id: `CredentialID` the unique identifier of the `Credential`.
+    ///   - callback: returns unit `()` on successful deletion
+    public func deleteCredential(
+        for id: CredentialID,
+        callback: @escaping (Result<(), BISDKError>) -> Void
+    ) {
+        guard let core = CoreEmbedded.core else {
+            fatalError(INIT_ERROR)
+        }
+        core.deleteAuthNCredential(CoreSDK.CredentialID(id.value)) { result in
             switch result {
             case .success:
                 callback(.success(()))
@@ -208,97 +204,14 @@ extension CoreEmbedded {
             }
         }
     }
-
-    /**
-     Create a Proof Key for Code Exchange (PKCE, pronounced "pixy")
-     
-     Used by public clients to [mitigate authorization code interception attack.](https://datatracker.ietf.org/doc/html/rfc7636)
-     
-     It can also be leveraged by confidential clients for an added layer of security.
-     
-     - Parameters:
-         - callback: Returns a newly generated PKCE response with a codeVerifier and codeChallenge.
-     */
-    public func createPKCE(callback: @escaping (Result<PKCE, BISDKError>) -> Void) {
-        core.createPKCE { coreResult in
-            switch coreResult {
-            case let .success(pkce):
-                print(Configuration.catalogFolderName)
-
-                callback(.success(PKCE(pkce)))
-            case let .failure(error):
-                callback(.failure(.from(error)))
-            }
-        }
-    }
     
-    /**
-     Delete a `Credential` by its handle.
-     - Warning: deleting a `Credential` is destructive and will remove everything from the device. If no other device contains the credential then the user will need to complete a recovery in order to log in again on this device.
-     
-     - Parameters:
-         - handle: `Credential.Handle` uniquely  identifying a `Credential`.
-         - callback: returns the deleted `Credential.Handle`.
-     */
-    public func deleteCredential(
-        for handle: Credential.Handle,
-        callback: @escaping (Result<Credential.Handle, BISDKError>) -> Void
-    ) {
-        core.deleteProfile(handle.value) { result in
-            switch result {
-            case .success:
-                callback(.success(handle))
-            case let .failure(error):
-                callback(.failure(.from(error)))
-            }
-        }
-    }
-    
-    /**
-     Extend a list of credentials from one device to another. The user must be in an authenticated state to extend any credentials.
-     
-     - Note: Only one credential per device is currently supported.
-     
-     - Parameters:
-         - handles: list of `Credential` handles to be extended.
-         - callback: returns an `ExtendCredentialsStatus` with a random 9 digit token that the user wants to extend. Pass this token to `registerCredentials`.
-     */
-    public func extendCredentials(handles: [Credential.Handle], callback: @escaping(Result<ExtendCredentialsStatus, BISDKError>) -> Void) {
-        core.copy(withExportProgress: { status in
-            switch status {
-            case let .started(token):
-                let credential = CredentialToken(value: token)
-                callback(.success(.started(credential, generateQRCode(from: credential))))
-            case let .token(token):
-                let credential = CredentialToken(value: token)
-                callback(.success(.tokenUpdated(credential, generateQRCode(from: credential))))
-            case .received:
-                callback(.success(.done))
-            }
-        })
-        .export(handles.map({ $0.value })) { result in
-            switch result {
-            case .success: break
-            case let .failure(error):
-                let message = error.localizedDescription.lowercased()
-                if message.contains("most likely user canceled") || message.contains("aborted") {
-                    return callback(.success(.aborted))
-                }
-                callback(.failure(.from(error)))
-            }
-        }
-    }
-    
-    /**
-     Get all current credentials on the device.
-     
-     - Note: Only one credential per device is currently supported.
-     
-     - Parameters:
-         - callback: returns all registered credentials
-     */
+    /// Get all current credentials on the device.
+    /// - Parameter callback: returns all registered credentials
     public func getCredentials(callback: @escaping (Result<[Credential], BISDKError>) -> Void) {
-        core.getAllCredentials { result in
+        guard let core = CoreEmbedded.core else {
+            fatalError(INIT_ERROR)
+        }
+        core.getAllAuthNCredentials { result in
             switch result {
             case let .success(credential):
                 callback(.success(credential.map(Credential.init)))
@@ -308,68 +221,33 @@ extension CoreEmbedded {
         }
     }
     
-    /**
-     Use this function in the `AppDelegate` or `SceneDelegate` to intercept a user redirect during the registration or recovery flow to continue that flow. This may be triggered after a tap on a universal link from an email.
-     
-     - Parameters:
-         - url: intercepted url during a redirect. This url must contain a host and "register" in the path. For example: `acme://host/register`
-         - callback: Returns a registered `Credential`
-     */
-    public func registerCredentials(
-        _ url: URL,
-        callback: @escaping (Result<Credential, BISDKError>) -> Void
-    ) {
-        core.register(
-            from: url.absoluteString,
-            trusted: .embedded,
-            flowType: .embedded
-        ) { result in
-            switch result {
-            case let .success(response):
-                guard case let .registration(registrationResponse) = response.urlResponse else {
-                    return callback(
-                        .failure(.description("Expected Registration, got \(response.urlResponse.value)"))
-                    )
-                }
-                callback(.success(Credential(registrationResponse.profile)))
-
-            case let .failure(error):
-                return callback(.failure(.from(error)))
-
-            }
+    /// Determines if a URL is a valid Authenticate URL or not.
+    /// - Parameter url: URL in question
+    public func isAuthenticateUrl(_ url: URL) -> Bool {
+        guard let core = CoreEmbedded.core else {
+            fatalError(INIT_ERROR)
         }
+        
+        let result = core.getUrlType(url)
+        
+        guard result == .success(.authenticate) else {
+            return false
+        }
+        return true
     }
     
-    /**
-     Register a `Credential`.
-     
-     Use this function to register a `Credential` from one device to another.
-          
-     - Parameters:
-         - token: the 9 digit code that the user entered. This may represent one or more credentials, but only one credential per device is currently supported.
-         - callback: returns a list of registered credentials.
-     */
-    public func registerCredentials(token: CredentialToken, callback: @escaping(Result<[Credential], BISDKError>) -> Void) {
-        core.import(token.value, overwrite: true) { result in
-            switch result {
-            case let .success(profiles):
-                callback(.success(profiles.map(Credential.init)))
-            case let .failure(error):
-                callback(.failure(.from(error)))
-            }
+    /// Determines if a URL is a valid Bind URL or not.
+    /// - Parameter url: URL in question
+    public func isBindUrl(_ url: URL) -> Bool {
+        guard let core = CoreEmbedded.core else {
+            fatalError(INIT_ERROR)
         }
-    }
-}
-
-extension URLResponseClass {
-    var value: String {
-        switch self {
-        case .registration:
-            return "Registration"
-        case .selfIssue:
-            return "SelfIssue"
-        @unknown default:
-            return "Unknown"
+        
+        let result = core.getUrlType(url)
+        
+        guard result == .success(.bind) else {
+            return false
         }
+        return true
     }
 }

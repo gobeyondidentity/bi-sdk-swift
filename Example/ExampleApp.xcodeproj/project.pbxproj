@@ -7,80 +7,54 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9508D70B2734534200981636 /* ScrollableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9508D70A2734534200981636 /* ScrollableViewController.swift */; };
+		9510C400285A5411005EF959 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9510C3FF285A5411005EF959 /* InputView.swift */; };
+		9510C407285A75B6005EF959 /* SelectCredentialButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9510C406285A75B6005EF959 /* SelectCredentialButton.swift */; };
 		9536F8442682304500159945 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9536F8432682304500159945 /* DemoViewController.swift */; };
 		9536F8462682363A00159945 /* EmbeddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9536F8452682363A00159945 /* EmbeddedViewController.swift */; };
 		9536F851268294C300159945 /* EmbeddedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9536F850268294C300159945 /* EmbeddedViewModel.swift */; };
+		9544B7E8285BEF2D006E27C1 /* URLVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9544B7E7285BEF2D006E27C1 /* URLVerificationViewController.swift */; };
+		9544B7EA285BF4D6006E27C1 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9544B7E9285BF4D6006E27C1 /* Card.swift */; };
+		9544B7EC285CDE0A006E27C1 /* ResponseLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9544B7EB285CDE0A006E27C1 /* ResponseLabelView.swift */; };
 		954957832786254600503722 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954957822786254600503722 /* AuthenticationViewController.swift */; };
-		954957852786254E00503722 /* ExtendCredentialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954957842786254E00503722 /* ExtendCredentialsViewController.swift */; };
 		954957872786256F00503722 /* ManageCredentialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954957862786256F00503722 /* ManageCredentialsViewController.swift */; };
-		954E8F7526D0061F002DCEF2 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954E8F7426D0061F002DCEF2 /* UserDefaults.swift */; };
-		9564CCBD27275E9300A4717B /* BeyondIdentityAuthenticator in Frameworks */ = {isa = PBXBuildFile; productRef = 9564CCBC27275E9300A4717B /* BeyondIdentityAuthenticator */; };
 		9564CCBF27275E9300A4717B /* BeyondIdentityEmbedded in Frameworks */ = {isa = PBXBuildFile; productRef = 9564CCBE27275E9300A4717B /* BeyondIdentityEmbedded */; };
-		9564CCC127275E9300A4717B /* BeyondIdentityEmbeddedUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9564CCC027275E9300A4717B /* BeyondIdentityEmbeddedUI */; };
 		95694CDB25F81A34000A06F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694CDA25F81A34000A06F7 /* AppDelegate.swift */; };
 		95694CDD25F81A34000A06F7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694CDC25F81A34000A06F7 /* SceneDelegate.swift */; };
-		95694CDF25F81A34000A06F7 /* PreLoggedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694CDE25F81A34000A06F7 /* PreLoggedInViewController.swift */; };
 		95694CE725F81A34000A06F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95694CE525F81A34000A06F7 /* LaunchScreen.storyboard */; };
-		95694D2125F9340B000A06F7 /* LoggedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D2025F9340B000A06F7 /* LoggedInViewController.swift */; };
-		95694D2625F93604000A06F7 /* LoggedInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D2525F93604000A06F7 /* LoggedInViewModel.swift */; };
-		95694D4425F9BBF4000A06F7 /* PreLoggedInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D4325F9BBF4000A06F7 /* PreLoggedInViewModel.swift */; };
-		95694D6525FACEC4000A06F7 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95694D6425FACEC4000A06F7 /* InputViewController.swift */; };
-		958DF55226C1ACBA0026145A /* EmbeddedUILoggedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958DF55126C1ACBA0026145A /* EmbeddedUILoggedInViewController.swift */; };
 		95AFBF3C26A5FB9C0021785E /* UIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AFBF3B26A5FB9C0021785E /* UIHelpers.swift */; };
-		95AFBF4226A6029B0021785E /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AFBF4126A6029B0021785E /* RegistrationView.swift */; };
-		95AFBF4426A603300021785E /* RecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AFBF4326A603300021785E /* RecoveryView.swift */; };
-		95D60C8D26B9D0AD0092C2E4 /* EmbeddedUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D60C8C26B9D0AD0092C2E4 /* EmbeddedUIViewController.swift */; };
-		95E8489F26DFD5CF000F2553 /* RecoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E8489E26DFD5CF000F2553 /* RecoverViewController.swift */; };
-		95E848A126DFD5E1000F2553 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E848A026DFD5E1000F2553 /* SignUpViewController.swift */; };
-		95F2D4CD26F3FEBE00C68FEE /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95F2D4CC26F3FEBE00C68FEE /* Icons.xcassets */; };
+		95F9236F286A45950064B89B /* SharedDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 95F9236E286A45950064B89B /* SharedDesign */; };
 		990CBBE827A1C17A00A24DF8 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990CBBE727A1C17A00A24DF8 /* WebView.swift */; };
 		99266E3427BEF06300E4DEF1 /* Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99266E3327BEF06300E4DEF1 /* Localized.swift */; };
 		9949E908279742E300DBDAE5 /* CustomButtonWithLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949E907279742E300DBDAE5 /* CustomButtonWithLine.swift */; };
 		9974025A27BFE47B00B420A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9974025C27BFE47B00B420A5 /* Localizable.strings */; };
-		99DDF42E27BC2E6C00283F6E /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DDF42D27BC2E6C00283F6E /* Icon.swift */; };
-		99EF73E6278F1405003B6123 /* Overpass-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99EF73E5278F13F8003B6123 /* Overpass-Regular.ttf */; };
-		99EF73E8278F1417003B6123 /* Overpass-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99EF73E7278F1417003B6123 /* Overpass-Bold.ttf */; };
 		99F2B40E27921169001A7864 /* DeveloperDocsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F2B40D27921169001A7864 /* DeveloperDocsViewController.swift */; };
 		99F2B4102792130B001A7864 /* SupportPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F2B40F2792130B001A7864 /* SupportPageViewController.swift */; };
 		BD47B28E269D30D900BC2E77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD47B28D269D30D900BC2E77 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9508D70A2734534200981636 /* ScrollableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableViewController.swift; sourceTree = "<group>"; };
+		9510C3FF285A5411005EF959 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		9510C406285A75B6005EF959 /* SelectCredentialButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCredentialButton.swift; sourceTree = "<group>"; };
 		952EEE1E26852C6C00206D79 /* bi-sdk-swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "bi-sdk-swift"; path = ..; sourceTree = "<group>"; };
 		9536F8432682304500159945 /* DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
 		9536F8452682363A00159945 /* EmbeddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedViewController.swift; sourceTree = "<group>"; };
 		9536F850268294C300159945 /* EmbeddedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedViewModel.swift; sourceTree = "<group>"; };
+		9544B7E7285BEF2D006E27C1 /* URLVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLVerificationViewController.swift; sourceTree = "<group>"; };
+		9544B7E9285BF4D6006E27C1 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		9544B7EB285CDE0A006E27C1 /* ResponseLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseLabelView.swift; sourceTree = "<group>"; };
 		954957822786254600503722 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
-		954957842786254E00503722 /* ExtendCredentialsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExtendCredentialsViewController.swift; path = Sources/EmbeddedExample/ExtendCredentialsViewController.swift; sourceTree = SOURCE_ROOT; };
 		954957862786256F00503722 /* ManageCredentialsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCredentialsViewController.swift; sourceTree = "<group>"; };
-		954E8F7426D0061F002DCEF2 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		95694CD725F81A34000A06F7 /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95694CDA25F81A34000A06F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		95694CDC25F81A34000A06F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		95694CDE25F81A34000A06F7 /* PreLoggedInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreLoggedInViewController.swift; sourceTree = "<group>"; };
 		95694CE625F81A34000A06F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		95694CE825F81A34000A06F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		95694D2025F9340B000A06F7 /* LoggedInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInViewController.swift; sourceTree = "<group>"; };
-		95694D2525F93604000A06F7 /* LoggedInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInViewModel.swift; sourceTree = "<group>"; };
-		95694D4325F9BBF4000A06F7 /* PreLoggedInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreLoggedInViewModel.swift; sourceTree = "<group>"; };
-		95694D6425FACEC4000A06F7 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
-		958DF55126C1ACBA0026145A /* EmbeddedUILoggedInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedUILoggedInViewController.swift; sourceTree = "<group>"; };
 		95AFBF3B26A5FB9C0021785E /* UIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelpers.swift; sourceTree = "<group>"; };
-		95AFBF4126A6029B0021785E /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
-		95AFBF4326A603300021785E /* RecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryView.swift; sourceTree = "<group>"; };
-		95D60C8C26B9D0AD0092C2E4 /* EmbeddedUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedUIViewController.swift; sourceTree = "<group>"; };
-		95E8489E26DFD5CF000F2553 /* RecoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverViewController.swift; sourceTree = "<group>"; };
-		95E848A026DFD5E1000F2553 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		95F2D4CC26F3FEBE00C68FEE /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
+		95F9236D286A44820064B89B /* SharedDesign */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SharedDesign; sourceTree = "<group>"; };
 		990CBBE727A1C17A00A24DF8 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		99266E3327BEF06300E4DEF1 /* Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localized.swift; sourceTree = "<group>"; };
 		9949E907279742E300DBDAE5 /* CustomButtonWithLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonWithLine.swift; sourceTree = "<group>"; };
 		9974025B27BFE47B00B420A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		99DDF42D27BC2E6C00283F6E /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
-		99EF73E5278F13F8003B6123 /* Overpass-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Overpass-Regular.ttf"; sourceTree = "<group>"; };
-		99EF73E7278F1417003B6123 /* Overpass-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Overpass-Bold.ttf"; sourceTree = "<group>"; };
 		99F2B40D27921169001A7864 /* DeveloperDocsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperDocsViewController.swift; sourceTree = "<group>"; };
 		99F2B40F2792130B001A7864 /* SupportPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportPageViewController.swift; sourceTree = "<group>"; };
 		BD47B28D269D30D900BC2E77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -92,9 +66,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9564CCBD27275E9300A4717B /* BeyondIdentityAuthenticator in Frameworks */,
 				9564CCBF27275E9300A4717B /* BeyondIdentityEmbedded in Frameworks */,
-				9564CCC127275E9300A4717B /* BeyondIdentityEmbeddedUI in Frameworks */,
+				95F9236F286A45950064B89B /* SharedDesign in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,20 +77,16 @@
 		9536F8402682300900159945 /* EmbeddedExample */ = {
 			isa = PBXGroup;
 			children = (
-				95AFBF4526A607580021785E /* Views */,
-				9536F850268294C300159945 /* EmbeddedViewModel.swift */,
-				9536F8452682363A00159945 /* EmbeddedViewController.swift */,
 				954957822786254600503722 /* AuthenticationViewController.swift */,
-				954957842786254E00503722 /* ExtendCredentialsViewController.swift */,
-				954957862786256F00503722 /* ManageCredentialsViewController.swift */,
 				99F2B40D27921169001A7864 /* DeveloperDocsViewController.swift */,
+				9536F8452682363A00159945 /* EmbeddedViewController.swift */,
+				9536F850268294C300159945 /* EmbeddedViewModel.swift */,
+				954957862786256F00503722 /* ManageCredentialsViewController.swift */,
 				99F2B40F2792130B001A7864 /* SupportPageViewController.swift */,
-				9508D70A2734534200981636 /* ScrollableViewController.swift */,
-				9949E907279742E300DBDAE5 /* CustomButtonWithLine.swift */,
-				990CBBE727A1C17A00A24DF8 /* WebView.swift */,
-				9974025C27BFE47B00B420A5 /* Localizable.strings */,
-				99266E3327BEF06300E4DEF1 /* Localized.swift */,
+				9544B7E7285BEF2D006E27C1 /* URLVerificationViewController.swift */,
 				99DDF42827BC230600283F6E /* Helpers */,
+				956A819B27E53D59004D0351 /* Resources */,
+				95AFBF4526A607580021785E /* Views */,
 			);
 			path = EmbeddedExample;
 			sourceTree = "<group>";
@@ -125,6 +94,7 @@
 		95694CCE25F81A34000A06F7 = {
 			isa = PBXGroup;
 			children = (
+				95F9236D286A44820064B89B /* SharedDesign */,
 				952EEE1E26852C6C00206D79 /* bi-sdk-swift */,
 				BDF640E0269D195200C5044C /* BuildConfig */,
 				95694CD925F81A34000A06F7 /* Sources */,
@@ -144,14 +114,11 @@
 		95694CD925F81A34000A06F7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				95694ED026000C32000A06F7 /* AuthenticatorExample */,
 				9536F8402682300900159945 /* EmbeddedExample */,
 				95D60C8B26B9D07C0092C2E4 /* EmbeddedUIExample */,
-				954E8F7426D0061F002DCEF2 /* UserDefaults.swift */,
 				9536F8432682304500159945 /* DemoViewController.swift */,
 				95694EC026000C05000A06F7 /* Supporting */,
 				95694CE825F81A34000A06F7 /* Info.plist */,
-				99EF73DF278F11FA003B6123 /* Custom Font */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -170,59 +137,38 @@
 				95694CDC25F81A34000A06F7 /* SceneDelegate.swift */,
 				95694CE525F81A34000A06F7 /* LaunchScreen.storyboard */,
 				BD47B28D269D30D900BC2E77 /* Assets.xcassets */,
-				95F2D4CC26F3FEBE00C68FEE /* Icons.xcassets */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
 		};
-		95694ED026000C32000A06F7 /* AuthenticatorExample */ = {
+		956A819B27E53D59004D0351 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				95694D6425FACEC4000A06F7 /* InputViewController.swift */,
-				95694D2525F93604000A06F7 /* LoggedInViewModel.swift */,
-				95694D2025F9340B000A06F7 /* LoggedInViewController.swift */,
-				95694CDE25F81A34000A06F7 /* PreLoggedInViewController.swift */,
-				95694D4325F9BBF4000A06F7 /* PreLoggedInViewModel.swift */,
+				99266E3327BEF06300E4DEF1 /* Localized.swift */,
+				9974025C27BFE47B00B420A5 /* Localizable.strings */,
 			);
-			path = AuthenticatorExample;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		95AFBF4526A607580021785E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				95AFBF4126A6029B0021785E /* RegistrationView.swift */,
-				95AFBF4326A603300021785E /* RecoveryView.swift */,
+				9544B7E9285BF4D6006E27C1 /* Card.swift */,
+				9949E907279742E300DBDAE5 /* CustomButtonWithLine.swift */,
+				9510C3FF285A5411005EF959 /* InputView.swift */,
+				9544B7EB285CDE0A006E27C1 /* ResponseLabelView.swift */,
+				9510C406285A75B6005EF959 /* SelectCredentialButton.swift */,
+				990CBBE727A1C17A00A24DF8 /* WebView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		95D60C8B26B9D07C0092C2E4 /* EmbeddedUIExample */ = {
-			isa = PBXGroup;
-			children = (
-				95D60C8C26B9D0AD0092C2E4 /* EmbeddedUIViewController.swift */,
-				958DF55126C1ACBA0026145A /* EmbeddedUILoggedInViewController.swift */,
-				95E8489E26DFD5CF000F2553 /* RecoverViewController.swift */,
-				95E848A026DFD5E1000F2553 /* SignUpViewController.swift */,
-			);
-			path = EmbeddedUIExample;
 			sourceTree = "<group>";
 		};
 		99DDF42827BC230600283F6E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				95AFBF3B26A5FB9C0021785E /* UIHelpers.swift */,
-				99DDF42D27BC2E6C00283F6E /* Icon.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		99EF73DF278F11FA003B6123 /* Custom Font */ = {
-			isa = PBXGroup;
-			children = (
-				99EF73E7278F1417003B6123 /* Overpass-Bold.ttf */,
-				99EF73E5278F13F8003B6123 /* Overpass-Regular.ttf */,
-			);
-			path = "Custom Font";
 			sourceTree = "<group>";
 		};
 		BDF640E0269D195200C5044C /* BuildConfig */ = {
@@ -250,9 +196,8 @@
 			);
 			name = ExampleApp;
 			packageProductDependencies = (
-				9564CCBC27275E9300A4717B /* BeyondIdentityAuthenticator */,
 				9564CCBE27275E9300A4717B /* BeyondIdentityEmbedded */,
-				9564CCC027275E9300A4717B /* BeyondIdentityEmbeddedUI */,
+				95F9236E286A45950064B89B /* SharedDesign */,
 			);
 			productName = "sdk-swift";
 			productReference = 95694CD725F81A34000A06F7 /* ExampleApp.app */;
@@ -296,10 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95694CE725F81A34000A06F7 /* LaunchScreen.storyboard in Resources */,
-				95F2D4CD26F3FEBE00C68FEE /* Icons.xcassets in Resources */,
-				99EF73E8278F1417003B6123 /* Overpass-Bold.ttf in Resources */,
 				9974025A27BFE47B00B420A5 /* Localizable.strings in Resources */,
-				99EF73E6278F1405003B6123 /* Overpass-Regular.ttf in Resources */,
 				BD47B28E269D30D900BC2E77 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -313,32 +255,22 @@
 			files = (
 				954957832786254600503722 /* AuthenticationViewController.swift in Sources */,
 				99266E3427BEF06300E4DEF1 /* Localized.swift in Sources */,
-				9508D70B2734534200981636 /* ScrollableViewController.swift in Sources */,
-				95694D6525FACEC4000A06F7 /* InputViewController.swift in Sources */,
-				95D60C8D26B9D0AD0092C2E4 /* EmbeddedUIViewController.swift in Sources */,
+				9510C407285A75B6005EF959 /* SelectCredentialButton.swift in Sources */,
 				99F2B40E27921169001A7864 /* DeveloperDocsViewController.swift in Sources */,
-				954957852786254E00503722 /* ExtendCredentialsViewController.swift in Sources */,
 				9949E908279742E300DBDAE5 /* CustomButtonWithLine.swift in Sources */,
-				95E8489F26DFD5CF000F2553 /* RecoverViewController.swift in Sources */,
-				95694CDF25F81A34000A06F7 /* PreLoggedInViewController.swift in Sources */,
-				95694D2125F9340B000A06F7 /* LoggedInViewController.swift in Sources */,
+				9510C400285A5411005EF959 /* InputView.swift in Sources */,
 				95AFBF3C26A5FB9C0021785E /* UIHelpers.swift in Sources */,
-				99DDF42E27BC2E6C00283F6E /* Icon.swift in Sources */,
 				990CBBE827A1C17A00A24DF8 /* WebView.swift in Sources */,
 				95694CDB25F81A34000A06F7 /* AppDelegate.swift in Sources */,
 				99F2B4102792130B001A7864 /* SupportPageViewController.swift in Sources */,
 				95694CDD25F81A34000A06F7 /* SceneDelegate.swift in Sources */,
-				95AFBF4426A603300021785E /* RecoveryView.swift in Sources */,
-				95694D4425F9BBF4000A06F7 /* PreLoggedInViewModel.swift in Sources */,
-				95694D2625F93604000A06F7 /* LoggedInViewModel.swift in Sources */,
-				95AFBF4226A6029B0021785E /* RegistrationView.swift in Sources */,
+				9544B7EC285CDE0A006E27C1 /* ResponseLabelView.swift in Sources */,
+				9544B7E8285BEF2D006E27C1 /* URLVerificationViewController.swift in Sources */,
 				9536F8442682304500159945 /* DemoViewController.swift in Sources */,
-				954E8F7526D0061F002DCEF2 /* UserDefaults.swift in Sources */,
-				95E848A126DFD5E1000F2553 /* SignUpViewController.swift in Sources */,
 				954957872786256F00503722 /* ManageCredentialsViewController.swift in Sources */,
 				9536F851268294C300159945 /* EmbeddedViewModel.swift in Sources */,
-				958DF55226C1ACBA0026145A /* EmbeddedUILoggedInViewController.swift in Sources */,
 				9536F8462682363A00159945 /* EmbeddedViewController.swift in Sources */,
+				9544B7EA285BF4D6006E27C1 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +428,7 @@
 				DEVELOPMENT_TEAM = BZA6SZ8XVQ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Sources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -521,6 +454,7 @@
 				DEVELOPMENT_TEAM = BZA6SZ8XVQ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Sources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -558,17 +492,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9564CCBC27275E9300A4717B /* BeyondIdentityAuthenticator */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = BeyondIdentityAuthenticator;
-		};
 		9564CCBE27275E9300A4717B /* BeyondIdentityEmbedded */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BeyondIdentityEmbedded;
 		};
-		9564CCC027275E9300A4717B /* BeyondIdentityEmbeddedUI */ = {
+		95F9236E286A45950064B89B /* SharedDesign */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = BeyondIdentityEmbeddedUI;
+			productName = SharedDesign;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

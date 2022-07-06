@@ -1,5 +1,4 @@
 import BeyondIdentityEmbedded
-import BeyondIdentityEmbeddedUI
 import os
 import UIKit
 
@@ -21,13 +20,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.makeKeyAndVisible()
             
             let viewModel = EmbeddedViewModel()
-                  
+            
             Embedded.initialize(
                 biometricAskPrompt: viewModel.biometricAskPrompt,
-                clientID: "Embedded Example: \(viewModel.publicClientID): \(viewModel.confidentialClientID)",
-                redirectURI: viewModel.redirectURI,
                 logger: logger
-            )
+            ) { _ in }
             
             if let url = connectionOptions.urlContexts.first?.url {
                 register(url)
@@ -45,73 +42,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func register(_ url: URL){
-        guard let demo = UserDefaults.getDemo() else { return }
-        switch demo {
-        case .authenticator:
-            break
-        case .embedded:
-            Embedded.shared.registerCredentials(url) { [weak self] result in
-                switch result {
-                case let .success(credential):
-                    let dialog = UIAlertController(title: "Registered Credential: \(credential.name)", message: nil, preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
-                    dialog.addAction(action)
-                    self?.window?.rootViewController?.present(dialog, animated: true, completion: nil)
-                case let .failure(error):
-                    let dialog = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
-                    dialog.addAction(action)
-                    self?.window?.rootViewController?.present(dialog, animated: true, completion: nil)
-                }
-            }
-        case .embeddedUI:
-            let vm = EmbeddedViewModel()
-            
-            let auth = UserDefaults.getClientType()
-            
-            switch auth {
-            case .confidential:
-                registerCredentialAndLogin(
-                    window: window!,
-                    url: url,
-                    config: RegisterConfig(
-                        authFlowType: .authorize(
-                            pkce: nil,
-                            scope: "openid",
-                            callback: { [weak self] authCode in
-                                (self?.window?.rootViewController as? UINavigationController)?.pushViewController(
-                                    EmbeddedUILoggedInViewController(authResponse: .authorize(authCode)),
-                                    animated: true
-                                )
-                            }),
-                        supportURL: vm.supportURL,
-                        recoverUserAction: recoverUserAction
-                    )
-                )
-            case .public:
-                registerCredentialAndLogin(
-                    window: window!,
-                    url: url,
-                    config: RegisterConfig(
-                        authFlowType: .authenticate(
-                            callback: { [weak self] tokenResponse in
-                                (self?.window?.rootViewController as? UINavigationController)?.pushViewController(
-                                    EmbeddedUILoggedInViewController(authResponse: .authenticate(tokenResponse)),
-                                    animated: true
-                                )
-                            }),
-                        supportURL: vm.supportURL,
-                        recoverUserAction: recoverUserAction
-                    )
-                )
+        Embedded.shared.bindCredential(url: url) { [weak self] result in
+            switch result {
+            case let .success(response):
+                let dialog = UIAlertController(title: "Registered Credential: \(response.credential.identity.displayName)", message: nil, preferredStyle: .alert)
+                let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                dialog.addAction(action)
+                self?.window?.rootViewController?.present(dialog, animated: true, completion: nil)
+            case let .failure(error):
+                let dialog = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .alert)
+                let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                dialog.addAction(action)
+                self?.window?.rootViewController?.present(dialog, animated: true, completion: nil)
             }
         }
-    }
-    
-    private func recoverUserAction() {
-        let vm = EmbeddedViewModel()
-        let currentVC = window?.rootViewController?.presentedViewController ?? window?.rootViewController
-        currentVC?.present(RecoverViewController(recoveryURL: vm.recoverUserEndpoint), animated: true, completion: nil)
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -1,4 +1,4 @@
-<img src="https://user-images.githubusercontent.com/238738/173244201-e403272c-fa59-4122-91a2-eba4614b8081.svg" width="300px">
+![beyond-identity-logo](https://user-images.githubusercontent.com/6578679/172954923-7a0c741a-8ee6-4ba3-a610-1b073f3eec59.png)
 
 # Beyond Identity Swift SDKs
 
@@ -10,19 +10,9 @@
 
 Goodbye, passwords! The Beyond Identity SDKs allow you to embed the Passwordless experience into your product. These SDKs supports OIDC and OAuth2.
 
-## SDKs
-
-### [Authenticator](https://developer.beyondidentity.com/docs/ios-swift-authenticator-sdk)
-
-Passwordless authentication with our native platform Authenticator. The [Beyond Identity Authenticator](https://app.byndid.com/downloads) will need to be downloaded by your users.
-
-### [Embedded](https://developer.beyondidentity.com/docs/ios-swift-embedded-sdk)
+## [Embedded SDK](https://developer.beyondidentity.com/docs/swift-sdks/embedded-sdk)
 
 Passwordless authentication with our Authenticator embedded into your app. Users will not need to download the Beyond Identity Authenticator.
-
-### [EmbeddedUI](https://developer.beyondidentity.com/docs/ios-swift-embedded-with-ui)
-
-Passwordless authentication with our Authenticator embedded into your app with out of the box view wrappers.
 
 ## Installation
 

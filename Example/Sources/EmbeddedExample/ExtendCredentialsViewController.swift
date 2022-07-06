@@ -6,97 +6,133 @@ import SharedDesign
 class ExtendCredentialsViewController: ScrollableViewController {
     private let viewModel: EmbeddedViewModel
     
-    // Buttons
-    let extendButton = makeButton(with: Localized.extendButton.string)
-    let extendCancelButton = makeButton(with: Localized.extendCancelButton.string)
-    let registerButton = makeButton(with: Localized.registerButton.string)
-
-    // Labels
-    let extendLabel = UILabel().wrap()
-    let extendCancelLabel = UILabel().wrap()
-    let registerLabel = UILabel().wrap()
-
-    private let line = Line()
-
-    private let lineTwo = Line()
+    let extendLabel = ResponseLabelView()
+    let extendCancelLabel = ResponseLabelView()
+    let registerLabel = ResponseLabelView()
     
-    // TextFields
-    let registerField = UITextField().with(placeholder: Localized.registerField.string, type: .namePhonePad)
-
-    // ExtendStackView
-    let extendView = UIStackView().vertical()
+    let QRCodeView = UIStackView().vertical()
     
-    // User input
     var tokenToRegister: CredentialToken?
     
     init(viewModel: EmbeddedViewModel) {
         self.viewModel = viewModel
         super.init()
         
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = Colors.background.value
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        cancelExtendCredentials()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.hideKeyboardWhenTappedOutside()
+        hideKeyboardWhenTappedOutside()
         
-        extendButton.addTarget(self, action: #selector(extendCredential), for: .touchUpInside)
-        extendCancelButton.addTarget(self, action: #selector(cancelExtendCredentials), for: .touchUpInside)
-        registerButton.addTarget(self, action: #selector(registerCredentials), for: .touchUpInside)
+        let title = UILabel().wrap().withText(Localized.extendRegisterTitle.string).withFont(Fonts.largeTitle)
+        let detail = UILabel().wrap().withText(Localized.extendRegisterText.string).withFont(Fonts.title2)
+        
+        let titleStack = UIStackView(arrangedSubviews: [title, detail]).vertical()
+        
+        let extendCredential = makeExtendCard(
+            title: Localized.extendTitle.string,
+            text: Localized.extendText.string,
+            note: Localized.noteText.string
+        )
+        
+        let cancelCredential = makeCancelCard(
+            title: Localized.cancelTitle.string,
+            text: Localized.cancelText.string
+        )
+        
+        let registerCredential = makeRegisterCard(
+            title: Localized.registerCredentialTitle.string,
+            text: Localized.registerCredentialText.string
+        )
+        
+        let stack = UIStackView(arrangedSubviews: [
+            titleStack,
+            extendCredential,
+            Line(),
+            cancelCredential,
+            Line(),
+            registerCredential,
+        ]).vertical()
+        
+        contentView.addSubview(stack)
+        
+        stack.alignment = .fill
+        stack.spacing = Spacing.padding
+        stack.setCustomSpacing(Spacing.large, after: extendCredential)
+        
+        stack.verticalAnchors == contentView.safeAreaLayoutGuide.verticalAnchors + Spacing.large
+        stack.horizontalAnchors == contentView.safeAreaLayoutGuide.horizontalAnchors + Spacing.large
+    }
+    
+    func makeExtendCard(title: String, text: String, note: String) -> View {
+        let title = UILabel().wrap().withText(title).withFont(Fonts.title)
+        let text = UILabel().wrap().withText(text).withFont(Fonts.title2)
+        let note = UILabel().wrap().withText(note).withFont(Fonts.title2)
+        let button = makeButton(with: Localized.extendButton.string)
+        button.addTarget(self, action: #selector(extendCredential), for: .touchUpInside)
+        
+        let stack = UIStackView(arrangedSubviews: [
+            title,
+            text,
+            note,
+            button,
+            extendLabel,
+            QRCodeView,
+        ]).vertical()
+        
+        stack.alignment = .fill
+        stack.spacing = Spacing.large
+        return stack
+    }
+    
+    func makeCancelCard(title: String, text: String) -> View {
+        let title = UILabel().wrap().withText(title).withFont(Fonts.title)
+        let text =  UILabel().wrap().withText(text).withFont(Fonts.title2)
+        let button = makeButton(with: Localized.extendCancelButton.string)
+        button.addTarget(self, action: #selector(cancelExtendCredentials), for: .touchUpInside)
+        
+        let stack = UIStackView(arrangedSubviews: [
+            title,
+            text,
+            button,
+            extendCancelLabel
+        ]).vertical()
+        
+        stack.alignment = .fill
+        stack.spacing = Spacing.large
+        return stack
+    }
+    
+    func makeRegisterCard(title: String, text: String) -> View {
+        let title = UILabel().wrap().withText(title).withFont(Fonts.title)
+        let text = UILabel().wrap().withText(text).withFont(Fonts.title2)
+        
+        let registerField = UITextField().with(placeholder: Localized.registerField.string, type: .namePhonePad)
         registerField.addTarget(self, action: #selector(registerFieldDidChange(_:)), for: .editingChanged)
         registerField.addTarget(self, action: #selector(textFieldDidEnd(_:)), for: .editingDidEndOnExit)
-
-        extendView.addArrangedSubview(extendButton)
-        extendView.addArrangedSubview(extendLabel)
-
-        let registerTitle = UILabel().wrap().withTitle(Localized.extendRegisterTitle.string).withFont(Fonts.largeTitle)
-        let registerText = UILabel().wrap().withTitle(Localized.extendRegisterText.string).withFont(Fonts.title2)
-        let extendTitle =  UILabel().wrap().withTitle(Localized.extendTitle.string).withFont(Fonts.largeTitle)
-        let extendText = UILabel().wrap().withTitle(Localized.extendText.string).withFont(Fonts.title2)
-        let noteText = UILabel().wrap().withTitle(Localized.noteText.string).withFont(Fonts.title2)
-        let cancelTitle = UILabel().wrap().withTitle(Localized.cancelTitle.string).withFont(Fonts.largeTitle)
-        let cancelText = UILabel().wrap().withTitle(Localized.cancelText.string).withFont(Fonts.title2)
-        let registerCredentialTitle = UILabel().wrap().withTitle(Localized.registerCredentialTitle.string).withFont(Fonts.largeTitle)
-        let registerCredentialText = UILabel().wrap().withTitle(Localized.registerCredentialText.string).withFont(Fonts.title2)
-
+        
+        let button = makeButton(with: Localized.registerButton.string)
+        button.addTarget(self, action: #selector(registerCredential), for: .touchUpInside)
+        
         let stack = UIStackView(arrangedSubviews: [
-            registerTitle,
-            registerText,
-            extendTitle,
-            extendText,
-            noteText,
-            extendButton,
-            extendLabel,
-            extendView,
-            line,
-            cancelTitle,
-            cancelText,
-            extendCancelButton,
-            extendCancelLabel,
-            lineTwo,
-            registerCredentialTitle,
-            registerCredentialText,
+            title,
+            text,
             registerField,
-            registerButton,
-            registerLabel
+            button,
+            registerLabel,
         ]).vertical()
-
-        contentView.addSubview(stack)
-
+        
         stack.alignment = .fill
-        stack.setCustomSpacing(32, after: registerText)
-        stack.setCustomSpacing(32, after: extendText)
-        stack.setCustomSpacing(16, after: extendLabel)
-        stack.setCustomSpacing(32, after: line)
-        stack.setCustomSpacing(16, after: extendCancelLabel)
-        stack.setCustomSpacing(32, after: lineTwo)
-
-        stack.isLayoutMarginsRelativeArrangement = true
-        stack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0)
-        stack.verticalAnchors == contentView.safeAreaLayoutGuide.verticalAnchors - 16
-        stack.horizontalAnchors == contentView.safeAreaLayoutGuide.horizontalAnchors + 16
-
+        stack.spacing = Spacing.large
+        return stack
     }
     
     @available(*, unavailable)
@@ -105,7 +141,7 @@ class ExtendCredentialsViewController: ScrollableViewController {
     }
     
     @objc func cancelExtendCredentials() {
-        Embedded.shared.cancelExtendCredentials { result in
+        Embedded.shared.cancelExtendCredential { result in
             switch result {
             case .success:
                 self.extendCancelLabel.text = Localized.cancelExtendCredentials.string
@@ -124,11 +160,7 @@ class ExtendCredentialsViewController: ScrollableViewController {
                     self.extendLabel.text = Localized.missingCredential.string
                     return
                 }
-                guard let handle = firstCredential.handle else {
-                    self.extendLabel.text = Localized.missingHandle.string
-                    return
-                }
-                Embedded.shared.extendCredentials(handles: [handle]) { [weak self] result in
+                Embedded.shared.extendCredential(id: firstCredential.id.value) { [weak self] result in
                     guard let self = self else { return }
                     switch result {
                     case let .success(extend):
@@ -137,7 +169,7 @@ class ExtendCredentialsViewController: ScrollableViewController {
                             self.resetExportView()
                             self.extendLabel.text = "aborted"
                         case let .started(token, qrcode),
-                             let .tokenUpdated(token, qrcode):
+                            let .tokenUpdated(token, qrcode):
                             self.resetExportView()
                             self.updateView(with: token, qrcode)
                         case .done:
@@ -149,7 +181,7 @@ class ExtendCredentialsViewController: ScrollableViewController {
                         self.extendLabel.text = error.localizedDescription
                     }
                 }
-
+                
             case let .failure(error):
                 self.extendLabel.text = error.localizedDescription
             }
@@ -157,18 +189,16 @@ class ExtendCredentialsViewController: ScrollableViewController {
     }
     
     private func resetExportView(){
-        extendView.clear()
-        extendView.addArrangedSubview(extendButton)
-        extendView.addArrangedSubview(extendLabel)
+        QRCodeView.clear()
     }
     
     private func updateView(with token: CredentialToken, _ qrcode: QRCode?) {
         extendLabel.text = "\(token)"
         let QRCodeImage = UIImageView(image: qrcode)
-        extendView.addArrangedSubview(QRCodeImage)
+        QRCodeView.addArrangedSubview(QRCodeImage)
     }
     
-    @objc func registerCredentials() {
+    @objc func registerCredential() {
         guard let tokenToRegister = tokenToRegister else {
             self.registerLabel.text =
                 """
@@ -178,7 +208,7 @@ class ExtendCredentialsViewController: ScrollableViewController {
                 """
             return
         }
-        Embedded.shared.registerCredentials(token: tokenToRegister) { result in
+        Embedded.shared.registerCredential(token: tokenToRegister) { result in
             switch result {
             case let .success(credentials):
                 self.registerLabel.text = "\(credentials)"
@@ -196,7 +226,7 @@ class ExtendCredentialsViewController: ScrollableViewController {
     
     @objc func textFieldDidEnd(_ textField: UITextField) {
         textField.resignFirstResponder()
-        registerCredentials()
+        registerCredential()
     }
 }
 

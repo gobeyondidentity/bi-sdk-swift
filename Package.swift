@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 
 // THIS FILE IS GENERATED. DO NOT EDIT.
 import PackageDescription
@@ -9,47 +9,24 @@ let package = Package(
     platforms: [.iOS(.v12), .macOS(.v10_15)],
     products: [
         .library(
-            name: "BeyondIdentityAuthenticator",
-            targets: ["BeyondIdentityAuthenticator"]),
-        .library(
             name: "BeyondIdentityEmbedded",
             targets: ["BeyondIdentityEmbedded"]),
-        .library(
-            name: "BeyondIdentityEmbeddedUI",
-            targets: ["BeyondIdentityEmbeddedUI"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/Rightpoint/Anchorage.git", from: "4.5.0"),
-    ],
+    dependencies: [],
     targets: [
-        .target(
-            name: "BeyondIdentityAuthenticator",
-            dependencies: ["CoreSDK", "SharedDesign"],
-            path: "Sources/Authenticator/"
-        ),
         .target(
             name: "BeyondIdentityEmbedded",
             dependencies: ["CoreSDK"],
             path: "Sources/Embedded/"
         ),
-        .target(
-            name: "BeyondIdentityEmbeddedUI",
-            dependencies: ["Anchorage", "BeyondIdentityEmbedded", "SharedDesign"],
-            path: "Sources/EmbeddedUI/"
-         ),
-        .target(
-            name: "SharedDesign",
-            path: "Sources/SharedDesign/",
-            resources: [.process("Resources/Fonts")]
-         ),
 	.binaryTarget(
 	    name: "CoreSDK",
-	    url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/0.7.0/CoreSDK.xcframework.zip",
-	    checksum: "091d0a946cfcafdd76d4bf01489abdc4cb2583df5b0c297c80a8a2465ba0f31e"
+	    url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/1.0.1/CoreSDK.xcframework.zip",
+	    checksum: "6130d43b654fcf4e208885fb1e6cddf81bc280d9ab696ecfce35f51b8abb1e44"
 	),
         .testTarget(
             name: "UnitTests",
-            dependencies: ["BeyondIdentityAuthenticator", "BeyondIdentityEmbedded", "SharedDesign"],
+            dependencies: ["BeyondIdentityEmbedded"],
             path: "Tests/UnitTests",
             exclude: []
         )

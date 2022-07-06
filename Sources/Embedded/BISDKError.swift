@@ -3,8 +3,11 @@ import Foundation
 
 /// Error returned from the Embedded SDK.
 public enum BISDKError: Equatable, Error {
-    /// `Credential` for this user does not exist on this device. The `User` may need to migrate, recover, or register.
+    /// `Credential` for this user does not exist on this device.
     case credentialNotFound
+    
+    /// URL provided is invalid
+    case invalidUrlType
     
     /// string description of the error.
     case description(String)
@@ -28,6 +31,8 @@ extension BISDKError: LocalizedError {
             return message
         case .credentialNotFound:
             return "Credential for this user does not exist on this device"
+        case .invalidUrlType:
+            return "URL provided is invalid"
         }
     }
 }

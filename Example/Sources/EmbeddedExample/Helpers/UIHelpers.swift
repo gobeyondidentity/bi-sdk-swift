@@ -1,23 +1,8 @@
+import Anchorage
 import BeyondIdentityEmbedded
 import Foundation
 import UIKit
 import SharedDesign
-
-extension UILabel {
-    func wrap() -> UILabel {
-        numberOfLines = 0
-        lineBreakMode = .byWordWrapping
-        return self
-    }
-    
-    func withTitle(_ text: String) -> UILabel {
-        self.text = text
-        font = UIFont.preferredFont(forTextStyle: .title1)
-        adjustsFontForContentSizeCategory = true
-        return self
-    }
-
-}
 
 extension UITextField {
     func with(placeholder: String, type: UIKeyboardType) -> UITextField {
@@ -55,24 +40,59 @@ extension UIViewController {
     }
 }
 
+extension ScrollableViewController {
+    @objc private func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            scrollView.contentInset = .zero
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+        }
+        
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
+    }
+    
+    func addKeyboardObserver(){
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+}
+
 func makeButton(with name: String) -> UIButton {
     let button = UIButton()
     button.setTitle(name, for: .normal)
     button.layer.cornerRadius = 4
-    button.contentEdgeInsets = UIEdgeInsets(top: 8.0, left: 16.0, bottom: 8.0, right: 16.0)
     button.setTitleColor(Colors.standardButtonText.value, for: .normal)
     button.layer.backgroundColor = Colors.primary.value.cgColor
     return button
 }
 
-extension PKCE: CustomStringConvertible {
+func makeCard(title: String, text: String, button: Button, responseLabel: ResponseLabelView) -> View {
+    let title = UILabel().wrap().withText(title).withFont(Fonts.title)
+    let text =  UILabel().wrap().withText(text).withFont(Fonts.title2)
+    
+    let stack = UIStackView(arrangedSubviews: [
+        title,
+        text,
+        button,
+        responseLabel
+    ]).vertical()
+    
+    stack.alignment = .fill
+    stack.spacing = Spacing.large
+    return stack
+}
+
+extension AuthenticateResponse: CustomStringConvertible {
     public var description: String {
         """
-        codeVerifier:
-        \(codeVerifier)\n
-        codeChallenge:
-        \(codeChallenge.challenge)\n
-        method: \(codeChallenge.method)\n
+        redirectURL: \(redirectURL)
+        message: \(message ?? "")
         """
     }
 }
@@ -80,36 +100,51 @@ extension PKCE: CustomStringConvertible {
 extension Credential: CustomStringConvertible {
     public var description: String {
         """
-        created: \(created ?? "no created date available")
+        id: \(id.value)
+        localCreated: \(localCreated)
+        localUpdated: \(localUpdated)
+        apiBaseURL: \(apiBaseURL)
+        tenantID: \(tenantID.value)
+        realmID: \(realmID.value)
+        identityID: \(identityID.value)
+        keyHandle: \(keyHandle.value)
         state: \(state.rawValue)
-        handle: \(handle?.value ?? "Missing handle")
-        keyHandle: \(keyHandle ?? "Missing keyHandle")
-        name: \(name)
-        logoURL: \(logoURL)
-        loginURI: \(loginURI ?? "no loginURI available")
-        enrollURI: \(enrollURI ?? "no enrollURI available")
-        chain:
-        \(chain)\n
-        rootFingerprint: \(rootFingerprint ?? "Missing fingerprint")
+        created: \(created)
+        updated: \(updated)
+        realm:
+        \(realm.description)
+        identity:
+        \(identity.description)
+        theme:
+        \(theme.description)
+        \n
         """
     }
 }
 
-extension AccessToken: CustomStringConvertible {
+extension Realm: CustomStringConvertible {
     public var description: String {
         """
-        value: \(value)\n
-        tokenType: \(type)\n
-        expiresIn: \(expiresIn)\n
+            displayName: \(displayName)
         """
     }
 }
 
-extension TokenResponse: CustomStringConvertible {
+extension Identity: CustomStringConvertible {
     public var description: String {
         """
-        accessToken: \(accessToken.description)\n
-        idToken: \(idToken)\n
+            displayName: \(displayName)
+            username: \(username)
+        """
+    }
+}
+
+extension Theme: CustomStringConvertible {
+    public var description: String {
+        """
+            logoLightURL: \(logoLightURL)
+            logoDarkURL: \(logoDarkURL)
+            supportURL: \(supportURL)
         """
     }
 }

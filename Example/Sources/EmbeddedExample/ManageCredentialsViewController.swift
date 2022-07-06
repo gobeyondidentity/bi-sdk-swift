@@ -6,92 +6,70 @@ import SharedDesign
 class ManageCredentialsViewController: ScrollableViewController {
     private let viewModel: EmbeddedViewModel
     
-    let deleteCredentialButton = makeButton(with: Localized.deleteCredentialButton.string)
     let getCredentialsButton = makeButton(with: Localized.getCredentialsButton.string)
-
-    let deleteCredentialLabel = UILabel().wrap()
-    let getCredentialsLabel = UILabel().wrap()
+    let getCredentialsLabel = ResponseLabelView()
     
-    private let line = Line()
+    var credentialToDelete: CredentialID?
     
     init(viewModel: EmbeddedViewModel) {
         self.viewModel = viewModel
         super.init()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = Colors.background.value
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        addKeyboardObserver()
+        hideKeyboardWhenTappedOutside()
+        
         getCredentialsButton.addTarget(self, action: #selector(getCredentials), for: .touchUpInside)
         
-        deleteCredentialButton.addTarget(self, action: #selector(deleteCredential), for: .touchUpInside)
+        let credentialTitle = UILabel().wrap().withText(Localized.credentialTitle.string).withFont(Fonts.largeTitle)
         
-        deleteCredentialLabel.backgroundColor = .lightGray
-        getCredentialsLabel.backgroundColor = .lightGray
-
-        let credentialTitle = UILabel().wrap().withTitle(Localized.credentialTitle.string).withFont(Fonts.largeTitle)
-        let viewCredentialTitle = UILabel().wrap().withTitle(Localized.viewCredentialTitle.string).withFont(Fonts.navTitle)
-        let credentialText = UILabel().wrap().withTitle(Localized.credentialText.string).withFont(Fonts.title2)
-        let deleteTitle = UILabel().wrap().withTitle(Localized.deleteTitle.string).withFont(Fonts.navTitle)
-        let deleteText = UILabel().wrap().withTitle(Localized.deleteText.string).withFont(Fonts.title2)
-
+        let viewCredential = makeCard(
+            title: Localized.viewCredentialTitle.string,
+            text: Localized.credentialText.string,
+            button: getCredentialsButton,
+            responseLabel: getCredentialsLabel
+        )
+        
+        let deleteCredential = Card(
+            title: Localized.deleteTitle.string,
+            detail: Localized.deleteText.string,
+            cardView: InputView<CredentialID>(
+                buttonTitle: Localized.deleteTitle.string,
+                placeholder: Localized.deletePlaceholder.string
+            ){ (id, callback) in
+                Embedded.shared.deleteCredential(for: id) { result in
+                    switch result {
+                    case .success:
+                        callback("Deleted Credential: \(id.value)")
+                    case let .failure(error):
+                        callback(error.localizedDescription)
+                    }
+                }
+            }
+        )
+        
         let stack = UIStackView(arrangedSubviews: [
             credentialTitle,
-            viewCredentialTitle,
-            credentialText,
-            getCredentialsButton,
-            getCredentialsLabel,
-            line,
-            deleteTitle,
-            deleteText,
-            deleteCredentialButton,
-            deleteCredentialLabel,
+            viewCredential,
+            Line(),
+            deleteCredential
         ]).vertical()
-
-        contentView.addSubview(stack)
-
         stack.alignment = .fill
-        stack.setCustomSpacing(32, after: credentialTitle)
-        stack.setCustomSpacing(16, after: getCredentialsLabel)
-        stack.setCustomSpacing(32, after: line)
-
-        stack.isLayoutMarginsRelativeArrangement = true
-        stack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0)
-        stack.verticalAnchors == contentView.safeAreaLayoutGuide.verticalAnchors - 16
-        stack.horizontalAnchors == contentView.safeAreaLayoutGuide.horizontalAnchors + 16
-
+        stack.spacing = Spacing.padding
+        
+        contentView.addSubview(stack)
+        
+        stack.verticalAnchors == contentView.safeAreaLayoutGuide.verticalAnchors + Spacing.large
+        stack.horizontalAnchors == contentView.safeAreaLayoutGuide.horizontalAnchors + Spacing.large
     }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    @objc func deleteCredential(){
-        Embedded.shared.getCredentials { result in
-            switch result {
-            case let .success(credentials):
-                guard let credential = credentials.first else {
-                    self.deleteCredentialLabel.text = Localized.noCredentialFound.string
-                    return
-                }
-                guard let handle = credential.handle else {
-                    self.getCredentialsLabel.text = Localized.missingHandle.string
-                    return
-                }
-                Embedded.shared.deleteCredential(for: handle) { result in
-                    switch result {
-                    case let .success(credential):
-                        self.deleteCredentialLabel.text = "Deleted Credential: \(credential.value)"
-                    case let .failure(error):
-                        self.deleteCredentialLabel.text = error.localizedDescription
-                    }
-                }
-            case let .failure(error):
-                self.getCredentialsLabel.text = error.localizedDescription
-            }
-        }
     }
     
     @objc func getCredentials() {

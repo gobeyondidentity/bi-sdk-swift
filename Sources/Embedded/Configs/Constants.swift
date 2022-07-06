@@ -10,7 +10,7 @@ struct Configuration {
     #endif
 
     static let deviceGateway = "https://device-gateway.byndid.com"
-    static let sdkVersion = "0.7.0"
+    static let sdkVersion = "1.0.1"
 }
 
 enum Endpoint: String, CaseIterable {
