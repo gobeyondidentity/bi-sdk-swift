@@ -17,7 +17,7 @@ jobs:
       - name: Deploy to Cocoapods Trunk
         run: |
           set -euo pipefail
-          pod trunk push BeyondIdentityCoreSDK.podspec
+          pod trunk push --allow-warnings BeyondIdentityCoreSDK.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
 
@@ -35,6 +35,6 @@ jobs:
           sleep 900
           set -euo pipefail
           pod repo update
-          pod trunk push BeyondIdentityEmbedded.podspec
+          pod trunk push --allow-warnings BeyondIdentityEmbedded.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}

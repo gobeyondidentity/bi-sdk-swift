@@ -44,7 +44,7 @@ class URLVerificationViewController: ScrollableViewController {
                     buttonTitle: Localized.validateButton.string,
                     placeholder: Localized.isBindTitle.string
                 ){ (url, callback) in
-                    if Embedded.shared.isBindUrl(url){
+                    if Embedded.shared.isBindCredentialUrl(url){
                         callback("true")
                     }else {
                         callback("false")

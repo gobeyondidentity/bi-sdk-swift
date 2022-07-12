@@ -8,7 +8,7 @@ struct EmbeddedViewModel {
     let biometricAskPrompt = "Please verify it's really you before you can set up this credential on another device."
     
     /// SDK version
-    let sdkVersion = "1.0.1"
+    let sdkVersion = "1.0.2"
 
     /// Your support URL
     let supportURL = URL(string: "mailto:acme@mail.com")!

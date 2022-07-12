@@ -124,10 +124,6 @@ extension CoreEmbedded {
             fatalError(INIT_ERROR)
         }
         
-        guard let config = CoreEmbedded.config else {
-            fatalError(INIT_ERROR)
-        }
-        
         core.copy(withSelectAuthNCredentials: { credentials in
             var selectResult: Result<String?, BridgeError> = .success(nil)
             let group = DispatchGroup()
@@ -167,7 +163,7 @@ extension CoreEmbedded {
             fatalError(INIT_ERROR)
         }
         
-        guard isBindUrl(url) else { return callback(.failure(.invalidUrlType)) }
+        guard isBindCredentialUrl(url) else { return callback(.failure(.invalidUrlType)) }
         
         core.bindCredential(
             url,
@@ -236,9 +232,9 @@ extension CoreEmbedded {
         return true
     }
     
-    /// Determines if a URL is a valid Bind URL or not.
+    /// Determines if a URL is a valid Bind Credentail URL or not.
     /// - Parameter url: URL in question
-    public func isBindUrl(_ url: URL) -> Bool {
+    public func isBindCredentialUrl(_ url: URL) -> Bool {
         guard let core = CoreEmbedded.core else {
             fatalError(INIT_ERROR)
         }

@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "BeyondIdentitySDKs",
     defaultLocalization: "en",
-    platforms: [.iOS(.v12), .macOS(.v10_15)],
+    platforms: [.iOS(.v13)],
     products: [
         .library(
             name: "BeyondIdentityEmbedded",
@@ -21,8 +21,8 @@ let package = Package(
         ),
 	.binaryTarget(
 	    name: "CoreSDK",
-	    url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/1.0.1/CoreSDK.xcframework.zip",
-	    checksum: "6130d43b654fcf4e208885fb1e6cddf81bc280d9ab696ecfce35f51b8abb1e44"
+	    url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/1.0.2/CoreSDK.xcframework.zip",
+	    checksum: "a726426e215cbd3ddc8f8cea32b5a89cd1949b5dd5eddb4b8c9c14b8ea5215f5"
 	),
         .testTarget(
             name: "UnitTests",

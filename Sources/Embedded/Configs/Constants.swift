@@ -10,14 +10,5 @@ struct Configuration {
     #endif
 
     static let deviceGateway = "https://device-gateway.byndid.com"
-    static let sdkVersion = "1.0.1"
-}
-
-enum Endpoint: String, CaseIterable {
-    case authorizeEndpoint = "https://auth.byndid.com/v2/authorize"
-    case tokenEndpoint = "https://auth.byndid.com/v2/token"
-
-    static func url(for key: Endpoint) -> URL? {
-        URL(string: key.rawValue)
-    }
+    static let sdkVersion = "1.0.2"
 }

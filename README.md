@@ -1,12 +1,13 @@
 ![beyond-identity-logo](https://user-images.githubusercontent.com/6578679/172954923-7a0c741a-8ee6-4ba3-a610-1b073f3eec59.png)
 
 # Beyond Identity Swift SDKs
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+![version support](https://img.shields.io/badge/Version%20Support-iOS%2013%20and%20above-blueviolet)
 
 [![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-brightgreen.svg?style=flat)](https://swift.org/package-manager)
 
-![version support](https://img.shields.io/badge/Version%20Support-iOS%2012%20and%20above-blueviolet)
-
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Cocoapods compatible](https://img.shields.io/badge/Cocoapods-compatible-brightgreen.svg?style=flat)](https://cocoapods.org)
 
 Goodbye, passwords! The Beyond Identity SDKs allow you to embed the Passwordless experience into your product. These SDKs supports OIDC and OAuth2.
 
@@ -20,7 +21,7 @@ Passwordless authentication with our Authenticator embedded into your app. Users
 
 #### From Xcode
 
-1. From the Xcode `File` menu, select `Swift Packages` » `Add Package Dependency` and add the following url:
+1. From the Xcode `File` menu, select `Add Packages` and add the following url:
 
 ```
 https://github.com/gobeyondidentity/bi-sdk-swift
@@ -41,6 +42,25 @@ dependencies: [
 ```
 
 2. Run `swift build`
+
+### Cocoapods
+
+Add the pod to your Podfile:
+
+```swift 
+pod 'BeyondIdentityEmbedded'
+```
+
+And then run:
+```swift 
+pod install
+```
+
+After installing import with
+```swift
+import BeyondIdentityEmbedded
+```
+
 
 ## Usage
 
