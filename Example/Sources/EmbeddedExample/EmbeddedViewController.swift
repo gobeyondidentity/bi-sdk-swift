@@ -51,22 +51,56 @@ class EmbeddedViewController: ScrollableViewController {
         let stack = UIStackView(arrangedSubviews: [
             getStartedTitle,
             Card(
+                title: Localized.exampleBindTitle.string,
+                detail: Localized.exampleBindText.string,
+                cardView: InputView<String>(
+                    buttonTitle: Localized.exampleBindTitle.string,
+                    placeholder: Localized.examplePlaceholder.string
+                ){ [weak self] (username, printToScreen) in
+                    guard let self = self else { return }
+                    let request = createBindRequest(
+                        for: username,
+                        with: self.viewModel.bindEndpoint
+                    )
+                    sendRequest(for: self, with: request) { data in
+                        handleBindRequest(data: data, callback: printToScreen)
+                    }
+                }
+            ),
+            Card(
+                title: Localized.exampleRecoverTitle.string,
+                detail: Localized.exampleRecoverText.string,
+                cardView: InputView<String>(
+                    buttonTitle: Localized.exampleRecoverTitle.string,
+                    placeholder: Localized.exampleRecoverPlaceholder.string
+                ){ [weak self] (username, printToScreen) in
+                    guard let self = self else { return }
+                    let request = createBindRequest(
+                        for: username,
+                        with: self.viewModel.recoverEndpoint
+                    )
+                    sendRequest(for: self, with: request) { data in
+                        handleBindRequest(data: data, callback: printToScreen)
+                    }
+                }
+            ),
+            Card(
                 title: Localized.bindTitle.string,
                 detail: Localized.bindDescription.string,
                 cardView: InputView<URL>(
                     buttonTitle: Localized.bindTitle.string,
                     placeholder: Localized.bindURLPlaceholder.string
-                ){ (url, callback) in
+                ){ (url, printToScreen) in
                     Embedded.shared.bindCredential(url: url) { result in
                         switch result {
                         case let .success(response):
-                            callback(response.credential.description)
+                            printToScreen(response.credential.description)
                         case let .failure(error):
-                            callback(error.localizedDescription)
+                            printToScreen(error.localizedDescription)
                         }
                     }
                 }
-            )
+            ),
         ]).vertical()
         
         stack.alignment = .fill

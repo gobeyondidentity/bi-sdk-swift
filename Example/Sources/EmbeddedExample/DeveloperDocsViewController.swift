@@ -17,7 +17,7 @@ class DeveloperDocsViewController: ScrollableViewController {
         let webView = WebView()
         
         DispatchQueue.main.async {
-            webView.load(Localized.DeveloperDocsUrl.string)
+            webView.load(Localized.developerDocsUrl.string)
         }
         
         let stack = UIStackView(arrangedSubviews: [

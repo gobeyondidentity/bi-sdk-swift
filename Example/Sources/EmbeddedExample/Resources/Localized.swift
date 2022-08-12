@@ -3,17 +3,13 @@ import Foundation
 public enum Localized: String, CaseIterable {
     // Common
     case noCredentialFound
-    case missingCredential
 
     // Embedded SDK
     case embeddedButton
-    case embeddedUIButton
     case beyondIdentityTitle
     case beyondIdentityText
     case embeddedSdkTitle
     case embeddedSdkText
-    case embeddedUiTitle
-    case embeddedUiText
 
     // View Embedded SDK
     case manageCredentialsButton
@@ -22,12 +18,19 @@ public enum Localized: String, CaseIterable {
     case developerDocsButton
     case supportButton
     case viewEmbeddedSdkTitle
-    case viewEmbeddedUISdkTitle
     case getStartedTitle
     
     case bindTitle
     case bindDescription
     case bindURLPlaceholder
+    
+    case exampleBindTitle
+    case exampleBindText
+    case examplePlaceholder
+    
+    case exampleRecoverTitle
+    case exampleRecoverText
+    case exampleRecoverPlaceholder
 
     // SDK Functionality
     case sdkFunctionalityTitle
@@ -38,7 +41,6 @@ public enum Localized: String, CaseIterable {
     case supportText
 
     // Manage Credentials
-    case getCredentialsButton
     case credentialTitle
     case viewCredentialTitle
     case credentialText
@@ -48,10 +50,22 @@ public enum Localized: String, CaseIterable {
 
     // Authenticate
     case authenticateTitle
-    case authenticateText
+    case authenticateDetail
+    case authenticateCustomTitle
+    case authenticateCustomText
     case authenticateURLPlaceholder
+    
+    case authBeyondIdentity
+    case authBeyondIdentityText
+    
     case authOkta
     case authOktaText
+    
+    case authAuth0
+    case authAuth0Text
+    
+    // Select Credential
+    case selectCredentialTitle
     
     // URL Validation
     case isAuthenticateTitle
@@ -61,7 +75,7 @@ public enum Localized: String, CaseIterable {
     case validateButton
 
     // Developer Docs
-    case DeveloperDocsUrl
+    case developerDocsUrl
 
     // Support Page
     case supportPageUrl

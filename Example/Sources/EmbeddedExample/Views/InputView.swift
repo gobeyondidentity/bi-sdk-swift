@@ -6,6 +6,7 @@ import UIKit
 enum InputViewType {
     case url
     case credentialID
+    case string
     case unknown
 }
 
@@ -18,6 +19,11 @@ class InputView<T>: UIView {
     
     var input: String = ""
     
+    /// InputView: UIView
+    /// - Parameters:
+    ///   - buttonTitle: Button Title
+    ///   - placeholder: Input placeholder
+    ///   - buttonAction: When button taps, this action will run passing the caller both the input value type and a function that when given a String will print to the label
     init(
         buttonTitle: String,
         placeholder: String,
@@ -26,6 +32,7 @@ class InputView<T>: UIView {
         let inputType: InputViewType =
         T.self == CredentialID.self ? .credentialID
         : T.self == URL.self ? .url
+        : T.self == String.self ? .string
         : .unknown
         button = makeButton(with: buttonTitle)
         textField = UITextField().with(placeholder: placeholder, type: {
@@ -35,6 +42,8 @@ class InputView<T>: UIView {
             case .credentialID:
                 return .default
             case .unknown:
+                return .default
+            case .string:
                 return .default
             }
         }())
@@ -84,13 +93,22 @@ class InputView<T>: UIView {
                 return
             }
             value = id
+        case .string:
+            if !input.isEmpty, let username = input as? T {
+                value = username
+            } else {
+                label.text = "Please enter a username"
+                return
+            }
         case .unknown:
             label.text = "Input Type is Unknown"
             return
         }
         
-        buttonAction(value!) { [weak self] text in
-            self?.label.text = text
+        if let value = value {
+            buttonAction(value) { [weak self] text in
+                self?.label.text = text
+            }
         }
     }
     

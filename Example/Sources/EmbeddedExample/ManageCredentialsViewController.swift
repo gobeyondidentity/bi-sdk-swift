@@ -6,9 +6,6 @@ import SharedDesign
 class ManageCredentialsViewController: ScrollableViewController {
     private let viewModel: EmbeddedViewModel
     
-    let getCredentialsButton = makeButton(with: Localized.getCredentialsButton.string)
-    let getCredentialsLabel = ResponseLabelView()
-    
     var credentialToDelete: CredentialID?
     
     init(viewModel: EmbeddedViewModel) {
@@ -23,17 +20,29 @@ class ManageCredentialsViewController: ScrollableViewController {
         addKeyboardObserver()
         hideKeyboardWhenTappedOutside()
         
-        getCredentialsButton.addTarget(self, action: #selector(getCredentials), for: .touchUpInside)
-        
         let credentialTitle = UILabel().wrap().withText(Localized.credentialTitle.string).withFont(Fonts.largeTitle)
         
-        let viewCredential = makeCard(
+        let viewCredential = Card(
             title: Localized.viewCredentialTitle.string,
-            text: Localized.credentialText.string,
-            button: getCredentialsButton,
-            responseLabel: getCredentialsLabel
+            detail: Localized.credentialText.string,
+            cardView: ButtonView(
+                buttonTitle: Localized.viewCredentialTitle.string
+            ){ callback in
+                Embedded.shared.getCredentials { result in
+                    switch result {
+                    case let .success(credentials):
+                        guard !credentials.isEmpty else {
+                            callback(Localized.noCredentialFound.string)
+                            return
+                        }
+                        callback(credentials.map({$0.description}).joined())
+                    case let .failure(error):
+                        callback(error.localizedDescription)
+                    }
+                }
+            }
         )
-        
+
         let deleteCredential = Card(
             title: Localized.deleteTitle.string,
             detail: Localized.deleteText.string,
@@ -70,21 +79,6 @@ class ManageCredentialsViewController: ScrollableViewController {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    @objc func getCredentials() {
-        Embedded.shared.getCredentials { result in
-            switch result {
-            case let .success(credentials):
-                guard !credentials.isEmpty else {
-                    self.getCredentialsLabel.text = Localized.noCredentialFound.string
-                    return
-                }
-                self.getCredentialsLabel.text = credentials.map({$0.description}).joined()
-            case let .failure(error):
-                self.getCredentialsLabel.text = error.localizedDescription
-            }
-        }
     }
 }
 

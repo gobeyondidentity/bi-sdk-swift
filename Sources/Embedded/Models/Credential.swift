@@ -3,7 +3,7 @@ import Foundation
 
 /// A User Credential. Think of this as a wrapper around an X.509 Certificate.
 public struct Credential: Equatable {
-    /// The Globally unique ID of this Credential.
+    /// The globally unique identifier of the credential.
     public let id: CredentialID
     
     /// The time when this credential was created locally. This could be different from "created" which is the time when this credential was created on the server.

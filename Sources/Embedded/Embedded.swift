@@ -4,17 +4,24 @@ import os
 
 /// Use the `Embedded.shared` singleton to access all embedded sdk functionality.
 public class Embedded {
-    /// Initialize the `Embedded.shared` singleton before using it. This must be called first and is async.
+    /// Initialize the `Embedded.shared` singleton before using it. This must be called first.
     /// - Parameters:
-    ///   - allowedDomains: Optional array of domains that we whitelist against for network operations. This will default to Beyond Identity's allowed domains.
-    ///   - biometricAskPrompt: A prompt the user will see when asked for biometrics while extending a credential to another device.
+    ///   - allowedDomains: An optional array of whitelisted domains for network operations. This will default to Beyond Identity’s allowed domains when not provided or is empty.
+    ///   - biometricAskPrompt: A prompt the user will see when asked for biometrics.
     ///   - logger: Optional function to log output
     public static func initialize(
-        allowedDomains: [String] = ["beyondidentity.com"],
+        allowedDomains: [String]? = nil,
         biometricAskPrompt: String,
         logger: ((OSLogType, String) -> Void)? = nil,
         callback: @escaping(Result<Void, BISDKError>) -> Void
     ){
+        guard let allowedDomains = allowedDomains.isNilOrEmpty
+                ? ["beyondidentity.com"]
+                : allowedDomains else {
+            callback(.failure(BISDKError.description("Error with allowedDomains: \(String(describing: allowedDomains))")))
+            return
+        }
+        
         CoreEmbedded.initialize(
             allowedDomains: allowedDomains,
             biometricAskPrompt: biometricAskPrompt,
@@ -40,6 +47,8 @@ public class CoreEmbedded {
     
     private static var core: Core?
     
+    private static var hasInitalizedCore = false
+    
     public static let shared: CoreEmbedded = CoreEmbedded()
     
     public static func initialize(
@@ -52,12 +61,13 @@ public class CoreEmbedded {
             biometricAskPrompt: biometricAskPrompt,
             logger: logger
         )
-        
+        guard !hasInitalizedCore else { return }
         setUpCore(with: config)
         setUpDirectory(
             allowedDomains: allowedDomains.joined(separator: ","),
             callback: callback
         )
+        hasInitalizedCore = true
     }
     
     private static func setUpCore(with config: Config) {
@@ -83,7 +93,8 @@ public class CoreEmbedded {
             logger: config.logger,
             clientEnvironmentRequest: { ClientEnvironment() },
             selectCredentialRequest: { _, _ in },
-            keyProvenanceRequest: nil
+            keyProvenanceRequest: nil,
+            credentialStateChangedRequest: { }
         )
     }
     
@@ -93,6 +104,7 @@ public class CoreEmbedded {
     ) {
         CoreEmbedded.core?.setUpDirectory(
             allowedDomains: allowedDomains,
+            entitlements: [],
             catalogFolderName: Configuration.catalogFolderName
         ) { result in
             switch result {
@@ -217,7 +229,7 @@ extension CoreEmbedded {
         }
     }
     
-    /// Determines if a URL is a valid Authenticate URL or not.
+    /// Determines if a URL is a valid Authenticate URL.
     /// - Parameter url: URL in question
     public func isAuthenticateUrl(_ url: URL) -> Bool {
         guard let core = CoreEmbedded.core else {
@@ -232,7 +244,7 @@ extension CoreEmbedded {
         return true
     }
     
-    /// Determines if a URL is a valid Bind Credentail URL or not.
+    /// Determines if a URL is a valid Bind Credentail URL.
     /// - Parameter url: URL in question
     public func isBindCredentialUrl(_ url: URL) -> Bool {
         guard let core = CoreEmbedded.core else {
@@ -245,5 +257,11 @@ extension CoreEmbedded {
             return false
         }
         return true
+    }
+}
+
+extension Optional where Wrapped: Collection {
+    var isNilOrEmpty: Bool {
+        return self?.isEmpty ?? true
     }
 }

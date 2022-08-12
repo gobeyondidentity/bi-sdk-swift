@@ -1,16 +1,12 @@
 // Common
 "noCredentialFound" = "No Credential found, bind a Credential first";
-"missingCredential" = "Missing Credential, bind a Credential first";
 
 // Embedded SDK
 "embeddedButton" = "View Embedded SDK";
-"embeddedUIButton" = "View Embedded UI SDK";
 "beyondIdentityTitle" = "Beyond Identity Swift SDKs";
 "beyondIdentityText" = "Beyond Identity provides the strongest authentication on the planet, eliminating passwords completely for customers, as well as from your database.";
 "embeddedSdkTitle" = "Embedded SDK";
 "embeddedSdkText" = "The Embedded SDK is a holistic SDK solution offering the entire Passwordless authentication embedded into your app. A set of functions are provided to you through the Embedded SDK. This SDK supports OIDC and OAuth2.";
-"embeddedUiTitle" = "Embedded UI SDK";
-"embeddedUiText" = "The Embedded UI SDK provides view wrappers around the Embedded SDK functions.";
 
 // View Embedded SDK
 "manageCredentialsButton" = "Manage Credentials";
@@ -20,10 +16,19 @@
 "supportButton" = "Visit Support";
 "viewEmbeddedSdkTitle" = "Embedded SDK Demo";
 "viewEmbeddedUISdkTitle" = "Embedded UI SDK Demo";
-"getStartedTitle" = "Get Started";
-"bindTitle" = "Bind Credential";
-"bindDescription" = "To get started using the Embedded SDK sample app, paste the Bind Credential URL you received in your email or generated through the API in order to bind a credential.";
+"getStartedTitle" = "Get Started With A Credential";
+
+"bindTitle" = "Bind Custom Credential";
+"bindDescription" = "If you have your own Realm you would like to test, paste the Bind Credential URL you generated through the API in order to bind a credential.";
 "bindURLPlaceholder" = "Bind Credential URL";
+
+"exampleBindTitle" = "Bind Credential";
+"exampleBindText" = "To get started using the Embedded SDK sample app, enter any username to bind a credential to this device. Note: This requires a username for which an identity has NOT been created before. It will fail if the username is taken.";
+"examplePlaceholder" = "Unique Username";
+
+"exampleRecoverTitle" = "Recover Credential";
+"exampleRecoverText" = "If you have an account with a credential you can't access anymore, enter your username to recover your account and bind a credential to this device. Note: This requires a username for which an identity HAS been created before. It will fail if no identity exists for that username.";
+"exampleRecoverPlaceholder" = "Username";
 
 // SDK Functionality
 "sdkFunctionalityTitle" = "SDK Functionality";
@@ -34,7 +39,6 @@
 "supportText" = "Read through our developer docs for more details on our embedded SDK or reach out to support.";
 
 // Manage Credentials
-"getCredentialsButton" = "View Credential";
 "credentialTitle" = "Credential Management";
 "viewCredentialTitle" = "View Credentials";
 "credentialText" = "View details of your Credential, such as date created, identity and other information related to your device.";
@@ -44,10 +48,20 @@
 
 // Authenticate
 "authenticateTitle" = "Authenticate";
-"authenticateText" = "Authenticate against a credential bound to this device. If more than one credential is present, you must select a credential during authentication. Paste the Authenticate URL you received in your email or generated through the API.";
+"authenticateDetail" = "Authenticate against a credential bound to this device. If more than one credential is present, you must select a credential during authentication.";
+"authenticateCustomTitle" = "Authenticate in Custom Realm";
+"authenticateCustomText" = "Paste the Authenticate URL you generated through the API in order to authenticate.";
 "authenticateURLPlaceholder" = "Authenticate URL";
+"authBeyondIdentity" = "Authenticate with Beyond Identity";
+"authBeyondIdentityText" = "Try authenticating with Beyond Identity as the primary IdP";
 "authOkta" = "Authenticate with Okta";
-"authOktaText" = "Try authenticating with an example Okta account.";
+"authOktaText" = "Try authenticating with Okta using Beyond Identity as a secondary IdP.\n\nNote: You must recover the username \"difficult-coat@email.com\" before authenticating. This user has been configured to authenticate with Okta.";
+
+"authAuth0" = "Authenticate with Auth0";
+"authAuth0Text" = "Try authenticating with Auth0 using Beyond Identity as a secondary IdP.";
+
+// Select Credential
+"selectCredentialTitle" = "Select A Credential";
 
 // URL Validation
 "isAuthenticateTitle" = "Authenticate URL";
@@ -57,9 +71,7 @@
 "validateButton" = "Validate URL";
 
 // Developer Docs
-"DeveloperDocsUrl" = "https://developer.beyondidentity.com/docs/swift-sdks/embedded-sdk";
+"developerDocsUrl" = "https://developer.beyondidentity.com/docs/v1/sdks/swift-sdk/overview";
 
 // Support Page
 "supportPageUrl" = "https://beyondidentity.atlassian.net/wiki/spaces/CS/overview";
-
-

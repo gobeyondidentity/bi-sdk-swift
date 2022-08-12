@@ -72,22 +72,6 @@ func makeButton(with name: String) -> UIButton {
     return button
 }
 
-func makeCard(title: String, text: String, button: Button, responseLabel: ResponseLabelView) -> View {
-    let title = UILabel().wrap().withText(title).withFont(Fonts.title)
-    let text =  UILabel().wrap().withText(text).withFont(Fonts.title2)
-    
-    let stack = UIStackView(arrangedSubviews: [
-        title,
-        text,
-        button,
-        responseLabel
-    ]).vertical()
-    
-    stack.alignment = .fill
-    stack.spacing = Spacing.large
-    return stack
-}
-
 extension AuthenticateResponse: CustomStringConvertible {
     public var description: String {
         """
