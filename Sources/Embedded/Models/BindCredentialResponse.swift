@@ -2,7 +2,7 @@ import CoreSDK
 import Foundation
 
 /// A response returned after successfully binding a credential to a device.
-public struct BindCredentialResponse: Equatable {
+public struct BindCredentialResponse: Equatable, Hashable {
     /// The `Credential` bound to the device.
     public let credential: Credential
     /// A URI that can be redirected to once a credential is bound. This could be a URI that automatically logs the user in with the newly bound credential, or a success page indicating that a credential has been bound.

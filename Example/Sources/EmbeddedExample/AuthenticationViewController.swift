@@ -36,11 +36,8 @@ class AuthenticationViewController: ScrollableViewController {
                     with: self.viewModel.beyondIdentityAuth,
                     prefersEphemeralWebBrowserSession: true,
                     sendToLabel: printToScreen
-                ){ url in
-                    Embedded.shared.authenticate(
-                        url: url,
-                        onSelectCredential: self.presentCredentialSelection
-                    ) { result in
+                ){ [weak self] url in
+                    self?.authenticate(url: url, printToScreen: printToScreen){ result in
                         switch result {
                         case let .success(response):
                             printToScreen(response.redirectURL.absoluteString)
@@ -108,18 +105,19 @@ class AuthenticationViewController: ScrollableViewController {
             cardView: InputView<URL>(
                 buttonTitle: Localized.authenticateTitle.string,
                 placeholder: Localized.authenticateURLPlaceholder.string
-            ){ [weak self] (url, callback) in
+            ){ [weak self] (url, printToScreen) in
                 guard let self = self else { return }
-                Embedded.shared.authenticate(
-                    url: url,
-                    onSelectCredential: self.presentCredentialSelection
-                ) { result in
-                    switch result {
-                    case let .success(response):
-                        callback(response.description)
-                    case let .failure(error):
-                        callback(error.localizedDescription)
+                if Embedded.shared.isAuthenticateUrl(url){
+                    self.authenticate(url: url, printToScreen: printToScreen) { result in
+                        switch result {
+                        case let .success(response):
+                            printToScreen(response.redirectURL.absoluteString)
+                        case let .failure(error):
+                            printToScreen(error.localizedDescription)
+                        }
                     }
+                }else {
+                    printToScreen("URL provided is not a proper authenticate URL")
                 }
             }
         )
@@ -146,6 +144,43 @@ class AuthenticationViewController: ScrollableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func authenticate(
+        url: URL,
+        printToScreen: @escaping(String) -> Void,
+        callback: @escaping (Result<AuthenticateResponse, BISDKError>) -> Void
+    ){
+        Embedded.shared.getCredentials { result in
+            switch result {
+            case let .success(credentials):
+                guard !credentials.isEmpty else {
+                    return printToScreen("Credentials are missing")
+                }
+                
+                if credentials.count == 1, let id = credentials.first?.id {
+                    Embedded.shared.authenticate(
+                        url: url,
+                        credentialID: id,
+                        callback: callback
+                    )
+                }else {
+                    self.presentCredentialSelection(credentials) { id in
+                        guard let id = id else {
+                            print("Selection was canceled")
+                            return
+                        }
+                        Embedded.shared.authenticate(
+                            url: url,
+                            credentialID: id,
+                            callback: callback
+                        )
+                    }
+                }
+            case let .failure(error):
+                printToScreen(error.localizedDescription)
+            }
+        }
+    }
+    
     private func authenticateInnerAndOuter(
         initialURL url: URL,
         prefersEphemeralWebBrowserSession: Bool,
@@ -164,10 +199,7 @@ class AuthenticationViewController: ScrollableViewController {
             sendToLabel: printToScreen
         ){ [weak self] url in
             guard let self = self else { return }
-            Embedded.shared.authenticate(
-                url: url,
-                onSelectCredential: self.presentCredentialSelection
-            ) { result in
+            self.authenticate(url: url, printToScreen: printToScreen){ result in
                 switch result {
                 case let .success(response):
                     self.startWebSession(

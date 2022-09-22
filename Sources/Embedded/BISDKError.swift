@@ -2,7 +2,7 @@ import CoreSDK
 import Foundation
 
 /// Error returned from the Embedded SDK.
-public enum BISDKError: Equatable, Error {
+public enum BISDKError: Equatable, Error, Hashable {
     /// `Credential` for this user does not exist on this device.
     case credentialNotFound
     

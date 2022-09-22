@@ -2,7 +2,7 @@ import CoreSDK
 import Foundation
 
 /// Theme associated with a credential.
-public struct Theme: Equatable {
+public struct Theme: Equatable, Hashable {
     /// URL resolving the logo in light mode.
     public let logoLightURL: URL
     /// URL resolving the logo in dark mode.

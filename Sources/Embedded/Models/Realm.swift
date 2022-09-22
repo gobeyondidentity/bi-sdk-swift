@@ -2,7 +2,7 @@ import CoreSDK
 import Foundation
 
 /// Realm information associated with a credential.
-public struct Realm: Equatable {
+public struct Realm: Equatable, Hashable {
     /// The display name of the realm.
     public let displayName: String
     

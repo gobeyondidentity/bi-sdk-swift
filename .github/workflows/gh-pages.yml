@@ -1,0 +1,39 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Build & Publish DocC
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate Documentation
+        uses: SwiftDocOrg/swift-doc@master
+        with:
+          inputs: "Sources"
+          format: "html"
+          module-name: BeyondIdentityEmbedded
+          base-url: "${{ secrets.BASE_URL }}"
+          output: "Documentation"
+
+      - name: https://github.com/SwiftDocOrg/swift-doc/pull/146#issuecomment-670669044
+        run: sudo chown --recursive $USER Documentation
+
+      - name: Publish Swift Doc
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: Documentation

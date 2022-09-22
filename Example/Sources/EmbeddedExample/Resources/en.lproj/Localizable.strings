@@ -53,7 +53,7 @@
 "authenticateCustomText" = "Paste the Authenticate URL you generated through the API in order to authenticate.";
 "authenticateURLPlaceholder" = "Authenticate URL";
 "authBeyondIdentity" = "Authenticate with Beyond Identity";
-"authBeyondIdentityText" = "Try authenticating with Beyond Identity as the primary IdP";
+"authBeyondIdentityText" = "Try authenticating with Beyond Identity as the primary IdP.";
 "authOkta" = "Authenticate with Okta";
 "authOktaText" = "Try authenticating with Okta using Beyond Identity as a secondary IdP.\n\nNote: You must recover the username \"difficult-coat@email.com\" before authenticating. This user has been configured to authenticate with Okta.";
 

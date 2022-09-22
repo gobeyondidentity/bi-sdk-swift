@@ -95,6 +95,8 @@ extension Credential: CustomStringConvertible {
         state: \(state.rawValue)
         created: \(created)
         updated: \(updated)
+        tenant:
+        \(tenant.description)
         realm:
         \(realm.description)
         identity:
@@ -102,6 +104,14 @@ extension Credential: CustomStringConvertible {
         theme:
         \(theme.description)
         \n
+        """
+    }
+}
+
+extension Tenant: CustomStringConvertible {
+    public var description: String {
+        """
+            displayName: \(displayName)
         """
     }
 }
@@ -119,6 +129,7 @@ extension Identity: CustomStringConvertible {
         """
             displayName: \(displayName)
             username: \(username)
+            primaryEmailAddress: \(primaryEmailAddress)
         """
     }
 }

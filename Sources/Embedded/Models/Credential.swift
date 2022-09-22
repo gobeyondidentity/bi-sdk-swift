@@ -2,7 +2,7 @@ import CoreSDK
 import Foundation
 
 /// A User Credential. Think of this as a wrapper around an X.509 Certificate.
-public struct Credential: Equatable {
+public struct Credential: Equatable, Identifiable, Hashable {
     /// The globally unique identifier of the credential.
     public let id: CredentialID
     
@@ -36,6 +36,9 @@ public struct Credential: Equatable {
     /// The last time this credential was updated.
     public let updated: Date
     
+    /// Tenant information associated with this credential.
+    public let tenant: Tenant
+    
     /// Realm information associated with this credential.
     public let realm: Realm
     
@@ -57,6 +60,7 @@ public struct Credential: Equatable {
         state: CredentialState,
         created: Date,
         updated: Date,
+        tenant: Tenant,
         realm: Realm,
         identity: Identity,
         theme: Theme
@@ -72,6 +76,7 @@ public struct Credential: Equatable {
         self.state = state
         self.created = created
         self.updated = updated
+        self.tenant = tenant
         self.realm = realm
         self.identity = identity
         self.theme = theme
@@ -89,6 +94,7 @@ public struct Credential: Equatable {
         state = CredentialState(credential.state)
         created = credential.created
         updated = credential.updated
+        tenant = Tenant(credential.tenant)
         realm = Realm(credential.realm)
         identity = Identity(credential.identity)
         theme = Theme(credential.theme)
@@ -96,7 +102,7 @@ public struct Credential: Equatable {
 }
 
 /// The Globally unique ID of a Credential.
-public struct CredentialID: Equatable {
+public struct CredentialID: Equatable, Hashable {
     /// string value for the `CredentialID`
     public let value: String
     
@@ -106,7 +112,7 @@ public struct CredentialID: Equatable {
 }
 
 /// The Identity that owns a Credential.
-public struct IdentityID: Equatable {
+public struct IdentityID: Equatable, Hashable {
     /// string value for the `IdentityID`
     public let value: String
     
@@ -116,7 +122,7 @@ public struct IdentityID: Equatable {
 }
 
 /// An Associated key handle.
-public struct KeyHandle: Equatable {
+public struct KeyHandle: Equatable, Hashable {
     /// string value for the `KeyHandle`
     public let value: String
     
@@ -126,7 +132,7 @@ public struct KeyHandle: Equatable {
 }
 
 /// The Identity's Realm.
-public struct RealmID: Equatable {
+public struct RealmID: Equatable, Hashable {
     /// string value for the `RealmID`
     public let value: String
     
@@ -136,7 +142,7 @@ public struct RealmID: Equatable {
 }
 
 /// The Identity's Tenant.
-public struct TenantID: Equatable {
+public struct TenantID: Equatable, Hashable {
     /// string value for the `TenantID`
     public let value: String
     
@@ -147,7 +153,7 @@ public struct TenantID: Equatable {
 
 /// State of a given `Credential`.
 @frozen
-public enum CredentialState: String, CaseIterable, Equatable {
+public enum CredentialState: String, CaseIterable, Equatable, Hashable {
     /// Credential is active
     case active
     /// Credential is revoked

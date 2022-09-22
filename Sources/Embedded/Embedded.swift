@@ -104,7 +104,6 @@ public class CoreEmbedded {
     ) {
         CoreEmbedded.core?.setUpDirectory(
             allowedDomains: allowedDomains,
-            entitlements: [],
             catalogFolderName: Configuration.catalogFolderName
         ) { result in
             switch result {
@@ -123,11 +122,11 @@ extension CoreEmbedded {
     /// Authenticate a user.
     /// - Parameters:
     ///   - url: URL used to authenticate
-    ///   - onSelectCredential: Callback used to display a list of filtered Credentials associated with the current authentication flow. To select a Credential, return the selected `CredentialID`.
+    ///   - credentialID: `CredentialID` with which to authenticate.
     ///   - callback: returns a `AuthenticateResponse`.
     public func authenticate(
         url: URL,
-        onSelectCredential: @escaping ([Credential], @escaping ((CredentialID?) -> Void)) -> Void,
+        credentialID: CredentialID,
         callback: @escaping(Result<AuthenticateResponse, BISDKError>) -> Void
     ) {
         guard isAuthenticateUrl(url) else { return callback(.failure(.invalidUrlType)) }
@@ -136,21 +135,9 @@ extension CoreEmbedded {
             fatalError(INIT_ERROR)
         }
         
-        core.copy(withSelectAuthNCredentials: { credentials in
-            var selectResult: Result<String?, BridgeError> = .success(nil)
-            let group = DispatchGroup()
-            group.enter()
-            DispatchQueue.main.async {
-                onSelectCredential(credentials.map(Credential.init)) { id in
-                    selectResult = .success(id?.value ?? nil)
-                    group.leave()
-                }
-            }
-            group.wait()
-            return selectResult
-        })
-        .authenticate(
+        core.authenticate(
             url,
+            with: CoreSDK.CredentialID(credentialID.value),
             trusted: .embedded,
             flowType: .embedded
         ) { result in
