@@ -24,7 +24,10 @@ jobs:
       - name: Generate Documentation
         run: xcodebuild docbuild -derivedDataPath Documentation -destination 'platform=iOS Simulator,name=iPhone 14' -scheme BeyondIdentitySDKs
 
+      - name: Transform for Static Hosting
+        run: $(xcrun --find docc) process-archive transform-for-static-hosting Documentation/Build/Products/Debug-iphonesimulator/BeyondIdentityEmbedded.doccarchive --hosting-base-path "${{ secrets.HOSTING_BASE_PATH }}" --output-path docs
+
       - name: Publish Swift Doc
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: Documentation/Build/Products/Debug-iphonesimulator/BeyondIdentityEmbedded.doccarchive
+          folder: docs
