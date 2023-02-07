@@ -4,30 +4,30 @@ import Foundation
 import SharedDesign
 import UIKit
 
-class CredentialViewController: ScrollableViewController {
-    let credentials: [Credential]
-    let completion: (CredentialID?) -> Void
-    private var selectedCredentialID: CredentialID? = nil
+class PasskeyViewController: ScrollableViewController {
+    let passkeys: [Passkey]
+    let completion: (Passkey.Id?) -> Void
+    private var selectedPasskeyID: Passkey.Id? = nil
     
-    init(credentials: [Credential], completion: @escaping (CredentialID?) -> Void) {
-        self.credentials = credentials
+    init(passkeys: [Passkey], completion: @escaping (Passkey.Id?) -> Void) {
+        self.passkeys = passkeys
         self.completion = completion
         super.init()
         
         view.backgroundColor = Colors.background.value
-        navigationItem.title = Localized.selectCredentialTitle.string
+        navigationItem.title = Localized.selectPasskeyTitle.string
     }
     override func viewDidDisappear(_ animated: Bool) {
-        completion(selectedCredentialID)
+        completion(selectedPasskeyID)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        let accountButtons: [SelectCredentialButton] = credentials.enumerated().map{ (i, credential) in
-            let button = SelectCredentialButton(text: credential.identity.displayName)
+        let accountButtons: [SelectPasskeyButton] = passkeys.enumerated().map{ (i, passkey) in
+            let button = SelectPasskeyButton(text: passkey.identity.displayName)
             button.tag = i
-            button.addTarget(self, action: #selector(selectCredential(_:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(selectPasskey(_:)), for: .touchUpInside)
             return button
         }
         
@@ -42,9 +42,9 @@ class CredentialViewController: ScrollableViewController {
         stack.horizontalAnchors == contentView.safeAreaLayoutGuide.horizontalAnchors + Spacing.padding
     }
     
-    @objc func selectCredential(_ sender: UIButton){
-        guard sender.tag < credentials.endIndex && sender.tag >= credentials.startIndex else { return }
-        selectedCredentialID = credentials[sender.tag].id
+    @objc func selectPasskey(_ sender: UIButton){
+        guard sender.tag < passkeys.endIndex && sender.tag >= passkeys.startIndex else { return }
+        selectedPasskeyID = passkeys[sender.tag].id
         dismiss(animated: true)
     }
     

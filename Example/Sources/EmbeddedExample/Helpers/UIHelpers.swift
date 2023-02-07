@@ -75,22 +75,19 @@ func makeButton(with name: String) -> UIButton {
 extension AuthenticateResponse: CustomStringConvertible {
     public var description: String {
         """
-        redirectURL: \(redirectURL)
+        redirectUrl: \(redirectUrl)
         message: \(message ?? "")
         """
     }
 }
 
-extension Credential: CustomStringConvertible {
+extension Passkey: CustomStringConvertible {
     public var description: String {
         """
         id: \(id.value)
         localCreated: \(localCreated)
         localUpdated: \(localUpdated)
-        apiBaseURL: \(apiBaseURL)
-        tenantID: \(tenantID.value)
-        realmID: \(realmID.value)
-        identityID: \(identityID.value)
+        apiBaseUrl: \(apiBaseUrl)
         keyHandle: \(keyHandle.value)
         state: \(state.rawValue)
         created: \(created)
@@ -111,6 +108,7 @@ extension Credential: CustomStringConvertible {
 extension Tenant: CustomStringConvertible {
     public var description: String {
         """
+            id: \(id.value)
             displayName: \(displayName)
         """
     }
@@ -119,6 +117,7 @@ extension Tenant: CustomStringConvertible {
 extension Realm: CustomStringConvertible {
     public var description: String {
         """
+            id: \(id.value)
             displayName: \(displayName)
         """
     }
@@ -127,9 +126,10 @@ extension Realm: CustomStringConvertible {
 extension Identity: CustomStringConvertible {
     public var description: String {
         """
+            id: \(id.value)
             displayName: \(displayName)
             username: \(username)
-            primaryEmailAddress: \(primaryEmailAddress)
+            primaryEmailAddress: \(primaryEmailAddress ?? "")
         """
     }
 }
@@ -137,9 +137,9 @@ extension Identity: CustomStringConvertible {
 extension Theme: CustomStringConvertible {
     public var description: String {
         """
-            logoLightURL: \(logoLightURL)
-            logoDarkURL: \(logoDarkURL)
-            supportURL: \(supportURL)
+            logoLightUrl: \(logoLightUrl)
+            logoDarkUrl: \(logoDarkUrl)
+            supportUrl: \(supportUrl)
         """
     }
 }

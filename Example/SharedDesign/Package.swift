@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.6
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -10,7 +10,8 @@ let package = Package(
     products: [
         .library(
             name: "SharedDesign",
-            targets: ["SharedDesign"]),
+            targets: ["SharedDesign"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/Rightpoint/Anchorage.git", from: "4.5.0"),
@@ -24,6 +25,7 @@ let package = Package(
         ),
         .testTarget(
             name: "SharedDesignTests",
-            dependencies: ["SharedDesign"]),
+            dependencies: ["SharedDesign"]
+        ),
     ]
 )

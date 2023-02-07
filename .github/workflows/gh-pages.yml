@@ -16,24 +16,15 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Generate Documentation
-        uses: SwiftDocOrg/swift-doc@master
-        with:
-          inputs: "Sources"
-          format: "html"
-          module-name: BeyondIdentityEmbedded
-          base-url: "${{ secrets.BASE_URL }}"
-          output: "Documentation"
-
-      - name: https://github.com/SwiftDocOrg/swift-doc/pull/146#issuecomment-670669044
-        run: sudo chown --recursive $USER Documentation
+        run: xcodebuild docbuild -derivedDataPath Documentation -destination 'platform=iOS Simulator,name=iPhone 14' -scheme BeyondIdentitySDKs
 
       - name: Publish Swift Doc
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: Documentation
+          folder: Documentation/Build/Products/Debug-iphonesimulator/BeyondIdentityEmbedded.doccarchive

@@ -2,7 +2,7 @@ import Foundation
 
 public enum Localized: String, CaseIterable {
     // Common
-    case noCredentialFound
+    case noPasskeyFound
 
     // Embedded SDK
     case embeddedButton
@@ -12,7 +12,7 @@ public enum Localized: String, CaseIterable {
     case embeddedSdkText
 
     // View Embedded SDK
-    case manageCredentialsButton
+    case managePasskeysButton
     case authenticateButton
     case urlVerificationButton
     case developerDocsButton
@@ -40,10 +40,10 @@ public enum Localized: String, CaseIterable {
     case supportTitle
     case supportText
 
-    // Manage Credentials
-    case credentialTitle
-    case viewCredentialTitle
-    case credentialText
+    // Manage Passkeys
+    case passkeyTitle
+    case viewPasskeyTitle
+    case passkeyText
     case deleteTitle
     case deleteText
     case deletePlaceholder
@@ -64,8 +64,8 @@ public enum Localized: String, CaseIterable {
     case authAuth0
     case authAuth0Text
     
-    // Select Credential
-    case selectCredentialTitle
+    // Select Passkey
+    case selectPasskeyTitle
     
     // URL Validation
     case isAuthenticateTitle

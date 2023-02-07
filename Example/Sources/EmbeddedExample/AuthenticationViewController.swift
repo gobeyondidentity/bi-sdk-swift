@@ -32,15 +32,36 @@ class AuthenticationViewController: ScrollableViewController {
                 buttonTitle: Localized.authBeyondIdentity.string
             ){ [weak self] printToScreen in
                 guard let self = self else { return }
-                self.startWebSession(
-                    with: self.viewModel.beyondIdentityAuth,
-                    prefersEphemeralWebBrowserSession: true,
-                    sendToLabel: printToScreen
-                ){ [weak self] url in
-                    self?.authenticate(url: url, printToScreen: printToScreen){ result in
+                guard let (authURLWithPKCE, codeVerifier) = appendPKCE(for: self.viewModel.beyondIdentityAuth) else {
+                    printToScreen("Unable to append PKCE to url: \(self.viewModel.beyondIdentityAuth.absoluteString)")
+                    return
+                }
+                sendRequest(for: self, with: createBeyondIdentityAuthRequest(url: authURLWithPKCE), onError: printToScreen) { (data, json) in
+                    guard let response = try? JSONDecoder().decode(AuthResponse.self, from: data) else {
+                        printToScreen("Not able to parse data: \(json)")
+                        return
+                    }
+                    
+                    guard let url = URL(string: response.authenticateURL) else {
+                        printToScreen("Not a URL: \(response.authenticateURL)")
+                        return
+                    }
+                    
+                    self.authenticate(url: url, printToScreen: printToScreen){ result in
                         switch result {
                         case let .success(response):
-                            printToScreen(response.redirectURL.absoluteString)
+                            guard let code = parseParameter(from: response.redirectUrl, for: "code") else {
+                                printToScreen("Unable to parse code from URL:\n \(url)")
+                                return
+                            }
+                            let request = createBeyondIdentityTokenRequest(
+                                with: self.viewModel.beyondIdentityToken,
+                                code: code,
+                                code_verifier: codeVerifier.value
+                            )
+                            sendRequest(for: self, with: request, onError: printToScreen) { (data, json) in
+                                handleTokenResponse(data: data, json: json, callback: printToScreen)
+                            }
                         case let .failure(error):
                             printToScreen(error.localizedDescription)
                         }
@@ -66,8 +87,8 @@ class AuthenticationViewController: ScrollableViewController {
                             code: code,
                             code_verifier: codeVerifier.value
                         )
-                        sendRequest(for: self, with: request) { data in
-                            handleTokenResponse(data: data, callback: printToScreen)
+                        sendRequest(for: self, with: request, onError: printToScreen) { (data, json) in
+                            handleTokenResponse(data: data, json: json, callback: printToScreen)
                         }
                     }
                 )
@@ -91,8 +112,8 @@ class AuthenticationViewController: ScrollableViewController {
                             code: code,
                             code_verifier: codeVerifier.value
                         )
-                        sendRequest(for: self, with: request) { data in
-                            handleTokenResponse(data: data, callback: printToScreen)
+                        sendRequest(for: self, with: request, onError: printToScreen) { (data, json) in
+                            handleTokenResponse(data: data, json: json, callback: printToScreen)
                         }
                     }
                 )
@@ -111,7 +132,7 @@ class AuthenticationViewController: ScrollableViewController {
                     self.authenticate(url: url, printToScreen: printToScreen) { result in
                         switch result {
                         case let .success(response):
-                            printToScreen(response.redirectURL.absoluteString)
+                            printToScreen(response.redirectUrl.absoluteString)
                         case let .failure(error):
                             printToScreen(error.localizedDescription)
                         }
@@ -149,28 +170,28 @@ class AuthenticationViewController: ScrollableViewController {
         printToScreen: @escaping(String) -> Void,
         callback: @escaping (Result<AuthenticateResponse, BISDKError>) -> Void
     ){
-        Embedded.shared.getCredentials { result in
+        Embedded.shared.getPasskeys { result in
             switch result {
-            case let .success(credentials):
-                guard !credentials.isEmpty else {
-                    return printToScreen("Credentials are missing")
+            case let .success(passkeys):
+                guard !passkeys.isEmpty else {
+                    return printToScreen("Passkeys are missing")
                 }
                 
-                if credentials.count == 1, let id = credentials.first?.id {
+                if passkeys.count == 1, let id = passkeys.first?.id {
                     Embedded.shared.authenticate(
                         url: url,
-                        credentialID: id,
+                        id: id,
                         callback: callback
                     )
                 }else {
-                    self.presentCredentialSelection(credentials) { id in
+                    self.presentPasskeySelection(passkeys) { id in
                         guard let id = id else {
                             print("Selection was canceled")
                             return
                         }
                         Embedded.shared.authenticate(
                             url: url,
-                            credentialID: id,
+                            id: id,
                             callback: callback
                         )
                     }
@@ -203,7 +224,7 @@ class AuthenticationViewController: ScrollableViewController {
                 switch result {
                 case let .success(response):
                     self.startWebSession(
-                        with: response.redirectURL,
+                        with: response.redirectUrl,
                         prefersEphemeralWebBrowserSession: false,
                         sendToLabel: printToScreen
                     ) { url in
@@ -220,16 +241,16 @@ class AuthenticationViewController: ScrollableViewController {
         }
     }
     
-    private func presentCredentialSelection(
-        _ credentials: [Credential],
-        _ completion: @escaping (CredentialID?) -> Void
+    private func presentPasskeySelection(
+        _ passkeys: [Passkey],
+        _ completion: @escaping (Passkey.Id?) -> Void
     ) {
-        let vc = CredentialViewController(credentials: credentials, completion: completion)
+        let vc = PasskeyViewController(passkeys: passkeys, completion: completion)
         vc.modalPresentationStyle = .pageSheet
         
         if #available(iOS 15.0, *) {
             if let sheet = vc.sheetPresentationController {
-                if credentials.count > 3 {
+                if passkeys.count > 3 {
                     sheet.detents = [.large()]
                 }else {
                     sheet.detents = [.medium(), .large()]
@@ -266,7 +287,7 @@ class AuthenticationViewController: ScrollableViewController {
                 return
             }
             
-            // This delay is a workaround to dismiss ASWebAuthenticationSession before presenting the credential selection viewController
+            // This delay is a workaround to dismiss ASWebAuthenticationSession before presenting the passkey selection viewController
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 completion(url)
             }

@@ -62,8 +62,8 @@ class EmbeddedViewController: ScrollableViewController {
                         for: username,
                         with: self.viewModel.bindEndpoint
                     )
-                    sendRequest(for: self, with: request) { data in
-                        handleBindRequest(data: data, callback: printToScreen)
+                    sendRequest(for: self, with: request, onError: printToScreen) { (data, json) in
+                        handleBindRequest(data: data, json: json, callback: printToScreen)
                     }
                 }
             ),
@@ -79,8 +79,8 @@ class EmbeddedViewController: ScrollableViewController {
                         for: username,
                         with: self.viewModel.recoverEndpoint
                     )
-                    sendRequest(for: self, with: request) { data in
-                        handleBindRequest(data: data, callback: printToScreen)
+                    sendRequest(for: self, with: request, onError: printToScreen) { (data, json) in
+                        handleBindRequest(data: data, json: json, callback: printToScreen)
                     }
                 }
             ),
@@ -91,10 +91,10 @@ class EmbeddedViewController: ScrollableViewController {
                     buttonTitle: Localized.bindTitle.string,
                     placeholder: Localized.bindURLPlaceholder.string
                 ){ (url, printToScreen) in
-                    Embedded.shared.bindCredential(url: url) { result in
+                    Embedded.shared.bindPasskey(url: url) { result in
                         switch result {
                         case let .success(response):
-                            printToScreen(response.credential.description)
+                            printToScreen(response.passkey.description)
                         case let .failure(error):
                             printToScreen(error.localizedDescription)
                         }
@@ -109,11 +109,11 @@ class EmbeddedViewController: ScrollableViewController {
     }
     
     private func setUpFunctionalityView() -> View {
-        let manageCredentialsButton = CustomButtonWithLine(title: Localized.manageCredentialsButton.string)
+        let managePasskeysButton = CustomButtonWithLine(title: Localized.managePasskeysButton.string)
         let authenticateButton = CustomButtonWithLine(title: Localized.authenticateButton.string)
         let urlVerificationButton = CustomButtonWithLine(title: Localized.urlVerificationButton.string)
         
-        manageCredentialsButton.addTarget(self, action: #selector(toManageCredentials), for: .touchUpInside)
+        managePasskeysButton.addTarget(self, action: #selector(toManagePasskeys), for: .touchUpInside)
         authenticateButton.addTarget(self, action: #selector(toAuthentication), for: .touchUpInside)
         urlVerificationButton.addTarget(self, action: #selector(toURLVerification), for: .touchUpInside)
         
@@ -123,7 +123,7 @@ class EmbeddedViewController: ScrollableViewController {
         let stack = UIStackView(arrangedSubviews: [
             title,
             detail,
-            manageCredentialsButton,
+            managePasskeysButton,
             authenticateButton,
             urlVerificationButton,
         ]).vertical()
@@ -160,8 +160,8 @@ class EmbeddedViewController: ScrollableViewController {
         navigationController?.pushViewController(AuthenticationViewController(viewModel: viewModel), animated: true)
     }
     
-    @objc func toManageCredentials() {
-        navigationController?.pushViewController(ManageCredentialsViewController(viewModel: viewModel), animated: true)
+    @objc func toManagePasskeys() {
+        navigationController?.pushViewController(ManagePasskeyViewController(viewModel: viewModel), animated: true)
     }
     
     @objc func toURLVerification(){

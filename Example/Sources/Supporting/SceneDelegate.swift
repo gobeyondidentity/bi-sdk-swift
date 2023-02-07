@@ -42,10 +42,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func register(_ url: URL){
-        Embedded.shared.bindCredential(url: url) { [weak self] result in
+        Embedded.shared.bindPasskey(url: url) { [weak self] result in
             switch result {
             case let .success(response):
-                let dialog = UIAlertController(title: "Registered Credential: \(response.credential.identity.displayName)", message: nil, preferredStyle: .alert)
+                let dialog = UIAlertController(title: "Registered passkey: \(response.passkey.identity.displayName)", message: nil, preferredStyle: .alert)
                 let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
                 dialog.addAction(action)
                 self?.window?.rootViewController?.present(dialog, animated: true, completion: nil)

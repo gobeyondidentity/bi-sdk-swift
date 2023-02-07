@@ -1,54 +1,54 @@
 // Common
-"noCredentialFound" = "No Credential found, bind a Credential first";
+"noPasskeyFound" = "No Passkey found, bind a Passkey first";
 
 // Embedded SDK
 "embeddedButton" = "View Embedded SDK";
-"beyondIdentityTitle" = "Beyond Identity Swift SDKs";
+"beyondIdentityTitle" = "Beyond Identity Swift SDK";
 "beyondIdentityText" = "Beyond Identity provides the strongest authentication on the planet, eliminating passwords completely for customers, as well as from your database.";
 "embeddedSdkTitle" = "Embedded SDK";
 "embeddedSdkText" = "The Embedded SDK is a holistic SDK solution offering the entire Passwordless authentication embedded into your app. A set of functions are provided to you through the Embedded SDK. This SDK supports OIDC and OAuth2.";
 
 // View Embedded SDK
-"manageCredentialsButton" = "Manage Credentials";
+"managePasskeysButton" = "Manage Passkeys";
 "authenticateButton" = "Authenticate";
 "urlVerificationButton" = "URL Validation";
 "developerDocsButton" = "View Developer Docs";
 "supportButton" = "Visit Support";
 "viewEmbeddedSdkTitle" = "Embedded SDK Demo";
 "viewEmbeddedUISdkTitle" = "Embedded UI SDK Demo";
-"getStartedTitle" = "Get Started With A Credential";
+"getStartedTitle" = "Get Started With A Passkey";
 
-"bindTitle" = "Bind Custom Credential";
-"bindDescription" = "If you have your own Realm you would like to test, paste the Bind Credential URL you generated through the API in order to bind a credential.";
-"bindURLPlaceholder" = "Bind Credential URL";
+"bindTitle" = "Bind Custom Passkey";
+"bindDescription" = "If you have your own Realm you would like to test, paste the Bind Passkey URL you generated through the API in order to bind a passkey.";
+"bindURLPlaceholder" = "Bind Passkey URL";
 
-"exampleBindTitle" = "Bind Credential";
-"exampleBindText" = "To get started using the Embedded SDK sample app, enter any username to bind a credential to this device. Note: This requires a username for which an identity has NOT been created before. It will fail if the username is taken.";
+"exampleBindTitle" = "Bind Passkey";
+"exampleBindText" = "To get started using the Embedded SDK sample app, enter any username to bind a passkey to this device. Note: This requires a username for which an identity has NOT been created before. It will fail if the username is taken.";
 "examplePlaceholder" = "Unique Username";
 
-"exampleRecoverTitle" = "Recover Credential";
-"exampleRecoverText" = "If you have an account with a credential you can't access anymore, enter your username to recover your account and bind a credential to this device. Note: This requires a username for which an identity HAS been created before. It will fail if no identity exists for that username.";
+"exampleRecoverTitle" = "Recover Passkey";
+"exampleRecoverText" = "If you have an account with a passkey you can't access anymore, enter your username to recover your account and bind a passkey to this device. Note: This requires a username for which an identity HAS been created before. It will fail if no identity exists for that username.";
 "exampleRecoverPlaceholder" = "Username";
 
 // SDK Functionality
 "sdkFunctionalityTitle" = "SDK Functionality";
-"sdkFunctionalityText" = "Explore the various functions available when a Credential exists on the device.";
+"sdkFunctionalityText" = "Explore the various functions available when a passkey exists on the device.";
 
 // Questions or Issues?
 "supportTitle" = "Questions or Issues?";
 "supportText" = "Read through our developer docs for more details on our embedded SDK or reach out to support.";
 
-// Manage Credentials
-"credentialTitle" = "Credential Management";
-"viewCredentialTitle" = "View Credentials";
-"credentialText" = "View details of your Credential, such as date created, identity and other information related to your device.";
-"deleteTitle" = "Delete Credential";
-"deletePlaceholder" = "Credential ID";
-"deleteText" = "This is destructive and will remove the current Credential from this device. If no other device contains the Credential to extend it back to this device, then the Credential will be lost unless a recovery is done.";
+// Manage Passkeys
+"passkeyTitle" = "Passkey Management";
+"viewPasskeyTitle" = "View Passkeys";
+"passkeyText" = "View details of your passkey, such as date created, identity and other information related to your device.";
+"deleteTitle" = "Delete Passkey";
+"deletePlaceholder" = "Passkey ID";
+"deleteText" = "This is destructive and will remove the current passkey from this device. If no other device contains the Passkey to extend it back to this device, then the Passkey will be lost unless a recovery is done.";
 
 // Authenticate
 "authenticateTitle" = "Authenticate";
-"authenticateDetail" = "Authenticate against a credential bound to this device. If more than one credential is present, you must select a credential during authentication.";
+"authenticateDetail" = "Authenticate against a passkey bound to this device.";
 "authenticateCustomTitle" = "Authenticate in Custom Realm";
 "authenticateCustomText" = "Paste the Authenticate URL you generated through the API in order to authenticate.";
 "authenticateURLPlaceholder" = "Authenticate URL";
@@ -60,18 +60,18 @@
 "authAuth0" = "Authenticate with Auth0";
 "authAuth0Text" = "Try authenticating with Auth0 using Beyond Identity as a secondary IdP.";
 
-// Select Credential
-"selectCredentialTitle" = "Select A Credential";
+// Select Passkey
+"selectPasskeyTitle" = "Select A Passkey";
 
 // URL Validation
 "isAuthenticateTitle" = "Authenticate URL";
 "isAuthenticateText" = "Paste a URL here to validate if it's an authenticate URL";
-"isBindTitle" = "Bind Credential URL";
-"isBindText" = "Paste a URL here to validate if it's a bind credential URL";
+"isBindTitle" = "Bind Passkey URL";
+"isBindText" = "Paste a URL here to validate if it's a bind passkey URL";
 "validateButton" = "Validate URL";
 
 // Developer Docs
 "developerDocsUrl" = "https://developer.beyondidentity.com/docs/v1/sdks/swift-sdk/overview";
 
 // Support Page
-"supportPageUrl" = "https://beyondidentity.atlassian.net/wiki/spaces/CS/overview";
+"supportPageUrl" = "https://join.slack.com/t/byndid/shared_invite/zt-1anns8n83-NQX4JvW7coi9dksADxgeBQ";

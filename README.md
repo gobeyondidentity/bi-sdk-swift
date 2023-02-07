@@ -18,11 +18,9 @@
 
 [![Cocoapods compatible](https://img.shields.io/badge/Cocoapods-compatible-brightgreen.svg?style=flat)](https://cocoapods.org)
 
-Goodbye, passwords! The Beyond Identity SDKs allow you to embed the Passwordless experience into your product. These SDKs supports OIDC and OAuth2.
+### Embedded SDK
 
-## [Embedded SDK](https://developer.beyondidentity.com/docs/v1/sdks/swift-sdk/overview)
-
-Passwordless authentication with our Authenticator embedded into your app. Users will not need to download the Beyond Identity Authenticator.
+Goodbye, passwords! The Beyond Identity SDKs allow you to embed the Passwordless experience into your product. Users will not need to download the Beyond Identity Authenticator. These SDKs supports OIDC and OAuth2.
 
 ## Installation
 
@@ -56,21 +54,37 @@ dependencies: [
 
 Add the pod to your Podfile:
 
-```swift 
+```swift
 pod 'BeyondIdentityEmbedded'
 ```
 
 And then run:
-```swift 
+
+```swift
 pod install
 ```
 
 After installing import with
+
 ```swift
 import BeyondIdentityEmbedded
 ```
 
-
 ## Usage
 
-Check out the [documentation](https://developer.beyondidentity.com) for more information.
+Check out the [Developer Documentation](https://developer.beyondidentity.com) and the [SDK API Documentation](https://gobeyondidentity.github.io/bi-sdk-swift/documentation/beyondidentityembedded/) for more information.
+
+### Setup
+
+First, before calling the Embedded functions, make sure to initialize the SDK.
+
+```swift
+import BeyondIdentityEmbedded
+
+Embedded.initialize(
+    allowedDomains: [String] = ["beyondidentity.com"],
+    biometricAskPrompt: String,
+    logger: ((OSLogType, String) -> Void)? = nil,
+    callback: @escaping(Result<Void, BISDKError>) -> Void
+)
+```

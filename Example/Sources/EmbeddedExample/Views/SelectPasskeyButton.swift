@@ -3,7 +3,7 @@ import Foundation
 import SharedDesign
 import UIKit
 
-class SelectCredentialButton: UIButton {
+class SelectPasskeyButton: UIButton {
     private let label: UILabel = {
         let label = UILabel()
         label.textAlignment = .left

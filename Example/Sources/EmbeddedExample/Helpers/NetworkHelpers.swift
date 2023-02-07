@@ -2,6 +2,25 @@ import BeyondIdentityEmbedded
 import Foundation
 import UIKit
 
+func createBeyondIdentityAuthRequest(url: URL) -> URLRequest {
+    var request = URLRequest(url: url)
+    request.httpMethod = "GET"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    return request
+}
+
+func createBeyondIdentityTokenRequest(with baseURL: URL, code: String, code_verifier: String) -> URLRequest {
+    var request = URLRequest(url: baseURL)
+    request.httpMethod = "POST"
+    request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+    
+    let parameters = "grant_type=authorization_code&client_id=KhSWSmfhZ6xCMz9yw7DpJcv5&code_verifier=\(code_verifier)&code=\(code)&redirect_uri=acme%3A%2F%2F"
+    let postData =  parameters.data(using: .utf8)
+    
+    request.httpBody = postData
+    return request
+}
+
 func createOktaTokenRequest(with baseURL: URL, code: String, code_verifier: String) -> URLRequest {
     var request = URLRequest(url: baseURL)
     request.httpMethod = "POST"
@@ -19,20 +38,11 @@ func createAuth0TokenRequest(with config: Auth0Config, code: String, code_verifi
     request.httpMethod = "POST"
     request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
     
-    let parameters = "grant_type=authorization_code&client_id=q1cubQfeZWnajq5YkeZVD3NauRqU4vNs&code_verifier=\(code_verifier)&code=\(code)&redirect_uri=acme%3A%2F%2Fdev"
+    let parameters = "grant_type=authorization_code&client_id=q1cubQfeZWnajq5YkeZVD3NauRqU4vNs&code_verifier=\(code_verifier)&code=\(code)&redirect_uri=acme%3A%2F%2Fauth0"
     let postData =  parameters.data(using: .utf8)
     
     request.httpBody = postData
     return request
-}
-
-func handleTokenResponse(data: Data, callback: @escaping (String) -> Void) {
-    let response = try? JSONDecoder().decode(TokenResponse.self, from: data)
-    guard let response = response else {
-        callback("Error decoding TokenResponse")
-        return
-    }
-    callback(response.description)
 }
 
 func parseParameter(from url: URL, for param: String) -> String? {
@@ -59,14 +69,26 @@ func createBindRequest(for username: String, with url: URL) -> URLRequest {
     return request
 }
 
-func handleBindRequest(data: Data, callback: @escaping (String) -> Void){
+func handleTokenResponse(data: Data, json: String, callback: @escaping (String) -> Void) {
+    let response = try? JSONDecoder().decode(TokenResponse.self, from: data)
+    guard let response = response else {
+        callback("Error decoding TokenResponse, \(json)")
+        return
+    }
+    callback(response.description)
+}
+
+func handleBindRequest(data: Data, json: String, callback: @escaping (String) -> Void){
     let response = try? JSONDecoder().decode(BindResponse.self, from: data)
-    let url = URL(string: response?.credentialBindingLink ?? "")
-    if let url = url {
-        Embedded.shared.bindCredential(url: url) { result in
+    guard let response = response else {
+        callback("Error decoding BindResponse, \(json)")
+        return
+    }
+    if let url = URL(string: response.passkeyBindingLink) {
+        Embedded.shared.bindPasskey(url: url) { result in
             switch result {
             case let .success(response):
-                callback(response.credential.description)
+                callback(response.passkey.description)
             case let .failure(error):
                 callback(error.localizedDescription)
             }
@@ -77,23 +99,26 @@ func handleBindRequest(data: Data, callback: @escaping (String) -> Void){
 func sendRequest(
     for vc: UIViewController,
     with request: URLRequest,
-    callback: @escaping (Data) -> Void
+    onError: @escaping (String) -> Void,
+    callback: @escaping (Data, String) -> Void
 ) {
     let webTask = URLSession.shared.dataTask(
         with: request,
         completionHandler: { (data, response, error) in
             var message: String?
-            
             if let error = error {
                 message = error.localizedDescription
             } else if response == nil {
-                message = "Error: response is nil"
+                message = "Error: response is empty"
             } else if let data = data {
                 if let error = try? JSONDecoder().decode(DataError.self, from: data) {
                     message = error.message
                 }else {
                     DispatchQueue.main.async {
-                        callback(data)
+                        let json = String(decoding: data, as: UTF8.self)
+                        print("request", request)
+                        print("JSON: ", json)
+                        callback(data, json)
                     }
                 }
             } else if let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode != 200 {
@@ -104,10 +129,7 @@ func sendRequest(
             
             if let message = message {
                 DispatchQueue.main.async {
-                    let dialog = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
-                    dialog.addAction(action)
-                    vc.present(dialog, animated: true, completion: nil)
+                    onError(message)
                 }
             }
         })
@@ -115,11 +137,19 @@ func sendRequest(
     webTask.resume()
 }
 
-struct BindResponse: Decodable {
-    let credentialBindingLink: String
+struct AuthResponse: Decodable {
+    let authenticateURL: String
     
     enum CodingKeys: String, CodingKey {
-        case credentialBindingLink = "credential_binding_link"
+        case authenticateURL = "authenticate_url"
+    }
+}
+
+struct BindResponse: Decodable {
+    let passkeyBindingLink: String
+    
+    enum CodingKeys: String, CodingKey {
+        case passkeyBindingLink = "credential_binding_link"
     }
 }
 

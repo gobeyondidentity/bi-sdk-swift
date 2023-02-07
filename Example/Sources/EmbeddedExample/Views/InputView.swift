@@ -5,7 +5,7 @@ import UIKit
 
 enum InputViewType {
     case url
-    case credentialID
+    case passkeyID
     case string
     case unknown
 }
@@ -30,7 +30,7 @@ class InputView<T>: UIView {
         buttonAction: @escaping (T, @escaping (String) -> Void) -> Void
     ) {
         let inputType: InputViewType =
-        T.self == CredentialID.self ? .credentialID
+        T.self == Passkey.Id.self ? .passkeyID
         : T.self == URL.self ? .url
         : T.self == String.self ? .string
         : .unknown
@@ -39,7 +39,7 @@ class InputView<T>: UIView {
             switch inputType {
             case .url:
                 return .URL
-            case .credentialID:
+            case .passkeyID:
                 return .default
             case .unknown:
                 return .default
@@ -78,18 +78,22 @@ class InputView<T>: UIView {
     
     @objc func onTap() {
         var value: T?
+        label.isLoading = true
+        label.resetLabel()
         
         switch inputType {
         case .url:
             guard let url = URL(string: input) as? T else {
                 label.text = "Please enter a URL first"
+                label.isLoading = false
                 return
             }
             value = url
-        case .credentialID:
-            let id = CredentialID(input)
+        case .passkeyID:
+            let id = Passkey.Id(input)
             guard let id = id as? T else {
-                label.text = "Please enter a valid credential ID"
+                label.text = "Please enter a valid passkey ID"
+                label.isLoading = false
                 return
             }
             value = id
@@ -98,16 +102,19 @@ class InputView<T>: UIView {
                 value = username
             } else {
                 label.text = "Please enter a username"
+                label.isLoading = false
                 return
             }
         case .unknown:
             label.text = "Input Type is Unknown"
+            label.isLoading = false
             return
         }
         
         if let value = value {
             buttonAction(value) { [weak self] text in
                 self?.label.text = text
+                self?.label.isLoading = false
             }
         }
     }

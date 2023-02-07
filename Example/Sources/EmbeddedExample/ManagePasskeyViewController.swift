@@ -3,10 +3,10 @@ import BeyondIdentityEmbedded
 import UIKit
 import SharedDesign
 
-class ManageCredentialsViewController: ScrollableViewController {
+class ManagePasskeyViewController: ScrollableViewController {
     private let viewModel: EmbeddedViewModel
     
-    var credentialToDelete: CredentialID?
+    var passkeyToDelete: Passkey.Id?
     
     init(viewModel: EmbeddedViewModel) {
         self.viewModel = viewModel
@@ -20,22 +20,22 @@ class ManageCredentialsViewController: ScrollableViewController {
         addKeyboardObserver()
         hideKeyboardWhenTappedOutside()
         
-        let credentialTitle = UILabel().wrap().withText(Localized.credentialTitle.string).withFont(Fonts.largeTitle)
+        let passkeyTitle = UILabel().wrap().withText(Localized.passkeyTitle.string).withFont(Fonts.largeTitle)
         
-        let viewCredential = Card(
-            title: Localized.viewCredentialTitle.string,
-            detail: Localized.credentialText.string,
+        let getPasskeys = Card(
+            title: Localized.viewPasskeyTitle.string,
+            detail: Localized.passkeyText.string,
             cardView: ButtonView(
-                buttonTitle: Localized.viewCredentialTitle.string
+                buttonTitle: Localized.viewPasskeyTitle.string
             ){ callback in
-                Embedded.shared.getCredentials { result in
+                Embedded.shared.getPasskeys { result in
                     switch result {
-                    case let .success(credentials):
-                        guard !credentials.isEmpty else {
-                            callback(Localized.noCredentialFound.string)
+                    case let .success(passkeys):
+                        guard !passkeys.isEmpty else {
+                            callback(Localized.noPasskeyFound.string)
                             return
                         }
-                        callback(credentials.map({$0.description}).joined())
+                        callback(passkeys.map({$0.description}).joined())
                     case let .failure(error):
                         callback(error.localizedDescription)
                     }
@@ -43,17 +43,17 @@ class ManageCredentialsViewController: ScrollableViewController {
             }
         )
 
-        let deleteCredential = Card(
+        let deletePasskey = Card(
             title: Localized.deleteTitle.string,
             detail: Localized.deleteText.string,
-            cardView: InputView<CredentialID>(
+            cardView: InputView<Passkey.Id>(
                 buttonTitle: Localized.deleteTitle.string,
                 placeholder: Localized.deletePlaceholder.string
             ){ (id, callback) in
-                Embedded.shared.deleteCredential(for: id) { result in
+                Embedded.shared.deletePasskey(for: id) { result in
                     switch result {
                     case .success:
-                        callback("Deleted Credential: \(id.value)")
+                        callback("Deleted Passkey Id: \(id.value)")
                     case let .failure(error):
                         callback(error.localizedDescription)
                     }
@@ -62,10 +62,10 @@ class ManageCredentialsViewController: ScrollableViewController {
         )
         
         let stack = UIStackView(arrangedSubviews: [
-            credentialTitle,
-            viewCredential,
+            passkeyTitle,
+            getPasskeys,
             Line(),
-            deleteCredential
+            deletePasskey
         ]).vertical()
         stack.alignment = .fill
         stack.spacing = Spacing.padding

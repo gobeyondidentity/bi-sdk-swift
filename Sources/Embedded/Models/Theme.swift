@@ -1,28 +1,28 @@
 import CoreSDK
 import Foundation
 
-/// Theme associated with a credential.
+/// Theme associated with a `Passkey`.
 public struct Theme: Equatable, Hashable {
     /// URL resolving the logo in light mode.
-    public let logoLightURL: URL
+    public let logoLightUrl: URL
     /// URL resolving the logo in dark mode.
-    public let logoDarkURL: URL
+    public let logoDarkUrl: URL
     /// URL for customer support.
-    public let supportURL: URL
+    public let supportUrl: URL
     
     public init(
-        logoLightURL: URL,
-        logoDarkURL: URL,
-        supportURL: URL
+        logoLightUrl: URL,
+        logoDarkUrl: URL,
+        supportUrl: URL
     ){
-        self.logoLightURL = logoLightURL
-        self.logoDarkURL = logoDarkURL
-        self.supportURL = supportURL
+        self.logoLightUrl = logoLightUrl
+        self.logoDarkUrl = logoDarkUrl
+        self.supportUrl = supportUrl
     }
     
     init(_ theme: CoreSDK.Theme) {
-        logoLightURL = theme.logoLightURL
-        logoDarkURL = theme.logoDarkURL
-        supportURL = theme.supportURL
+        logoLightUrl = theme.logoLightURL
+        logoDarkUrl = theme.logoDarkURL
+        supportUrl = theme.supportURL
     }
 }

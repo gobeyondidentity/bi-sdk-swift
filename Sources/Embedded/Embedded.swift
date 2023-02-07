@@ -8,7 +8,7 @@ public class Embedded {
     /// - Parameters:
     ///   - allowedDomains: An optional array of whitelisted domains for network operations. This will default to Beyond Identity’s allowed domains when not provided or is empty.
     ///   - biometricAskPrompt: A prompt the user will see when asked for biometrics.
-    ///   - logger: Optional function to log output
+    ///   - logger: Optional function to log output.
     public static func initialize(
         allowedDomains: [String]? = nil,
         biometricAskPrompt: String,
@@ -22,7 +22,7 @@ public class Embedded {
             return
         }
         
-        CoreEmbedded.initialize(
+        CoreEmbedded._initialize(
             allowedDomains: allowedDomains,
             biometricAskPrompt: biometricAskPrompt,
             logger: logger,
@@ -32,9 +32,10 @@ public class Embedded {
     
     /// Use this shared property to access functionality.
     /// - Note: `Embedded.initialize` must be called first.
-    public static let shared = CoreEmbedded.shared
+    public static let shared = CoreEmbedded._shared
 }
 
+/// Internal implementation of all embedded sdk which should be accessed via `Embedded.shared`
 public class CoreEmbedded {
     private struct Config {
         let biometricAskPrompt: String
@@ -49,9 +50,9 @@ public class CoreEmbedded {
     
     private static var hasInitalizedCore = false
     
-    public static let shared: CoreEmbedded = CoreEmbedded()
+    public static let _shared: CoreEmbedded = CoreEmbedded()
     
-    public static func initialize(
+    public static func _initialize(
         allowedDomains: [String],
         biometricAskPrompt: String,
         logger: ((OSLogType, String) -> Void)? = nil,
@@ -122,11 +123,11 @@ extension CoreEmbedded {
     /// Authenticate a user.
     /// - Parameters:
     ///   - url: URL used to authenticate
-    ///   - credentialID: `CredentialID` with which to authenticate.
+    ///   - id: `Passkey.Id` with which to authenticate.
     ///   - callback: returns a `AuthenticateResponse`.
     public func authenticate(
         url: URL,
-        credentialID: CredentialID,
+        id: Passkey.Id,
         callback: @escaping(Result<AuthenticateResponse, BISDKError>) -> Void
     ) {
         guard isAuthenticateUrl(url) else { return callback(.failure(.invalidUrlType)) }
@@ -137,7 +138,7 @@ extension CoreEmbedded {
         
         core.authenticate(
             url,
-            with: CoreSDK.CredentialID(credentialID.value),
+            with: CoreSDK.Id(id.value),
             trusted: .embedded,
             flowType: .embedded
         ) { result in
@@ -150,19 +151,19 @@ extension CoreEmbedded {
         }
     }
     
-    /// Bind a `Credential` to a device.
+    /// Bind a `Passkey` to a device.
     /// - Parameters:
-    ///   - url: URL used to bind a credential to a device
-    ///   - callback: Returns the bound `Credential` and  optional redirect URL set by the developer
-    public func bindCredential(
+    ///   - url: URL used to bind a passkey to a device
+    ///   - callback: Returns the bound `Passkey` and  optional redirect URL set by the developer
+    public func bindPasskey(
         url: URL,
-        callback: @escaping(Result<BindCredentialResponse, BISDKError>) -> Void
+        callback: @escaping(Result<BindPasskeyResponse, BISDKError>) -> Void
     ) {
         guard let core = CoreEmbedded.core else {
             fatalError(INIT_ERROR)
         }
         
-        guard isBindCredentialUrl(url) else { return callback(.failure(.invalidUrlType)) }
+        guard isBindPasskeyUrl(url) else { return callback(.failure(.invalidUrlType)) }
         
         core.bindCredential(
             url,
@@ -171,26 +172,26 @@ extension CoreEmbedded {
         ) { result in
             switch result {
             case let .success(response):
-                callback(.success(BindCredentialResponse(response)))
+                callback(.success(BindPasskeyResponse(response)))
             case let .failure(error):
                 callback(.failure(.from(error)))
             }
         }
     }
     
-    /// Delete a `Credential` by its ID.
-    /// - Warning: deleting a `Credential` is destructive and will remove everything from the device. If no other device contains the credential then the user will need to complete a recovery in order to log in again on this device.
+    /// Delete a `Passkey` by its ID.
+    /// - Warning: deleting a `Passkey` is destructive and will remove everything from the device. If no other device contains the passkey then the user will need to complete a recovery in order to log in again on this device.
     /// - Parameters:
-    ///   - id: `CredentialID` the unique identifier of the `Credential`.
+    ///   - id: the unique identifier of the `Passkey`.
     ///   - callback: returns unit `()` on successful deletion
-    public func deleteCredential(
-        for id: CredentialID,
+    public func deletePasskey(
+        for id: Passkey.Id,
         callback: @escaping (Result<(), BISDKError>) -> Void
     ) {
         guard let core = CoreEmbedded.core else {
             fatalError(INIT_ERROR)
         }
-        core.deleteAuthNCredential(CoreSDK.CredentialID(id.value)) { result in
+        core.deleteAuthNCredential(CoreSDK.Id(id.value)) { result in
             switch result {
             case .success:
                 callback(.success(()))
@@ -200,23 +201,23 @@ extension CoreEmbedded {
         }
     }
     
-    /// Get all current credentials on the device.
-    /// - Parameter callback: returns all registered credentials
-    public func getCredentials(callback: @escaping (Result<[Credential], BISDKError>) -> Void) {
+    /// Get all current passkeys on the device.
+    /// - Parameter callback: returns all registered passkeys
+    public func getPasskeys(callback: @escaping (Result<[Passkey], BISDKError>) -> Void) {
         guard let core = CoreEmbedded.core else {
             fatalError(INIT_ERROR)
         }
         core.getAllAuthNCredentials { result in
             switch result {
-            case let .success(credential):
-                callback(.success(credential.map(Credential.init)))
+            case let .success(passkey):
+                callback(.success(passkey.map(Passkey.init)))
             case let .failure(error):
                 callback(.failure(.from(error)))
             }
         }
     }
     
-    /// Determines if a URL is a valid Authenticate URL.
+    /// Returns whether a URL is a valid Authenticate URL or not.
     /// - Parameter url: URL in question
     public func isAuthenticateUrl(_ url: URL) -> Bool {
         guard let core = CoreEmbedded.core else {
@@ -231,9 +232,9 @@ extension CoreEmbedded {
         return true
     }
     
-    /// Determines if a URL is a valid Bind Credentail URL.
+    /// Returns whether a URL is a valid Bind Passkey URL or not.
     /// - Parameter url: URL in question
-    public func isBindCredentialUrl(_ url: URL) -> Bool {
+    public func isBindPasskeyUrl(_ url: URL) -> Bool {
         guard let core = CoreEmbedded.core else {
             fatalError(INIT_ERROR)
         }

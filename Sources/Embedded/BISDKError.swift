@@ -3,8 +3,8 @@ import Foundation
 
 /// Error returned from the Embedded SDK.
 public enum BISDKError: Equatable, Error, Hashable {
-    /// `Credential` for this user does not exist on this device.
-    case credentialNotFound
+    /// `Passkey` for this user does not exist on this device.
+    case passkeyNotFound
     
     /// URL provided is invalid
     case invalidUrlType
@@ -15,7 +15,7 @@ public enum BISDKError: Equatable, Error, Hashable {
     static func from(_ error: BridgeError) -> Self {
         if case let .decodeError(string) = error {
             if string.lowercased().contains("credentialnotfound"){
-                return .credentialNotFound
+                return .passkeyNotFound
             }
         }
         return BISDKError.description("\(error)")
@@ -29,8 +29,8 @@ extension BISDKError: LocalizedError {
         switch self {
         case let .description(message):
             return message
-        case .credentialNotFound:
-            return "Credential for this user does not exist on this device"
+        case .passkeyNotFound:
+            return "Passkey for this user does not exist on this device"
         case .invalidUrlType:
             return "URL provided is invalid"
         }

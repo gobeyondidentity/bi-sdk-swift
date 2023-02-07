@@ -28,7 +28,6 @@ class ButtonView: UIView {
     
     func setUpSubviews() {
         button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
-        
         let stack = UIStackView(arrangedSubviews: [
             button,
             label,
@@ -42,8 +41,11 @@ class ButtonView: UIView {
     }
     
     @objc func onTap() {
+        self.label.isLoading = true
+        self.label.resetLabel()
         buttonAction() { [weak self] text in
             self?.label.text = text
+            self?.label.isLoading = false
         }
     }
 }

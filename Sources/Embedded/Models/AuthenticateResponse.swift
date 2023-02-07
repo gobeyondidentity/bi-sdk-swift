@@ -5,20 +5,21 @@ import Foundation
 public struct AuthenticateResponse: Equatable, Hashable {
     /// The redirect URL that originates from the /authorize call's `redirect_uri` parameter.
     /// The OAuth2 authorization `code` and the `state` parameter of the /authorize call are attached with the "code" and "state" parameters to this URL.
-    public let redirectURL: URL
+    public let redirectUrl: URL
     /// An optional displayable message defined by policy returned by the cloud on success.
     public let message: String?
     
     public init(
-        redirectURL: URL,
+        redirectUrl: URL,
         message: String?
     ){
-        self.redirectURL = redirectURL
+        self.redirectUrl = redirectUrl
         self.message = message
     }
     
     init(_ response: CoreSDK.BiAuthenticateResponse) {
-        self.redirectURL = response.redirectURL
+        self.redirectUrl = response.redirectURL
         self.message = response.message
     }
 }
+

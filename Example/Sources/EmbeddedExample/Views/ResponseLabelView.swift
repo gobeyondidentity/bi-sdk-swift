@@ -4,6 +4,7 @@ import SharedDesign
 
 class ResponseLabelView: View {
     let label = UITextView()
+    let spinner = UIActivityIndicatorView(style: .medium)
     
     var text: String {
         get {
@@ -14,21 +15,41 @@ class ResponseLabelView: View {
         }
     }
     
+    var isLoading: Bool {
+        get {
+            return true
+        }
+        set(newBool) {
+            if newBool {
+                spinner.startAnimating()
+            }else {
+                spinner.stopAnimating()
+            }
+        }
+    }
+    
+    /// Reset label text to "RESPONSE DATA"
+    func resetLabel(){
+        label.text = "RESPONSE DATA"
+    }
+    
     init(){
         super.init(frame: .zero)
         backgroundColor = Colors.empty.value
         
-        label.text = "RESPONSE DATA"
+        resetLabel()
         label.font = Fonts.body
         label.textColor = Colors.text.value
         label.isEditable = false
         label.isScrollEnabled = false
         label.backgroundColor = Colors.empty.value
         
-        addSubview(label)
+        let stack = UIStackView(arrangedSubviews: [label, spinner])
         
-        label.verticalAnchors == verticalAnchors + Spacing.medium
-        label.horizontalAnchors == horizontalAnchors + Spacing.medium
+        addSubview(stack)
+        
+        stack.verticalAnchors == verticalAnchors + Spacing.medium
+        stack.horizontalAnchors == horizontalAnchors + Spacing.medium
     }
     
     required init?(coder: NSCoder) {
