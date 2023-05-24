@@ -3,12 +3,12 @@ import Foundation
 // THIS FILE IS GENERATED. DO NOT EDIT.
 
 struct Configuration {
-    #if os(iOS)
+#if os(iOS)
     static let catalogFolderName = "com.beyondidentity.sdk.BISDK.ios"
-    #elseif os(macOS)
+#elseif os(macOS)
     static let catalogFolderName = "com.beyondidentity.sdk.BISDK.macos"
-    #endif
-
+#endif
+    
     static let deviceGateway = "https://device-gateway.byndid.com"
     static let sdkVersion = "0.7.0"
 }
@@ -16,8 +16,15 @@ struct Configuration {
 enum Endpoint: String, CaseIterable {
     case authorizeEndpoint = "https://auth.byndid.com/v2/authorize"
     case tokenEndpoint = "https://auth.byndid.com/v2/token"
-
-    static func url(for key: Endpoint) -> URL? {
-        URL(string: key.rawValue)
+    
+    static func url(for key: Endpoint, domain: Domain) -> URL? {
+        var urlString = key.rawValue
+        
+        switch domain {
+        case .us: break
+        case .eu:
+            urlString = urlString.replacingOccurrences(of: "auth.byndid.com", with: "auth-eu.byndid.com")
+        }
+        return URL(string: urlString)
     }
 }

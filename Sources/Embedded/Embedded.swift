@@ -2,23 +2,31 @@ import CoreSDK
 import Foundation
 import os
 
+public enum Domain {
+    case eu
+    case us
+}
+
 /// Use the `Embedded.shared` singleton to access all embedded sdk functionality.
 public class Embedded {
     /// Initialize the `Embedded.shared` singleton before using it. This must be called first.
     /// - Parameters:
     ///   - biometricAskPrompt: A prompt the user will see when asked for biometrics while extending a credential to another device.
+    ///   - domain: Configure URLs to `us` for USA or `eu` Europe data centers.
     ///   - clientID: The public or confidential client ID generated during the OIDC configuration
     ///   - redirectURI: URI where the user will be redirected after the authorization has completed. The redirect URI must be one of the URIs passed in the OIDC configuration.
     ///   - logger: optional function to log output
     public static func initialize(
         biometricAskPrompt: String,
         clientID: String,
+        domain: Domain = .us,
         redirectURI: String,
         logger: ((OSLogType, String) -> Void)? = nil
     ){
         CoreEmbedded.initialize(
             biometricAskPrompt: biometricAskPrompt,
             clientID: clientID,
+            domain: domain,
             redirectURI: redirectURI,
             logger: logger
         )
@@ -33,6 +41,7 @@ public class CoreEmbedded {
     struct Config {
         let askPrompt: String
         let clientID: String
+        let domain: Domain
         let redirectURI: String
         let logger: ((OSLogType, String) -> Void)?
     }
@@ -48,12 +57,14 @@ public class CoreEmbedded {
     public static func initialize(
         biometricAskPrompt: String,
         clientID: String,
+        domain: Domain,
         redirectURI: String,
         logger: ((OSLogType, String) -> Void)? = nil
     ){
         CoreEmbedded.config = Config(
             askPrompt: biometricAskPrompt,
             clientID: clientID,
+            domain: domain,
             redirectURI: redirectURI,
             logger: logger
         )
@@ -119,16 +130,16 @@ extension CoreEmbedded {
          - callback: returns a `TokenResponse` that contains the access and id token.
      */
     public func authenticate(callback: @escaping(Result<TokenResponse, BISDKError>) -> Void) {
-        guard let authURL = Endpoint.url(for: .authorizeEndpoint) else {
+        guard let config = CoreEmbedded.config else {
+            fatalError(INIT_ERROR)
+        }
+        
+        guard let authURL = Endpoint.url(for: .authorizeEndpoint, domain: config.domain) else {
             return callback(.failure(.description("Error creating authorize URL")))
         }
 
-        guard let tokenURL = Endpoint.url(for: .tokenEndpoint) else {
+        guard let tokenURL = Endpoint.url(for: .tokenEndpoint, domain: config.domain) else {
             return callback(.failure(.description("Error creating token URL")))
-        }
-        
-        guard let config = CoreEmbedded.config else {
-            fatalError(INIT_ERROR)
         }
 
         core.embeddedPublicOIDC(
@@ -166,12 +177,12 @@ extension CoreEmbedded {
         scope: String,
         callback: @escaping(Result<AuthorizationCode, BISDKError>) -> Void
     ) {
-        guard let authURL = Endpoint.url(for: .authorizeEndpoint) else {
-            return callback(.failure(.description("Error creating authorize URL")))
-        }
-        
         guard let config = CoreEmbedded.config else {
             fatalError(INIT_ERROR)
+        }
+        
+        guard let authURL = Endpoint.url(for: .authorizeEndpoint, domain: config.domain) else {
+            return callback(.failure(.description("Error creating authorize URL")))
         }
 
         core.embeddedConfidentialOIDC(
