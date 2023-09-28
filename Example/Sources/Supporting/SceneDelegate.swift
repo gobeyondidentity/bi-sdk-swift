@@ -21,10 +21,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             let viewModel = EmbeddedViewModel()
             
-            Embedded.initialize(
-                biometricAskPrompt: viewModel.biometricAskPrompt,
-                logger: logger
-            ) { _ in }
+            Task {
+                do {
+                    try await Embedded.initialize(
+                        biometricAskPrompt: viewModel.biometricAskPrompt,
+                        logger: { _, message in
+                            print(message)
+                        }
+                    )
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
             
             if let url = connectionOptions.urlContexts.first?.url {
                 register(url)
@@ -35,10 +43,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let url = URLContexts.first?.url {
             register(url)
         }
-    }
-    
-    func logger(type: OSLogType, message: String) {
-        print(message)
     }
     
     private func register(_ url: URL){

@@ -6,10 +6,10 @@ import UIKit
 
 class PasskeyViewController: ScrollableViewController {
     let passkeys: [Passkey]
-    let completion: (Passkey.Id?) -> Void
+    let completion: (Passkey.Id?) async -> Void
     private var selectedPasskeyID: Passkey.Id? = nil
     
-    init(passkeys: [Passkey], completion: @escaping (Passkey.Id?) -> Void) {
+    init(passkeys: [Passkey], completion: @escaping (Passkey.Id?) async -> Void) {
         self.passkeys = passkeys
         self.completion = completion
         super.init()
@@ -17,13 +17,16 @@ class PasskeyViewController: ScrollableViewController {
         view.backgroundColor = Colors.background.value
         navigationItem.title = Localized.selectPasskeyTitle.string
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
-        completion(selectedPasskeyID)
+        Task {
+            await completion(selectedPasskeyID)
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         let accountButtons: [SelectPasskeyButton] = passkeys.enumerated().map{ (i, passkey) in
             let button = SelectPasskeyButton(text: passkey.identity.displayName)
             button.tag = i
@@ -34,6 +37,7 @@ class PasskeyViewController: ScrollableViewController {
         let stack = StackView(arrangedSubviews: accountButtons)
         stack.axis = .vertical
         stack.spacing = Spacing.padding
+        stack.accessibilityLabel = "PasskeyModal"
         
         contentView.addSubview(stack)
         

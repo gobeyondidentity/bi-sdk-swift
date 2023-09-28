@@ -8,18 +8,23 @@ public struct AuthenticateResponse: Equatable, Hashable {
     public let redirectUrl: URL
     /// An optional displayable message defined by policy returned by the cloud on success.
     public let message: String?
+    /// An optional one-time-token returned from successful `redeemOtp` that may be redeemed for a credential_binding_link from the /credential-binding-jobs endpoint.
+    public let passkeyBindingToken: String?
     
     public init(
         redirectUrl: URL,
-        message: String?
+        message: String?,
+        passkeyBindingToken: String?
     ){
         self.redirectUrl = redirectUrl
         self.message = message
+        self.passkeyBindingToken = passkeyBindingToken
     }
     
-    init(_ response: CoreSDK.BiAuthenticateResponse) {
+    init(_ response: CoreSDK.BiAuthenticateUrlResponse) {
         self.redirectUrl = response.redirectURL
         self.message = response.message
+        self.passkeyBindingToken = response.passkeyBindingToken
     }
 }
 

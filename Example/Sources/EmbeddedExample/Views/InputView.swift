@@ -12,9 +12,9 @@ enum InputViewType {
 
 class InputView<T>: UIView {
     let button: Button
-    let buttonAction: (T, @escaping (String) -> Void) -> Void
+    let buttonAction: (T, @escaping (String) -> Void) async -> Void
     let inputType: InputViewType
-    let label = ResponseLabelView()
+    let label: ResponseLabelView
     let textField: UITextField
     
     var input: String = ""
@@ -23,11 +23,11 @@ class InputView<T>: UIView {
     /// - Parameters:
     ///   - buttonTitle: Button Title
     ///   - placeholder: Input placeholder
-    ///   - buttonAction: When button taps, this action will run passing the caller both the input value type and a function that when given a String will print to the label
+    ///   - buttonAction: When button taps, this action will run passing the caller both the input value and a function that when given a String will print to the label
     init(
         buttonTitle: String,
         placeholder: String,
-        buttonAction: @escaping (T, @escaping (String) -> Void) -> Void
+        buttonAction: @escaping (T, @escaping (String) -> Void) async -> Void
     ) {
         let inputType: InputViewType =
         T.self == Passkey.Id.self ? .passkeyID
@@ -35,6 +35,7 @@ class InputView<T>: UIView {
         : T.self == String.self ? .string
         : .unknown
         button = makeButton(with: buttonTitle)
+        label = ResponseLabelView(buttonTitle)
         textField = UITextField().with(placeholder: placeholder, type: {
             switch inputType {
             case .url:
@@ -90,6 +91,11 @@ class InputView<T>: UIView {
             }
             value = url
         case .passkeyID:
+            guard !input.isEmpty else {
+                label.text = "Please enter a passkey ID"
+                label.isLoading = false
+                return
+            }
             let id = Passkey.Id(input)
             guard let id = id as? T else {
                 label.text = "Please enter a valid passkey ID"
@@ -112,9 +118,11 @@ class InputView<T>: UIView {
         }
         
         if let value = value {
-            buttonAction(value) { [weak self] text in
-                self?.label.text = text
-                self?.label.isLoading = false
+            Task {
+                await buttonAction(value) { [weak self] text in
+                    self?.label.text = text
+                    self?.label.isLoading = false
+                }
             }
         }
     }
@@ -125,8 +133,8 @@ class InputView<T>: UIView {
         }
     }
     
-    @objc func textFieldDidEnd(_ textField: UITextField) {
-        textField.resignFirstResponder()
+    @objc func textFieldDidEnd(_ textField: UITextField) async {
+        _ = textField.resignFirstResponder()
         onTap()
     }
 }

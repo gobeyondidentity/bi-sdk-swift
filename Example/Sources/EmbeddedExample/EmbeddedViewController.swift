@@ -62,8 +62,11 @@ class EmbeddedViewController: ScrollableViewController {
                         for: username,
                         with: self.viewModel.bindEndpoint
                     )
-                    sendRequest(for: self, with: request, onError: printToScreen) { (data, json) in
-                        handleBindRequest(data: data, json: json, callback: printToScreen)
+                    do {
+                        let (data, json) = try await sendRequest(with: request)
+                        printToScreen(await handleBindRequest(data: data, json: json))
+                    } catch {
+                        printToScreen(error.localizedDescription)
                     }
                 }
             ),
@@ -79,8 +82,11 @@ class EmbeddedViewController: ScrollableViewController {
                         for: username,
                         with: self.viewModel.recoverEndpoint
                     )
-                    sendRequest(for: self, with: request, onError: printToScreen) { (data, json) in
-                        handleBindRequest(data: data, json: json, callback: printToScreen)
+                    do {
+                        let (data, json) = try await sendRequest(with: request)
+                        printToScreen(await handleBindRequest(data: data, json: json))
+                    } catch {
+                        printToScreen(error.localizedDescription)
                     }
                 }
             ),

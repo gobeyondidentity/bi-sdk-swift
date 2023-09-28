@@ -1,0 +1,27 @@
+{
+  "configurations" : [
+    {
+      "id" : "941FAA86-890C-4F38-9E09-F31B9BBB8ACC",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "maximumTestRepetitions" : 5,
+    "testRepetitionMode" : "retryOnFailure"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:ExampleApp.xcodeproj",
+        "identifier" : "95D85CBF299D850A005BB198",
+        "name" : "ExampleAppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

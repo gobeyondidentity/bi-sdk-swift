@@ -33,7 +33,7 @@ class ResponseLabelView: View {
         label.text = "RESPONSE DATA"
     }
     
-    init(){
+    init(_ testIdentifier: String = ""){
         super.init(frame: .zero)
         backgroundColor = Colors.empty.value
         
@@ -43,7 +43,7 @@ class ResponseLabelView: View {
         label.isEditable = false
         label.isScrollEnabled = false
         label.backgroundColor = Colors.empty.value
-        
+        label.accessibilityIdentifier = "\(testIdentifier) Response"
         let stack = UIStackView(arrangedSubviews: [label, spinner])
         
         addSubview(stack)

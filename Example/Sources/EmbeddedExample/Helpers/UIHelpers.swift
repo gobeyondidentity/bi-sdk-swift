@@ -77,6 +77,7 @@ extension AuthenticateResponse: CustomStringConvertible {
         """
         redirectUrl: \(redirectUrl)
         message: \(message ?? "")
+        passkeyBindingToken: \(passkeyBindingToken ?? "")
         """
     }
 }
@@ -140,6 +141,46 @@ extension Theme: CustomStringConvertible {
             logoLightUrl: \(logoLightUrl)
             logoDarkUrl: \(logoDarkUrl)
             supportUrl: \(supportUrl)
+        """
+    }
+}
+
+extension AuthenticationContext {
+    public var description: String {
+        """
+        authUrl: \(authUrl)
+        application:
+        \(application.description)
+        origin:
+        \(origin.description)
+        """
+    }
+}
+
+extension AuthenticationContext.Application {
+    public var description: String {
+        """
+            id: \(id.value)
+            displayName: \(displayName ?? "")
+        """
+    }
+}
+
+extension AuthenticationContext.Origin {
+    public var description: String {
+        """
+            sourceIp: \(sourceIp ?? "")
+            userAgent: \(userAgent ?? "")
+            geolocation: \(geolocation ?? "")
+            referer: \(referer ?? "")
+        """
+    }
+}
+
+extension OtpChallengeResponse {
+    public var description: String {
+        """
+        url: \(url)
         """
     }
 }

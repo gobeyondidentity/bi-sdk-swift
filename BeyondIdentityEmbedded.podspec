@@ -2,7 +2,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'BeyondIdentityEmbedded'
-  s.version          = '2.0.0'
+  s.version          = '2.0.1'
   s.author           = 'Beyond Identity'
   s.summary          = 'Passwordless identities for workforces and customers'
   s.license          = 'Apache License, Version 2.0'
@@ -12,5 +12,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5.5'
   s.source           = { :git => 'https://github.com/gobeyondidentity/bi-sdk-swift.git', :tag => s.version.to_s }
   s.source_files = 'Sources/Embedded/**/*'
-  s.dependency 'BeyondIdentityCoreSDK', '2.0.0'
+  s.dependency 'BeyondIdentityCoreSDK', '2.0.1'
 end

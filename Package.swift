@@ -17,19 +17,13 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "CoreSDK",
-            url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/2.0.0/CoreSDK.xcframework.zip",
-            checksum: "3c926116baf1a6974a98a74c4752f523f54ec557a64f99a309b4b5e134fca8ea"
+            url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/2.0.1/CoreSDK.xcframework.zip",
+            checksum: "3022a4ad25c2c4966b840dc36b2854e61902021f769318145426457aff069796"
         ),
         .target(
             name: "BeyondIdentityEmbedded",
             dependencies: ["CoreSDK"],
             path: "Sources/Embedded/"
-        ),
-        .testTarget(
-            name: "UnitTests",
-            dependencies: ["BeyondIdentityEmbedded"],
-            path: "Tests/UnitTests",
-            exclude: []
         ),
     ]
 )

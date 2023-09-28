@@ -52,6 +52,8 @@
 "authenticateCustomTitle" = "Authenticate in Custom Realm";
 "authenticateCustomText" = "Paste the Authenticate URL you generated through the API in order to authenticate.";
 "authenticateURLPlaceholder" = "Authenticate URL";
+"authGetAuthenticationContext" = "Authentication Context";
+"authGetAuthenticationContextText" = "Returns the Authentication Context for the current transaction.\n\nThe Authentication Context contains the Authenticator Config, Authentication Method Configuration, request origin, and the authenticating application.";
 "authBeyondIdentity" = "Authenticate with Beyond Identity";
 "authBeyondIdentityText" = "Try authenticating with Beyond Identity as the primary IdP.";
 "authOkta" = "Authenticate with Okta";
@@ -59,6 +61,13 @@
 
 "authAuth0" = "Authenticate with Auth0";
 "authAuth0Text" = "Try authenticating with Auth0 using Beyond Identity as a secondary IdP.";
+
+"emailOtp" = "Authenticate with Email OTP";
+"authEmailOtpText" = "Try authenticating with Email OTP using Beyond Identity";
+"authEmailOtpPlaceholder" = "Email";
+"redeemOtp" = "Redeem with Email OTP";
+"redeemEmailOtpText" = "Try redeeming the OTP in your Email";
+"redeemEmailOtpPlaceholder" = "OTP";
 
 // Select Passkey
 "selectPasskeyTitle" = "Select A Passkey";
@@ -68,10 +77,11 @@
 "isAuthenticateText" = "Paste a URL here to validate if it's an authenticate URL";
 "isBindTitle" = "Bind Passkey URL";
 "isBindText" = "Paste a URL here to validate if it's a bind passkey URL";
-"validateButton" = "Validate URL";
+"validateAuthenticateButton" = "Validate Authenticate URL";
+"validateBindPasskeyButton" = "Validate Bind Passkey URL";
 
 // Developer Docs
-"developerDocsUrl" = "https://developer.beyondidentity.com/docs/v1/sdks/swift-sdk/overview";
+"developerDocsUrl" = "https://developer.beyondidentity.com";
 
 // Support Page
 "supportPageUrl" = "https://join.slack.com/t/byndid/shared_invite/zt-1anns8n83-NQX4JvW7coi9dksADxgeBQ";

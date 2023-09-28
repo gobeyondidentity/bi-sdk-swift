@@ -1,7 +1,8 @@
 xcuserdata/
-xcshareddata/
+Package.resolved
 Carthage/
 .swiftpm
 .build/
 libs/
 .DS_Store
+scripts/swiftlint

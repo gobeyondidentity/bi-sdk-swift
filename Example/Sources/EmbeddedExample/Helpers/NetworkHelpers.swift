@@ -69,73 +69,63 @@ func createBindRequest(for username: String, with url: URL) -> URLRequest {
     return request
 }
 
-func handleTokenResponse(data: Data, json: String, callback: @escaping (String) -> Void) {
+func handleTokenResponse(data: Data, json: String) async -> String {
     let response = try? JSONDecoder().decode(TokenResponse.self, from: data)
     guard let response = response else {
-        callback("Error decoding TokenResponse, \(json)")
-        return
+        return "Error decoding TokenResponse, \(json)"
     }
-    callback(response.description)
+    return response.description
 }
 
-func handleBindRequest(data: Data, json: String, callback: @escaping (String) -> Void){
+func handleBindRequest(data: Data, json: String) async -> String {
     let response = try? JSONDecoder().decode(BindResponse.self, from: data)
     guard let response = response else {
-        callback("Error decoding BindResponse, \(json)")
-        return
+        return "Error decoding BindResponse, \(json)"
     }
-    if let url = URL(string: response.passkeyBindingLink) {
-        Embedded.shared.bindPasskey(url: url) { result in
-            switch result {
-            case let .success(response):
-                callback(response.passkey.description)
-            case let .failure(error):
-                callback(error.localizedDescription)
-            }
+    guard let url = URL(string: response.passkeyBindingLink) else {
+        return "passkeyBindingLink is not a URL: \(response.passkeyBindingLink)"
+    }
+    do {
+        let response = try await Embedded.shared.bindPasskey(url: url)
+        return response.passkey.description
+    } catch {
+        return error.localizedDescription
+    }
+}
+
+func sendRequest(with request: URLRequest) async throws -> (Data, String) {
+    do {
+        let (data, response) = try await URLSession.shared.data(for: request)
+        print("sendRequest|request:", request)
+        if let dataError = try? JSONDecoder().decode(DataError.self, from: data) {
+            throw ExampleAppError.description(dataError.message)
+        }
+        
+        if let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode != 200 {
+            throw ExampleAppError.description("Error: got status code \(statusCode)")
+        }
+        
+        let json = String(decoding: data, as: UTF8.self)
+        print("sendRequest|JSON: ", json)
+        return (data, json)
+    } catch {
+        throw error
+    }
+}
+
+public enum ExampleAppError: Equatable, Error, Hashable {
+    case description(String)
+}
+
+extension ExampleAppError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .description(message):
+            return message
         }
     }
 }
 
-func sendRequest(
-    for vc: UIViewController,
-    with request: URLRequest,
-    onError: @escaping (String) -> Void,
-    callback: @escaping (Data, String) -> Void
-) {
-    let webTask = URLSession.shared.dataTask(
-        with: request,
-        completionHandler: { (data, response, error) in
-            var message: String?
-            if let error = error {
-                message = error.localizedDescription
-            } else if response == nil {
-                message = "Error: response is empty"
-            } else if let data = data {
-                if let error = try? JSONDecoder().decode(DataError.self, from: data) {
-                    message = error.message
-                }else {
-                    DispatchQueue.main.async {
-                        let json = String(decoding: data, as: UTF8.self)
-                        print("request", request)
-                        print("JSON: ", json)
-                        callback(data, json)
-                    }
-                }
-            } else if let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode != 200 {
-                message = "Error: got status code \(statusCode)"
-            } else {
-                message = "Error: missing data"
-            }
-            
-            if let message = message {
-                DispatchQueue.main.async {
-                    onError(message)
-                }
-            }
-        })
-    
-    webTask.resume()
-}
 
 struct AuthResponse: Decodable {
     let authenticateURL: String

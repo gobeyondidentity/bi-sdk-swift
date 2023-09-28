@@ -28,21 +28,19 @@ class ManagePasskeyViewController: ScrollableViewController {
             cardView: ButtonView(
                 buttonTitle: Localized.viewPasskeyTitle.string
             ){ callback in
-                Embedded.shared.getPasskeys { result in
-                    switch result {
-                    case let .success(passkeys):
-                        guard !passkeys.isEmpty else {
-                            callback(Localized.noPasskeyFound.string)
-                            return
-                        }
-                        callback(passkeys.map({$0.description}).joined())
-                    case let .failure(error):
-                        callback(error.localizedDescription)
+                do {
+                    let passkeys = try await Embedded.shared.getPasskeys()
+                    guard !passkeys.isEmpty else {
+                        callback(Localized.noPasskeyFound.string)
+                        return
                     }
+                    callback(passkeys.map({$0.description}).joined())
+                } catch {
+                    callback(error.localizedDescription)
                 }
             }
         )
-
+        
         let deletePasskey = Card(
             title: Localized.deleteTitle.string,
             detail: Localized.deleteText.string,
@@ -50,13 +48,11 @@ class ManagePasskeyViewController: ScrollableViewController {
                 buttonTitle: Localized.deleteTitle.string,
                 placeholder: Localized.deletePlaceholder.string
             ){ (id, callback) in
-                Embedded.shared.deletePasskey(for: id) { result in
-                    switch result {
-                    case .success:
-                        callback("Deleted Passkey Id: \(id.value)")
-                    case let .failure(error):
-                        callback(error.localizedDescription)
-                    }
+                do {
+                    try await Embedded.shared.deletePasskey(for: id)
+                    callback("Deleted Passkey Id: \(id.value)")
+                } catch {
+                    callback(error.localizedDescription)
                 }
             }
         )

@@ -55,6 +55,9 @@ public enum Localized: String, CaseIterable {
     case authenticateCustomText
     case authenticateURLPlaceholder
     
+    case authGetAuthenticationContext
+    case authGetAuthenticationContextText
+    
     case authBeyondIdentity
     case authBeyondIdentityText
     
@@ -64,6 +67,13 @@ public enum Localized: String, CaseIterable {
     case authAuth0
     case authAuth0Text
     
+    case emailOtp
+    case authEmailOtpText
+    case authEmailOtpPlaceholder
+    case redeemOtp
+    case redeemEmailOtpText
+    case redeemEmailOtpPlaceholder
+    
     // Select Passkey
     case selectPasskeyTitle
     
@@ -72,7 +82,8 @@ public enum Localized: String, CaseIterable {
     case isAuthenticateText
     case isBindTitle
     case isBindText
-    case validateButton
+    case validateAuthenticateButton
+    case validateBindPasskeyButton
 
     // Developer Docs
     case developerDocsUrl

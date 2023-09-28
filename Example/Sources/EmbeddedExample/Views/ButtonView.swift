@@ -4,8 +4,8 @@ import UIKit
 
 class ButtonView: UIView {
     let button: Button
-    let buttonAction: (@escaping (String) -> Void) -> Void
-    let label = ResponseLabelView()
+    let buttonAction: (@escaping (String) -> Void) async -> Void
+    let label: ResponseLabelView
     
     /// ButtonView: UIView
     /// - Parameters:
@@ -13,9 +13,11 @@ class ButtonView: UIView {
     ///   - buttonAction: When button taps, this action will run passing the caller a function that when given a String will print to the label
     init(
         buttonTitle: String,
-        buttonAction: @escaping (@escaping (String) -> Void) -> Void
+        buttonAction: @escaping (@escaping (String) -> Void) async -> Void
     ) {
         button = makeButton(with: buttonTitle)
+        label = ResponseLabelView(buttonTitle)
+
         self.buttonAction = buttonAction
         super.init(frame: .zero)
         setUpSubviews()
@@ -43,9 +45,11 @@ class ButtonView: UIView {
     @objc func onTap() {
         self.label.isLoading = true
         self.label.resetLabel()
-        buttonAction() { [weak self] text in
-            self?.label.text = text
-            self?.label.isLoading = false
+        Task {
+            await buttonAction() { [weak self] text in
+                self?.label.text = text
+                self?.label.isLoading = false
+            }
         }
     }
 }

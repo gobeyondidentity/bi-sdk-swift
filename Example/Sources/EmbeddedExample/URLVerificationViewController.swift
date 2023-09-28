@@ -26,7 +26,7 @@ class URLVerificationViewController: ScrollableViewController {
                 title: Localized.isAuthenticateTitle.string,
                 detail: Localized.isAuthenticateText.string,
                 cardView: InputView<URL>(
-                    buttonTitle: Localized.validateButton.string,
+                    buttonTitle: Localized.validateAuthenticateButton.string,
                     placeholder: Localized.isAuthenticateTitle.string
                 ){ (url, callback) in
                     if Embedded.shared.isAuthenticateUrl(url){
@@ -41,7 +41,7 @@ class URLVerificationViewController: ScrollableViewController {
                 title: Localized.isBindTitle.string,
                 detail: Localized.isBindText.string,
                 cardView: InputView<URL>(
-                    buttonTitle: Localized.validateButton.string,
+                    buttonTitle: Localized.validateBindPasskeyButton.string,
                     placeholder: Localized.isBindTitle.string
                 ){ (url, callback) in
                     if Embedded.shared.isBindPasskeyUrl(url){

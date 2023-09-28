@@ -1,0 +1,40 @@
+{
+  "configurations" : [
+    {
+      "id" : "9F614D93-E28C-4434-9C9F-0F2480C6DAD7",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "maximumTestRepetitions" : 5,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ExampleApp.xcodeproj",
+      "identifier" : "95694CD625F81A34000A06F7",
+      "name" : "ExampleApp"
+    },
+    "testRepetitionMode" : "retryOnFailure"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:SharedDesign",
+        "identifier" : "SharedDesignTests",
+        "name" : "SharedDesignTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:ExampleApp.xcodeproj",
+        "identifier" : "95D85CBF299D850A005BB198",
+        "name" : "ExampleAppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
