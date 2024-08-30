@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -329,6 +329,8 @@
 				Base,
 			);
 			mainGroup = 95694CCE25F81A34000A06F7;
+			packageReferences = (
+			);
 			productRefGroup = 95694CD825F81A34000A06F7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

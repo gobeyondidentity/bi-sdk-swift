@@ -86,6 +86,7 @@ extension Passkey: CustomStringConvertible {
     public var description: String {
         """
         id: \(id.value)
+        passkeyId: \(passkeyId.value)
         localCreated: \(localCreated)
         localUpdated: \(localUpdated)
         apiBaseUrl: \(apiBaseUrl)

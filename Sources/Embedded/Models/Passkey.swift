@@ -7,6 +7,9 @@ import Foundation
 public struct Passkey: Equatable, Identifiable, Hashable {
     /// The globally unique identifier of the passkey.
     public let id: Id
+
+    /// The external (cloud) identifier of the passkey.
+    public let passkeyId: PasskeyId
     
     /// The time when this passkey was created locally. This could be different from "created" which is the time when this passkey was created on the server.
     public let localCreated: Date
@@ -43,6 +46,7 @@ public struct Passkey: Equatable, Identifiable, Hashable {
     
     public init(
         id: Passkey.Id,
+        passkeyId: Passkey.PasskeyId,
         localCreated: Date,
         localUpdated: Date,
         apiBaseUrl: URL,
@@ -56,6 +60,7 @@ public struct Passkey: Equatable, Identifiable, Hashable {
         theme: Theme
     ){
         self.id = id
+        self.passkeyId = passkeyId
         self.localCreated = localCreated
         self.localUpdated = localUpdated
         self.apiBaseUrl = apiBaseUrl
@@ -71,6 +76,7 @@ public struct Passkey: Equatable, Identifiable, Hashable {
     
     init(_ passkey: CoreSDK.AuthNCredential) {
         id = Passkey.Id(passkey.id.value)
+        passkeyId = Passkey.PasskeyId(passkey.passkeyId)
         localCreated = passkey.localCreated
         localUpdated = passkey.localUpdated
         apiBaseUrl = passkey.apiBaseURL
@@ -88,6 +94,15 @@ public struct Passkey: Equatable, Identifiable, Hashable {
 extension Passkey {
     /// The globally unique identifier of the passkey.
     public struct Id: Equatable, Hashable, Codable {
+        public let value: String
+        
+        public init(_ value: String) {
+            self.value = value
+        }
+    }
+
+    /// The external (cloud) identifier of the passkey.
+    public struct PasskeyId: Equatable, Hashable, Codable {
         public let value: String
         
         public init(_ value: String) {

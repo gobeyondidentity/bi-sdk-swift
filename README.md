@@ -82,7 +82,7 @@ First, before calling the Embedded functions, make sure to initialize the SDK.
 import BeyondIdentityEmbedded
 
 Embedded.initialize(
-    allowedDomains: [String] = ["beyondidentity.com"],
+    allowedDomains: [String] = ["beyondidentity.com", "byndid.com"],
     biometricAskPrompt: String,
     logger: ((OSLogType, String) -> Void)? = nil,
     callback: @escaping(Result<Void, BISDKError>) -> Void

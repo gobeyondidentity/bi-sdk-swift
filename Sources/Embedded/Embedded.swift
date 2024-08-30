@@ -16,7 +16,7 @@ public class Embedded {
         callback: @escaping(Result<Void, BISDKError>) -> Void
     ){
         guard let allowedDomains = allowedDomains.isNilOrEmpty
-                ? ["beyondidentity.com"]
+                ? ["beyondidentity.com", "byndid.com"]
                 : allowedDomains else {
             callback(.failure(BISDKError.description("Error with allowedDomains: \(String(describing: allowedDomains))")))
             return
@@ -115,12 +115,7 @@ public class CoreEmbedded {
             biSdkInfo: CoreSDKInfo.init(
                 sdkVersion: Configuration.sdkVersion,
                 appVersion: appVersion),
-            logger: config.logger,
-            clientEnvironmentRequest: { ClientEnvironment() },
-            selectCredentialRequest: { _, _ in },
-            keyProvenanceRequest: nil,
-            credentialStateChangedRequest: nil,
-            checkClientRequest: nil
+            logger: config.logger
         )
     }
     
