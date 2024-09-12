@@ -17,8 +17,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "CoreSDK",
-            url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/2.0.2/CoreSDK.xcframework.zip",
-            checksum: "beaedba47b6294347f408fe0dcde868a402a6539de29e4b7fc432fab13302749"
+            url: "https://packages.beyondidentity.com/public/bi-sdk-swift/raw/versions/2.0.3/CoreSDK.xcframework.zip",
+            checksum: "93fc08bd9e97f7248fef2670c6690b9ed552a4239aa25855e7459c1658ec67c1"
         ),
         .target(
             name: "BeyondIdentityEmbedded",
