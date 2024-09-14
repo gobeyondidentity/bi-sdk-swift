@@ -24,7 +24,7 @@ struct EmbeddedViewModel {
     let recoverEndpoint = URL(string: "https://acme-cloud.byndid.com/recover-credential-binding-link")!
     
     /// SDK version
-    let sdkVersion = "2.0.4"
+    let sdkVersion = "2.0.5"
 }
 
 struct Auth0Config {
