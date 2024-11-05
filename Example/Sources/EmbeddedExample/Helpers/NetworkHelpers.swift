@@ -6,6 +6,11 @@ func createBeyondIdentityAuthRequest(url: URL) -> URLRequest {
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    let correlationID = UUID().uuidString
+    print("X-Correlation-Id:", correlationID)
+    request.setValue(correlationID, forHTTPHeaderField: "X-Correlation-Id")
+    
     return request
 }
 

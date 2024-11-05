@@ -7,7 +7,7 @@ struct EmbeddedViewModel {
     let auth0Config = Auth0Config()
     
     /// Your crafted Beyond Identity Authorize URL
-    let beyondIdentityAuth = URL(string: "https://auth-us.beyondidentity.com/v2/tenants/00012da391ea206d/realms/862e4b72cfdce072/applications/a8c0aa60-38e4-42b6-bd52-ef64aba5478b/authorize?response_type=code&client_id=KhSWSmfhZ6xCMz9yw7DpJcv5&redirect_uri=\("acme://".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)&scope=openid&state=random_state")!
+    let beyondIdentityAuth = URL(string: "https://auth-us.beyondidentity.com/v1/tenants/00012da391ea206d/realms/862e4b72cfdce072/applications/a8c0aa60-38e4-42b6-bd52-ef64aba5478b/authorize?response_type=code&client_id=KhSWSmfhZ6xCMz9yw7DpJcv5&redirect_uri=\("acme://".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)&scope=openid&state=random_state")!
     
     /// Your crafter Beyond Identity Token URL
     let beyondIdentityToken = URL(string: "https://auth-us.beyondidentity.com/v1/tenants/00012da391ea206d/realms/862e4b72cfdce072/applications/a8c0aa60-38e4-42b6-bd52-ef64aba5478b/token")!
@@ -24,7 +24,7 @@ struct EmbeddedViewModel {
     let recoverEndpoint = URL(string: "https://acme-cloud.byndid.com/recover-credential-binding-link")!
     
     /// SDK version
-    let sdkVersion = "2.0.5"
+    let sdkVersion = "2.0.6"
 }
 
 struct Auth0Config {

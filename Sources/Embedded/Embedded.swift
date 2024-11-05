@@ -108,7 +108,6 @@ public class CoreEmbedded {
             // with the native platform authenticator, we set this to a dummy value.
             appVersion: "0.0.0",
             appInstanceId: appInstanceId,
-            authenticationPrompt: { _, _ in },
             deviceGatewayUrl: Configuration.deviceGateway,
             isProduction: true,
             askPrompt: config.biometricAskPrompt,
