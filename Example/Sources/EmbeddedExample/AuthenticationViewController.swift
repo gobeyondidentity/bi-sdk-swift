@@ -273,7 +273,7 @@ class AuthenticationViewController: ScrollableViewController {
             
             if passkeys.count == 1, let id = passkeys.first?.id {
                 do {
-                    return try await Embedded.shared.authenticate(url: url, id: id)
+                    return try await authenticateIfValid(url: url, id: id)
                 } catch {
                     throw error
                 }
@@ -285,7 +285,7 @@ class AuthenticationViewController: ScrollableViewController {
                 }
                 
                 do {
-                    return try await Embedded.shared.authenticate(url: url, id: id)
+                    return try await authenticateIfValid(url: url, id: id)
                 } catch {
                     throw error
                 }
@@ -293,6 +293,28 @@ class AuthenticationViewController: ScrollableViewController {
         } catch {
             throw error
         }
+    }
+    
+    private func authenticateIfValid(url: URL, id: Passkey.Id) async throws -> AuthenticateResponse {
+        do {
+            let response = try await Embedded.shared.authenticate(url: url, id: id)
+            return try await vaidateAuthenticateResponse(response: response)
+        } catch {
+            throw error
+        }
+    }
+    
+    private func vaidateAuthenticateResponse(response: AuthenticateResponse) async throws -> AuthenticateResponse {
+        if let components = URLComponents(url: response.redirectUrl, resolvingAgainstBaseURL: false) {
+            if let queryItems = components.queryItems {
+                if !queryItems.contains(where: { $0.name == "state" }) {
+                    throw ExampleAppError.description("state not found on redirectUrl")
+                }
+                return response
+            }
+        }
+        
+        throw ExampleAppError.description("response.redirectUrl doesn't have any url components")
     }
     
     private func authenticateInnerAndOuter(
