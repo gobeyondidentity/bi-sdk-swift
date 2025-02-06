@@ -31,6 +31,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     )
                 } catch {
                     print(error.localizedDescription)
+                    // simulate a retry
+                    try await Embedded.initialize(
+                        biometricAskPrompt: viewModel.biometricAskPrompt,
+                        logger: { _, message in
+                            print(message)
+                        }
+                    )
                 }
             }
             

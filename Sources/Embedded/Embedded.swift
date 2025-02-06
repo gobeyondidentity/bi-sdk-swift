@@ -71,7 +71,8 @@ public class CoreEmbedded {
     
     private static var core: Core?
     
-    private static var hasInitalizedCore = false
+    // To allow retry, only set to true once everything has successfuly completed
+    private static var hasInitialized = false
     
     public static let _shared: CoreEmbedded = CoreEmbedded()
     
@@ -86,13 +87,15 @@ public class CoreEmbedded {
             biometricAskPrompt: biometricAskPrompt,
             logger: logger
         )
-        guard !hasInitalizedCore else { return }
+        guard !hasInitialized else {
+            callback(.success(()))
+            return
+        }
         setUpCore(with: config)
         setUpDirectory(
             allowedDomains: allowedDomains.joined(separator: ","),
             callback: callback
         )
-        hasInitalizedCore = true
     }
     
     private static func setUpCore(with config: Config) {
@@ -128,9 +131,10 @@ public class CoreEmbedded {
         ) { result in
             switch result {
             case .success:
+                hasInitialized = true
                 callback(.success(()))
             case let .failure(error):
-                callback(.failure(.description(error.localizedDescription)))
+                callback(.failure(.from(error)))
             }
         }
     }
@@ -149,12 +153,12 @@ extension CoreEmbedded {
         id: Passkey.Id,
         callback: @escaping(Result<AuthenticateResponse, BISDKError>) -> Void
     ) {
-        guard isAuthenticateUrl(url) else { return callback(.failure(.invalidUrlType)) }
-        
-        guard let core = CoreEmbedded.core else {
-            fatalError(INIT_ERROR)
+        guard let core = CoreEmbedded.core, CoreEmbedded.hasInitialized else {
+            callback(.failure(BISDKError.initializationIncomplete))
+            return
         }
-        
+        guard isAuthenticateUrl(url) else { return callback(.failure(.invalidUrlType)) }
+
         core.authenticate(
             url: url,
             trusted: .embedded,
@@ -201,11 +205,11 @@ extension CoreEmbedded {
         email: String,
         callback: @escaping(Result<OtpChallengeResponse, BISDKError>) -> Void
     ) {
-        guard isAuthenticateUrl(url) else { return callback(.failure(.invalidUrlType)) }
-        
-        guard let core = CoreEmbedded.core else {
-            fatalError(INIT_ERROR)
+        guard let core = CoreEmbedded.core, CoreEmbedded.hasInitialized else {
+            callback(.failure(BISDKError.initializationIncomplete))
+            return
         }
+        guard isAuthenticateUrl(url) else { return callback(.failure(.invalidUrlType)) }
         
         core.authenticate(
             url: url,
@@ -251,10 +255,10 @@ extension CoreEmbedded {
         url: URL,
         callback: @escaping(Result<BindPasskeyResponse, BISDKError>) -> Void
     ) {
-        guard let core = CoreEmbedded.core else {
-            fatalError(INIT_ERROR)
+        guard let core = CoreEmbedded.core, CoreEmbedded.hasInitialized else {
+            callback(.failure(BISDKError.initializationIncomplete))
+            return
         }
-        
         guard isBindPasskeyUrl(url) else { return callback(.failure(.invalidUrlType)) }
         
         core.bindCredential(
@@ -294,8 +298,9 @@ extension CoreEmbedded {
         for id: Passkey.Id,
         callback: @escaping (Result<(), BISDKError>) -> Void
     ) {
-        guard let core = CoreEmbedded.core else {
-            fatalError(INIT_ERROR)
+        guard let core = CoreEmbedded.core, CoreEmbedded.hasInitialized else {
+            callback(.failure(BISDKError.initializationIncomplete))
+            return
         }
         core.deleteAuthNCredential(CoreSDK.Id(id.value)) { result in
             switch result {
@@ -332,14 +337,13 @@ extension CoreEmbedded {
         url: URL,
         callback: @escaping(Result<AuthenticationContext, BISDKError>) -> Void
     ) {
-        guard let core = CoreEmbedded.core else {
-            fatalError(INIT_ERROR)
+        guard let core = CoreEmbedded.core,
+              let config = CoreEmbedded.config,
+              CoreEmbedded.hasInitialized else {
+                  callback(.failure(BISDKError.initializationIncomplete))
+                  return
         }
-        
-        guard let config = CoreEmbedded.config else {
-            fatalError(INIT_ERROR)
-        }
-        
+
         core.getAuthenticationContext(
             url,
             config.allowedDomains.joined(separator: ",")
@@ -375,8 +379,9 @@ extension CoreEmbedded {
     /// Get all current passkeys on the device.
     /// - Parameter callback: returns all registered passkeys
     public func getPasskeys(callback: @escaping (Result<[Passkey], BISDKError>) -> Void) {
-        guard let core = CoreEmbedded.core else {
-            fatalError(INIT_ERROR)
+        guard let core = CoreEmbedded.core, CoreEmbedded.hasInitialized else {
+            callback(.failure(BISDKError.initializationIncomplete))
+            return
         }
         core.getAllAuthNCredentials { result in
             switch result {
@@ -402,8 +407,8 @@ extension CoreEmbedded {
     /// - Parameter url: URL in question
     /// - Returns: Bool
     public func isAuthenticateUrl(_ url: URL) -> Bool {
-        guard let core = CoreEmbedded.core else {
-            fatalError(INIT_ERROR)
+        guard let core = CoreEmbedded.core, CoreEmbedded.hasInitialized else {
+            return false
         }
         
         let result = core.getUrlType(url)
@@ -418,8 +423,8 @@ extension CoreEmbedded {
     /// - Parameter url: URL in question
     /// - Returns: Bool
     public func isBindPasskeyUrl(_ url: URL) -> Bool {
-        guard let core = CoreEmbedded.core else {
-            fatalError(INIT_ERROR)
+        guard let core = CoreEmbedded.core, CoreEmbedded.hasInitialized else {
+            return false
         }
         
         let result = core.getUrlType(url)
@@ -441,8 +446,9 @@ extension CoreEmbedded {
         otp: String,
         callback: @escaping(Result<RedeemOtpResponse, BISDKError>) -> Void
     ) {
-        guard let core = CoreEmbedded.core else {
-            fatalError(INIT_ERROR)
+        guard let core = CoreEmbedded.core, CoreEmbedded.hasInitialized else {
+            callback(.failure(BISDKError.initializationIncomplete))
+            return
         }
         
         core.authenticate(
