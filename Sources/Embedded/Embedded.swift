@@ -3,7 +3,7 @@ import Foundation
 import os
 
 /// Use the `Embedded.shared` singleton to access all embedded sdk functionality.
-public class Embedded {
+public class Embedded: Retryable {
     /// Initialize the `Embedded.shared` singleton before using it. This must be called first.
     /// - Parameters:
     ///   - allowedDomains: An optional array of whitelisted domains for network operations. This will default to Beyond Identity’s allowed domains when not provided or is empty.
@@ -22,12 +22,14 @@ public class Embedded {
             return
         }
         
-        CoreEmbedded._initialize(
-            allowedDomains: allowedDomains,
-            biometricAskPrompt: biometricAskPrompt,
-            logger: logger,
-            callback: callback
-        )
+        retry { cb in
+            CoreEmbedded._initialize(
+                allowedDomains: allowedDomains,
+                biometricAskPrompt: biometricAskPrompt,
+                logger: logger,
+                callback: cb
+            )
+        }(callback)
     }
     
     /// Initialize the `Embedded.shared` singleton before using it. This must be called first.
@@ -142,7 +144,7 @@ public class CoreEmbedded {
 
 // MARK: Functions
 
-extension CoreEmbedded {
+extension CoreEmbedded: Retryable {
     /// Authenticate a user.
     /// - Parameters:
     ///   - url: The authentication URL of the current transaction.
@@ -159,24 +161,26 @@ extension CoreEmbedded {
         }
         guard isAuthenticateUrl(url) else { return callback(.failure(.invalidUrlType)) }
 
-        core.authenticate(
-            url: url,
-            trusted: .embedded,
-            flowType: .embedded,
-            credentialDescriptor: .credentialId(credential_id: id.value)
-        ) { result in
-            switch result {
-            case let .success(response):
-                switch response {
-                case let .allow(authenticateUrlResponse):
-                    callback(.success(AuthenticateResponse(authenticateUrlResponse)))
-                default:
-                    callback(.failure(.description("BiAuthenticateUrlResponse was not sent")))
+        Self.retry { cb in
+            core.authenticate(
+                url: url,
+                trusted: .embedded,
+                flowType: .embedded,
+                credentialDescriptor: .credentialId(credential_id: id.value)
+            ) { result in
+                switch result {
+                case let .success(response):
+                    switch response {
+                    case let .allow(authenticateUrlResponse):
+                        cb(.success(AuthenticateResponse(authenticateUrlResponse)))
+                    default:
+                        cb(.failure(.description("BiAuthenticateUrlResponse was not sent")))
+                    }
+                case let .failure(error):
+                    cb(.failure(.from(error)))
                 }
-            case let .failure(error):
-                callback(.failure(.from(error)))
             }
-        }
+        }(callback)
     }
     
     /// Authenticate a user.
@@ -211,24 +215,26 @@ extension CoreEmbedded {
         }
         guard isAuthenticateUrl(url) else { return callback(.failure(.invalidUrlType)) }
         
-        core.authenticate(
-            url: url,
-            trusted: .embedded,
-            flowType: .embedded,
-            credentialDescriptor: .beginEmailOtp(email: email)
-        ) { result in
-            switch result {
-            case let .success(response):
-                switch response {
-                case let .continue(continueResponse):
-                    callback(.success(OtpChallengeResponse(continueResponse)))
-                default:
-                    callback(.failure(.description("BiContinueResponse was not sent")))
+        Self.retry { cb in
+            core.authenticate(
+                url: url,
+                trusted: .embedded,
+                flowType: .embedded,
+                credentialDescriptor: .beginEmailOtp(email: email)
+            ) { result in
+                switch result {
+                case let .success(response):
+                    switch response {
+                    case let .continue(continueResponse):
+                        cb(.success(OtpChallengeResponse(continueResponse)))
+                    default:
+                        cb(.failure(.description("BiContinueResponse was not sent")))
+                    }
+                case let .failure(error):
+                    cb(.failure(.from(error)))
                 }
-            case let .failure(error):
-                callback(.failure(.from(error)))
             }
-        }
+        }(callback)
     }
     
     /// Initiates authentication using an OTP, which will be sent to the
@@ -261,19 +267,21 @@ extension CoreEmbedded {
         }
         guard isBindPasskeyUrl(url) else { return callback(.failure(.invalidUrlType)) }
         
-        core.bindCredential(
-            url,
-            trusted: .embedded,
-            flowType: .embedded,
-            credentialDescriptor: nil
-        ) { result in
-            switch result {
-            case let .success(response):
-                callback(.success(BindPasskeyResponse(response)))
-            case let .failure(error):
-                callback(.failure(.from(error)))
+        Self.retry { cb in
+            core.bindCredential(
+                url,
+                trusted: .embedded,
+                flowType: .embedded,
+                credentialDescriptor: nil
+            ) { result in
+                switch result {
+                case let .success(response):
+                    cb(.success(BindPasskeyResponse(response)))
+                case let .failure(error):
+                    cb(.failure(.from(error)))
+                }
             }
-        }
+        }(callback)
     }
     
     /// Bind a `Passkey` to a device.
@@ -302,14 +310,17 @@ extension CoreEmbedded {
             callback(.failure(BISDKError.initializationIncomplete))
             return
         }
-        core.deleteAuthNCredential(CoreSDK.Id(id.value)) { result in
-            switch result {
-            case .success:
-                callback(.success(()))
-            case let .failure(error):
-                callback(.failure(.from(error)))
+        
+        Self.retry { cb in
+            core.deleteAuthNCredential(CoreSDK.Id(id.value)) { result in
+                switch result {
+                case .success:
+                    cb(.success(()))
+                case let .failure(error):
+                    cb(.failure(.from(error)))
+                }
             }
-        }
+        }(callback)
     }
     
     /// Delete a `Passkey` by its ID.
@@ -344,17 +355,19 @@ extension CoreEmbedded {
                   return
         }
 
-        core.getAuthenticationContext(
-            url,
-            config.allowedDomains.joined(separator: ",")
-        ) { result in
-            switch result {
-            case let .success(response):
-                callback(.success(AuthenticationContext(response)))
-            case let .failure(error):
-                callback(.failure(.from(error)))
+        Self.retry { cb in
+            core.getAuthenticationContext(
+                url,
+                config.allowedDomains.joined(separator: ",")
+            ) { result in
+                switch result {
+                case let .success(response):
+                    cb(.success(AuthenticationContext(response)))
+                case let .failure(error):
+                    cb(.failure(.from(error)))
+                }
             }
-        }
+        }(callback)
     }
     
     /// Get the Authentication Context for the current transaction.
@@ -383,14 +396,17 @@ extension CoreEmbedded {
             callback(.failure(BISDKError.initializationIncomplete))
             return
         }
-        core.getAllAuthNCredentials { result in
-            switch result {
-            case let .success(passkey):
-                callback(.success(passkey.map(Passkey.init)))
-            case let .failure(error):
-                callback(.failure(.from(error)))
+        
+        Self.retry { cb in
+            core.getAllAuthNCredentials { result in
+                switch result {
+                case let .success(passkey):
+                    cb(.success(passkey.map(Passkey.init)))
+                case let .failure(error):
+                    cb(.failure(.from(error)))
+                }
             }
-        }
+        }(callback)
     }
     
     /// Get all current passkeys on the device.
@@ -451,24 +467,26 @@ extension CoreEmbedded {
             return
         }
         
-        core.authenticate(
-            url: url,
-            trusted: .embedded,
-            flowType: .embedded,
-            credentialDescriptor: .redeemOtp(otp: otp)
-        ) { result in
-            switch result {
-            case let .success(response):
-                switch response {
-                case let .allow(authenticateUrlResponse):
-                    callback(.success(.success(AuthenticateResponse(authenticateUrlResponse))))
-                case let .continue(continueResponse):
-                    callback(.success(.failedOtp(OtpChallengeResponse(continueResponse))))
+        Self.retry { cb in
+            core.authenticate(
+                url: url,
+                trusted: .embedded,
+                flowType: .embedded,
+                credentialDescriptor: .redeemOtp(otp: otp)
+            ) { result in
+                switch result {
+                case let .success(response):
+                    switch response {
+                    case let .allow(authenticateUrlResponse):
+                        cb(.success(.success(AuthenticateResponse(authenticateUrlResponse))))
+                    case let .continue(continueResponse):
+                        cb(.success(.failedOtp(OtpChallengeResponse(continueResponse))))
+                    }
+                case let .failure(error):
+                    cb(.failure(.from(error)))
                 }
-            case let .failure(error):
-                callback(.failure(.from(error)))
             }
-        }
+        }(callback)
     }
     
     /// Redeems an OTP for a grant code.
