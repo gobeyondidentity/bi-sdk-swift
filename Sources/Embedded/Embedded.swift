@@ -16,7 +16,7 @@ public class Embedded: Retryable {
         callback: @escaping(Result<Void, BISDKError>) -> Void
     ){
         guard let allowedDomains = allowedDomains.isNilOrEmpty
-                ? ["beyondidentity.com", "byndid.com"]
+                ? ["beyondidentity.com", "byndid.com", "beyondidentity-gov.com"]
                 : allowedDomains else {
             callback(.failure(BISDKError.description("Error with allowedDomains: \(String(describing: allowedDomains))")))
             return
@@ -75,6 +75,8 @@ public class CoreEmbedded {
     
     // To allow retry, only set to true once everything has successfuly completed
     private static var hasInitialized = false
+    // A lock to serialize access to hasInitialized
+    private static let initLock = NSLock()
     
     public static let _shared: CoreEmbedded = CoreEmbedded()
     
@@ -84,19 +86,39 @@ public class CoreEmbedded {
         logger: ((OSLogType, String) -> Void)? = nil,
         callback: @escaping(Result<Void, BISDKError>) -> Void
     ){
+        // Prevent multiple concurrent initializations using a lock
+        initLock.lock()
+        // If we've already initialized, just return success
+        if hasInitialized {
+            initLock.unlock()
+            callback(.success(()))
+            return
+        }
+        // Otherwise mark as initialized so no one else tries it
+        hasInitialized = true
+        initLock.unlock()
+        
         let config = Config(
             allowedDomains: allowedDomains,
             biometricAskPrompt: biometricAskPrompt,
             logger: logger
         )
-        guard !hasInitialized else {
-            callback(.success(()))
-            return
-        }
+        
         setUpCore(with: config)
         setUpDirectory(
             allowedDomains: allowedDomains.joined(separator: ","),
-            callback: callback
+            callback: { result in
+                switch result {
+                case .success:
+                    callback(.success(()))
+                case .failure(let error):
+                    // If the setup fails, allow another retry later
+                    initLock.lock()
+                    hasInitialized = false
+                    initLock.unlock()
+                    callback(.failure(error))
+                }
+            }
         )
     }
     
@@ -133,7 +155,6 @@ public class CoreEmbedded {
         ) { result in
             switch result {
             case .success:
-                hasInitialized = true
                 callback(.success(()))
             case let .failure(error):
                 callback(.failure(.from(error)))
