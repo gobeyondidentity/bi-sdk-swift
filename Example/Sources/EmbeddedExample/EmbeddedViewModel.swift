@@ -1,30 +1,44 @@
 import Foundation
 
 // THIS FILE IS GENERATED.
+let isGovEnvironment: Bool = false
+let acme_cloud_base_url = "https://acme-cloud.byndid.com"
+
+let tenant_gov = "0001b3d03c6f0b83"
+let realm_gov = "8c1e82693c192b59"
+let application_gov = "dfb75f55-f20f-496b-a6bc-98b88a3ffcbd"
+let client_id_gov = "LIvW1Mb1xsW36QeOCNo3usYQ"
+let bi_base_url_gov = "https://auth.us1.beyondidentity-gov.com"
+
+var tenant: String { isGovEnvironment ? tenant_gov : "00012da391ea206d" }
+var realm: String { isGovEnvironment ? realm_gov : "862e4b72cfdce072" }
+var application: String { isGovEnvironment ? application_gov : "a8c0aa60-38e4-42b6-bd52-ef64aba5478b" }
+var client_id: String { isGovEnvironment ? client_id_gov : "KhSWSmfhZ6xCMz9yw7DpJcv5" }
+var bi_base_url: String { isGovEnvironment ? bi_base_url_gov : "https://auth-us.beyondidentity.com" }
 
 // swiftlint:disable line_length
 struct EmbeddedViewModel {
     let auth0Config = Auth0Config()
     
     /// Your crafted Beyond Identity Authorize URL
-    let beyondIdentityAuth = URL(string: "https://auth-us.beyondidentity.com/v1/tenants/00012da391ea206d/realms/862e4b72cfdce072/applications/a8c0aa60-38e4-42b6-bd52-ef64aba5478b/authorize?response_type=code&client_id=KhSWSmfhZ6xCMz9yw7DpJcv5&redirect_uri=\("acme://".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)&scope=openid&state=random_state")!
+    let beyondIdentityAuth = URL(string: "\(bi_base_url)/v1/tenants/\(tenant)/realms/\(realm)/applications/\(application)/authorize?response_type=code&client_id=\(client_id)&redirect_uri=\("acme://".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)&scope=openid&state=random_state")!
     
     /// Your crafter Beyond Identity Token URL
-    let beyondIdentityToken = URL(string: "https://auth-us.beyondidentity.com/v1/tenants/00012da391ea206d/realms/862e4b72cfdce072/applications/a8c0aa60-38e4-42b6-bd52-ef64aba5478b/token")!
+    let beyondIdentityToken = URL(string: "\(bi_base_url)/v1/tenants/\(tenant)/realms/\(realm)/applications/\(application)/token")!
 
     /// Prompt the user will see when exporting a passkey from one device to another
     let biometricAskPrompt = "Please verify it's really you before you can set up this passkey on another device."
     
     // This would be your backend endpoint to bind a passkey to device.
-    let bindEndpoint = URL(string: "https://acme-cloud.byndid.com/credential-binding-link")!
+    let bindEndpoint = URL(string: "\(acme_cloud_base_url)/credential-binding-link")!
     
     let oktaConfig = OktaConfig()
     
     // This would be your backend endpoint to recover a passkey by username already bound to device.
-    let recoverEndpoint = URL(string: "https://acme-cloud.byndid.com/recover-credential-binding-link")!
+    let recoverEndpoint = URL(string: "\(acme_cloud_base_url)/recover-credential-binding-link")!
     
     /// SDK version
-    let sdkVersion = "2.1.1"
+    let sdkVersion = "2.2.0"
 }
 
 struct Auth0Config {

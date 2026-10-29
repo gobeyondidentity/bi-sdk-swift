@@ -180,8 +180,8 @@ extension CoreEmbedded: Retryable {
             callback(.failure(BISDKError.initializationIncomplete))
             return
         }
+        
         guard isAuthenticateUrl(url) else { return callback(.failure(.invalidUrlType)) }
-
         Self.retry { cb in
             core.authenticate(
                 url: url,
@@ -234,6 +234,7 @@ extension CoreEmbedded: Retryable {
             callback(.failure(BISDKError.initializationIncomplete))
             return
         }
+        
         guard isAuthenticateUrl(url) else { return callback(.failure(.invalidUrlType)) }
         
         Self.retry { cb in
@@ -286,6 +287,7 @@ extension CoreEmbedded: Retryable {
             callback(.failure(BISDKError.initializationIncomplete))
             return
         }
+        
         guard isBindPasskeyUrl(url) else { return callback(.failure(.invalidUrlType)) }
         
         Self.retry { cb in
@@ -447,7 +449,6 @@ extension CoreEmbedded: Retryable {
         guard let core = CoreEmbedded.core, CoreEmbedded.hasInitialized else {
             return false
         }
-        
         let result = core.getUrlType(url)
         
         guard result == .success(.authenticate) else {
@@ -463,7 +464,6 @@ extension CoreEmbedded: Retryable {
         guard let core = CoreEmbedded.core, CoreEmbedded.hasInitialized else {
             return false
         }
-        
         let result = core.getUrlType(url)
         
         guard result == .success(.bind) else {

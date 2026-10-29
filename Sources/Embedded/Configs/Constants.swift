@@ -10,5 +10,5 @@ struct Configuration {
     #endif
 
     static let deviceGateway = "https://device-gateway.byndid.com"
-    static let sdkVersion = "2.1.1"
+    static let sdkVersion = "2.2.0"
 }

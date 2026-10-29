@@ -52,7 +52,6 @@ public enum BISDKError: Equatable, Error, Hashable {
 }
 
 extension BISDKError: LocalizedError {
-    
     /// localized error description.
     public var errorDescription: String? {
         switch self {

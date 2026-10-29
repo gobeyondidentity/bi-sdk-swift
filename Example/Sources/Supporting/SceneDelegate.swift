@@ -53,18 +53,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func register(_ url: URL){
-        Embedded.shared.bindPasskey(url: url) { [weak self] result in
-            switch result {
-            case let .success(response):
-                let dialog = UIAlertController(title: "Registered passkey: \(response.passkey.identity.displayName)", message: nil, preferredStyle: .alert)
-                let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
-                dialog.addAction(action)
-                self?.window?.rootViewController?.present(dialog, animated: true, completion: nil)
-            case let .failure(error):
-                let dialog = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .alert)
-                let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
-                dialog.addAction(action)
-                self?.window?.rootViewController?.present(dialog, animated: true, completion: nil)
+        let viewModel = EmbeddedViewModel()
+        Task {
+            do {
+                try await Embedded.initialize(
+                    biometricAskPrompt: viewModel.biometricAskPrompt,
+                    logger: { _, message in
+                        print(message)
+                    }
+                )
+                Embedded.shared.bindPasskey(url: url) { [weak self] result in
+                    switch result {
+                    case let .success(response):
+                        let dialog = UIAlertController(title: "Registered passkey: \(response.passkey.identity.displayName)", message: nil, preferredStyle: .alert)
+                        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                        dialog.addAction(action)
+                        self?.window?.rootViewController?.present(dialog, animated: true, completion: nil)
+                    case let .failure(error):
+                        let dialog = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .alert)
+                        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                        dialog.addAction(action)
+                        self?.window?.rootViewController?.present(dialog, animated: true, completion: nil)
+                    }
+                }
+            } catch {
+                print(error.localizedDescription)
             }
         }
     }

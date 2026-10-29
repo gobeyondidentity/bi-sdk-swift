@@ -50,7 +50,6 @@ public struct Fonts {
     private static func scaledFont(_ fontName: OverpassFontNames, _ fontSize: CGFloat) -> Font {
         Fonts.loadOnce()
         let font = Font(name: fontName.rawValue, size: fontSize) ?? Font.systemFont(ofSize: fontSize)
-        
         #if os(macOS)
         return font
         #elseif os(iOS)

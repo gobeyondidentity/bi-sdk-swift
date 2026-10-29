@@ -8,7 +8,7 @@ func createBeyondIdentityAuthRequest(url: URL) -> URLRequest {
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     
     let correlationID = UUID().uuidString
-    print("X-Correlation-Id:", correlationID)
+    print("Auth X-Correlation-Id:", correlationID)
     request.setValue(correlationID, forHTTPHeaderField: "X-Correlation-Id")
     
     return request
@@ -18,8 +18,10 @@ func createBeyondIdentityTokenRequest(with baseURL: URL, code: String, code_veri
     var request = URLRequest(url: baseURL)
     request.httpMethod = "POST"
     request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-    
-    let parameters = "grant_type=authorization_code&client_id=KhSWSmfhZ6xCMz9yw7DpJcv5&code_verifier=\(code_verifier)&code=\(code)&redirect_uri=acme%3A%2F%2F"
+    let correlationID = UUID().uuidString
+    print("Beyond Identity Token X-Correlation-Id:", correlationID)
+    request.setValue(correlationID, forHTTPHeaderField: "X-Correlation-Id")
+    let parameters = "grant_type=authorization_code&client_id=\(client_id)&code_verifier=\(code_verifier)&code=\(code)&redirect_uri=acme%3A%2F%2F"
     let postData =  parameters.data(using: .utf8)
     
     request.httpBody = postData
@@ -59,10 +61,13 @@ func createBindRequest(for username: String, with url: URL) -> URLRequest {
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    let correlationID = UUID().uuidString
+    print("Bind X-Correlation-Id:", correlationID)
+    request.setValue(correlationID, forHTTPHeaderField: "X-Correlation-Id")
     
     let body = [
         "username": username,
-        "authenticator_type" : "native",
+        "authenticator_type" : isGovEnvironment ? "native_gov" : "native",
         "delivery_method": "return"
     ]
     

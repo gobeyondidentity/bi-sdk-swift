@@ -12,7 +12,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-![version support](https://img.shields.io/badge/Version%20Support-iOS%2013%20and%20above-blueviolet)
+![version support](https://img.shields.io/badge/Version%20Support-iOS%2015%20and%20above-blueviolet)
 
 [![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-brightgreen.svg?style=flat)](https://swift.org/package-manager)
 
@@ -82,7 +82,7 @@ First, before calling the Embedded functions, make sure to initialize the SDK.
 import BeyondIdentityEmbedded
 
 Embedded.initialize(
-    allowedDomains: [String] = ["beyondidentity.com", "byndid.com"],
+    allowedDomains: [String] = ["beyondidentity.com", "byndid.com", "beyondidentity-gov.com"],
     biometricAskPrompt: String,
     logger: ((OSLogType, String) -> Void)? = nil,
     callback: @escaping(Result<Void, BISDKError>) -> Void

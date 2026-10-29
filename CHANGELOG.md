@@ -4,6 +4,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+## [2.2.0] - 2026-10-23
+
+### Changed
+
+- **Breaking**: The minimum supported iOS version is now 15.0 (was 13.0). Apps that still support iOS 13 or 14 must raise their deployment target before upgrading.
+
+## [2.1.1] - 2025-03-11
+
+### Added
+
+- Added support for gov
+
+### Changed
+
+- Synchronized the initialize function, preventing concurrent access
+- Allowing the initialization to continue even if the backup of the directory is not prevented.
+
+## [2.0.9] - 2025-02-19
+
+### Changed
+
+- Added safer retry logic
+
 ## [2.0.8] - 2025-12-05
 
 ### Added
@@ -18,6 +44,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Manual invocation type
 
 ## [2.0.6] - 2024-11-06
+
+### Changed
+
+- Reduced Size
+
+## [2.0.5] - 2024-09-14
+
+### Changed
+
+- Reduced Size
+
+## [2.0.4] - 2024-09-12
 
 ### Changed
 
